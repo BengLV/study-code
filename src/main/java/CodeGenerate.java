@@ -61,5 +61,6 @@ public class CodeGenerate {
         c.intern();
         String d = "1122";
         System.out.println(c == d);
+
     }
 }
