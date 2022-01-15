@@ -8,6 +8,7 @@ public class XMLExportVisitor implements Visitor {
         StringBuilder sb = new StringBuilder();
         sb.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + "\n");
         for (Shape shape : args) {
+            //accept() 双分派 可以进行动态绑定
             sb.append(shape.accept(this)).append("\n");
         }
         return sb.toString();
