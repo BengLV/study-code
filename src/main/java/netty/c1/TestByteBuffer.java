@@ -1,5 +1,7 @@
-package netty.day1;
+package netty.c1;
 
+import cn.hutool.json.JSON;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileInputStream;
@@ -25,10 +27,11 @@ public class TestByteBuffer {
                 //打印buffer内容
                 buffer.flip();//切换至读模式
                 while (buffer.hasRemaining()) {//检查是否还有剩余未读的数据
+                    System.out.println(JSONObject.toJSONString(buffer));
                     byte b = buffer.get();//读取一个字节的数据
                     System.out.println((char) b);
                 }
-                buffer.clear();//切换到写模式
+                buffer.clear();//切换到写模式 or compact()
             }
 
         } catch (IOException e) {
