@@ -15,6 +15,8 @@ import designpatterns.行为模式.访问者模式.shapes.Rectangle;
  *  3. 某个行为仅在类层次结构中的一些类中有意义， 而在其他类中没有意义
  *
  *  缺点: 访问者不是常用的设计模式， 因为它不仅复杂， 应用范围也比较狭窄。
+ *
+ *  Files.walkFileTree
  */
 public interface Visitor {
     String visitDot(Dot dot);
