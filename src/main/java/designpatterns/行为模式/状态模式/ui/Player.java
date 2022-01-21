@@ -6,9 +6,18 @@ import designpatterns.行为模式.状态模式.states.State;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * 上下文保存了对于一个具体状态对象的引用， 并会将所有与该状态相关的工作委派给它。
+ * 上下文通过状态接口与状态对象交互， 且会提供一个设置器用于传递新的状态对象。
+ */
 public class Player {
 
+    /**
+     * 对状态对象的引用,
+     */
     private State state;
+
     private boolean playing = false;
     private List<String> playlist = new ArrayList<>();
     private int currentTrack = 0;
