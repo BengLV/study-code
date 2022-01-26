@@ -1,4 +1,4 @@
-package netty.c3;
+package nettydemo.nio.c3;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,7 +19,7 @@ public class Service {
         ssc.configureBlocking(false);
 
         //2. 建立 selector 和 channel 的联系(注册)
-        //selectionKey 就是在时间发生后, 通过它可以知道时间和哪个channel的事件关联
+        //selectionKey 就是在事件发生后, 通过它可以知道事件和哪个channel的事件关联
         SelectionKey sscKey = ssc.register(selector, 0, null);
         //key 只关注accept事件
         sscKey.interestOps(SelectionKey.OP_ACCEPT);
@@ -46,7 +46,7 @@ public class Service {
                     //将第一个byteBuffer作为附件关联到selectionKey上
                     SelectionKey scKey = sc.register(selector, 0, buffer);
                     scKey.interestOps(SelectionKey.OP_READ);
-                    log.info("{}", sc);
+                    log.info("scKey:{}", sc);
                 } else if (key.isReadable()) {//read
                     try {
                         SocketChannel channel = (SocketChannel) key.channel();

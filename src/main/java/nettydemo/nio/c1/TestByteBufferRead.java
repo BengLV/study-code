@@ -1,4 +1,4 @@
-package netty.c1;
+package nettydemo.nio.c1;
 
 import java.nio.ByteBuffer;
 
