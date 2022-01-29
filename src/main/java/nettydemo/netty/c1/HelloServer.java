@@ -26,7 +26,7 @@ public class HelloServer {
                             protected void initChannel(NioSocketChannel ch) throws Exception {
                                 // 6. 添加具体 handler
                                 ch.pipeline().addLast(new LoggingHandler());
-                                ch.pipeline().addLast(new StringDecoder()); // 将 ByteBuf 转换为字符串
+                                ch.pipeline().addLast(new StringDecoder()); // 将 Byte                                                                                                                                                                                                                                                                                                                                                   Buf 转换为字符串
                                 ch.pipeline().addLast(new ChannelInboundHandlerAdapter() { // 自定义 handler
                                     @Override // 读事件
                                     public void channelRead(ChannelHandlerContext ctx,Object msg) throws Exception {
