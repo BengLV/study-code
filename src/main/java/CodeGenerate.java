@@ -1,3 +1,6 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -7,6 +10,8 @@ import java.util.Set;
  * @author lupeng
  */
 public class CodeGenerate {
+
+    private final static Logger log = LoggerFactory.getLogger(CodeGenerate.class);
 
     private static final String[] baseAlphabet = new String[]{"A", "C", "D", "E", "F", "G", "H", "I",
             "J", "K", "M", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
@@ -49,18 +54,10 @@ public class CodeGenerate {
     }
 
     public static void main(String[] args) {
-        /*Set<String> codeSet = batchCodeGenerate(100000);
-        System.out.println(codeSet);
-        System.out.println(codeSet.size());*/
-        String a = new String("11").intern();
-        a.intern();
-        String b = "11";
-        System.out.println(a == b);
-
-        String c = new String("11") + new String("22");
-        c.intern();
-        String d = "1122";
-        System.out.println(c == d);
+        log.info(".::args = [{}]", "2132132213211");
+        log.debug(".::args = [{}]", "21321323211");
+        Random random = new Random(System.currentTimeMillis());
+        System.out.println(random.nextInt(18)*60*60);
 
     }
 }
