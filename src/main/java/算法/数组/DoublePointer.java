@@ -65,7 +65,7 @@ public class DoublePointer {
             right++;
         }
         System.out.println(Arrays.toString(nums));
-        return nums.length;
+        return left + 1;
     }
 
     /**
@@ -233,7 +233,9 @@ public class DoublePointer {
         //sort(null);
         //moveZero(null);
 
-        int[] te = new int[]{-1,0,1,2,-1,-4};
+        int[] te = new int[]{1,0,3,2,5,4};
+        sort(te);
+        removeDuplicates(null);
         //threeSum(te);
         //System.out.println(reverseStr("abcdefg", 2));
     }

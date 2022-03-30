@@ -99,7 +99,7 @@ public class SlidingWindow {
                 ans = Math.max(ans, j - i + 1);
             }
             return ans;
-        }
+    }
 
     static class Counter extends HashMap<Integer, Integer> {
         public int get(int k) {
