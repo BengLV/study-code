@@ -306,39 +306,6 @@ public class BFS {
         return left + right + 1;*/
     }
 
-    /**
-     * 110. 平衡二叉树
-     * https://leetcode-cn.com/problems/balanced-binary-tree/
-     * 给定一个二叉树，判断它是否是高度平衡的二叉树。
-     * 本题中，一棵高度平衡二叉树定义为：一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1 。
-     * 输入：root = [3,9,20,null,null,15,7]
-     * 输出：true
-     * 输入：root = [1,2,2,3,3,null,null,4,4]
-     * 输出：false
-     *
-     * 求高度,用后序遍历(左右中)
-     */
-    public boolean isBalanced(TreeNode root) {
-        return getHeight(root) != -1;
-    }
-
-    public int getHeight(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        int leftHeight = getHeight(root.left);
-        if (leftHeight == -1) {
-            return -1;
-        }
-        int rightHeight = getHeight(root.right);
-        if (rightHeight == -1) {
-            return -1;
-        }
-        if (leftHeight - rightHeight > 1 ||  rightHeight - leftHeight > 1) {
-            return -1;
-        }
-        return Math.max(leftHeight, rightHeight) + 1;
-    }
 
 
 }
