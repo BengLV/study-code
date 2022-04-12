@@ -195,4 +195,55 @@ public class TreeCode {
         return sum + leaveValue(root.left) + leaveValue(root.right);
     }
 
+    /**
+     * 513. 找树左下角的值
+     * https://leetcode-cn.com/problems/find-bottom-left-tree-value/
+     * 给定一个二叉树的 根节点 root，请找出该二叉树的 最底层 最左边 节点的值。
+     * 假设二叉树中至少有一个节点。
+     *
+     * 输入: [1,2,3,4,null,5,6,null,null,7]
+     * 输出: 7
+     *
+     */
+    public int findBottomLeftValue(TreeNode root) {
+        int ret = root.val;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int n = queue.size();
+            for (int i = 0; i < n; i++) {
+                TreeNode node = queue.poll();
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+                if (i == 0) {
+                    ret = node.val;
+                }
+            }
+        }
+        return ret;
+        /**
+         *    递归:
+         *    int left, maxDepth = -1;
+         *     public int findBottomLeftValue(TreeNode root) {
+         *         dfs(root, 0);
+         *         return left;
+         *     }
+         *
+         *     public void dfs(TreeNode node, int depth) {
+         *         if (node == null) {
+         *             return;
+         *         }
+         *         if (depth > maxDepth) {
+         *             left = node.val;
+         *             maxDepth++;
+         *         }
+         *         dfs(node.left, depth + 1);
+         *         dfs(node.right, depth + 1);
+         *     }
+         */
+    }
 }
