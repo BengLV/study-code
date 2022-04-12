@@ -307,5 +307,45 @@ public class BFS {
     }
 
 
+    /**
+     * 112. 路径总和
+     * https://leetcode-cn.com/problems/path-sum/
+     * 给你二叉树的根节点root 和一个表示目标和的整数targetSum 。判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和targetSum 。如果存在，返回 true ；否则，返回 false 。
+     * 叶子节点 是指没有子节点的节点。
+     *
+     * 输入：root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22
+     * 输出：true
+     * 解释：等于目标和的根节点到叶节点路径如上图所示。
+     *
+     */
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return false;
+        }
+        //采用两个队列,一个存节点,一个存总和.
+        Queue<TreeNode> nodeQue = new LinkedList<TreeNode>();
+        Queue<Integer> sumQue = new LinkedList<Integer>();
+        nodeQue.add(root);
+        sumQue.add(root.val);
+        while (!nodeQue.isEmpty()) {
+            int size = nodeQue.size();
+            while (size-- > 0) {
+                TreeNode node = nodeQue.poll();
+                int sum = sumQue.poll();
+                if (node.right == null && node.left == null && sum == targetSum) {
+                    return true;
+                }
+                if (node.left != null) {
+                    nodeQue.add(node.left);
+                    sumQue.add(sum + node.left.val);
+                }
+                if (node.right != null) {
+                    nodeQue.add(node.right);
+                    sumQue.add(sum + node.right.val);
+                }
+            }
+        }
+        return false;
+    }
 
 }

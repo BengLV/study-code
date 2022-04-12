@@ -246,4 +246,72 @@ public class TreeCode {
          *     }
          */
     }
+
+    /**
+     * 112. 路径总和
+     * https://leetcode-cn.com/problems/path-sum/
+     * 给你二叉树的根节点root 和一个表示目标和的整数targetSum 。判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和targetSum 。如果存在，返回 true ；否则，返回 false 。
+     * 叶子节点 是指没有子节点的节点。
+     *
+     * 输入：root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22
+     * 输出：true
+     * 解释：等于目标和的根节点到叶节点路径如上图所示。
+     *
+     * 类似: 404. 左叶子之和
+     *
+     */
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return false;
+        }
+        return getPathSum(root, 0, targetSum);
+    }
+
+    public boolean getPathSum(TreeNode node, int sum, int targetSum) {
+        if (node != null) {
+            sum = sum + node.val;
+            if (node.right == null && node.left == null && sum == targetSum) {
+                return true;
+            } else {
+                return (getPathSum(node.left, sum, targetSum) || getPathSum(node.right, sum, targetSum));
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 113. 路径总和 II
+     * https://leetcode-cn.com/problems/path-sum-ii/
+     * 给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
+     * 叶子节点 是指没有子节点的节点。
+     *
+     * 输入：root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22
+     * 输出：[[5,4,11,2],[5,8,4,5]]
+     *
+     */
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        List<List<Integer>> ret = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        if (root == null) {
+            return ret;
+        }
+        getPath(root, targetSum, 0, ret, list);
+        return ret;
+    }
+
+    public void getPath (TreeNode node, int targetSum, int sum, List<List<Integer>> ret, List<Integer> list) {
+        if (node != null) {
+            List<Integer> tempList = new ArrayList<>();
+            tempList.addAll(list);
+            tempList.add(node.val);
+            sum = sum + node.val;
+            if (node.left == null && node.right== null && sum == targetSum) {
+                ret.add(tempList);
+            } else {
+                getPath(node.left, targetSum, sum, ret, tempList);
+                getPath(node.right, targetSum, sum, ret, tempList);
+            }
+        }
+
+    }
 }
