@@ -8,11 +8,6 @@ import java.util.*;
 public class TreeCode {
 
 
-    public static void main(String[] args) {
-
-    }
-
-
     /**
      * 144. 二叉树的前序遍历  中左右
      * https://leetcode-cn.com/problems/binary-tree-preorder-traversal/
@@ -314,4 +309,142 @@ public class TreeCode {
         }
 
     }
+
+    /**
+     * 654. 最大二叉树
+     * 给定一个不重复的整数数组nums 。最大二叉树可以用下面的算法从nums 递归地构建:
+     *
+     * 创建一个根节点，其值为nums 中的最大值。
+     * 递归地在最大值左边的子数组前缀上构建左子树。
+     * 递归地在最大值 右边 的子数组后缀上构建右子树。
+     * 返回nums 构建的 最大二叉树 。
+     *
+     * 输入：nums = [3,2,1,6,0,5]
+     * 输出：[6,3,5,null,2,0,null,null,1]
+     * 解释：递归调用如下所示：
+     * - [3,2,1,6,0,5] 中的最大值是 6 ，左边部分是 [3,2,1] ，右边部分是 [0,5] 。
+     *     - [3,2,1] 中的最大值是 3 ，左边部分是 [] ，右边部分是 [2,1] 。
+     *         - 空数组，无子节点。
+     *         - [2,1] 中的最大值是 2 ，左边部分是 [] ，右边部分是 [1] 。
+     *             - 空数组，无子节点。
+     *             - 只有一个元素，所以子节点是一个值为 1 的节点。
+     *     - [0,5] 中的最大值是 5 ，左边部分是 [0] ，右边部分是 [] 。
+     *         - 只有一个元素，所以子节点是一个值为 0 的节点。
+     *         - 空数组，无子节点。
+     *
+     */
+    public TreeNode constructMaximumBinaryTree(int[] nums) {
+        return construct(nums, 0, nums.length);
+    }
+
+    private TreeNode construct(int[] nums, int left, int right) {
+        if (left == right) {
+            return null;
+        }
+        int maxIndex = left;
+        for (int i = left; i < right; i++) {
+            if (nums[i] > nums[maxIndex]) {
+                maxIndex = i;
+            }
+        }
+        TreeNode root = new TreeNode(nums[maxIndex]);
+        root.left = construct(nums, left, maxIndex);
+        root.right = construct(nums, maxIndex + 1, right);
+        return root;
+    }
+
+    private HashMap<Integer, Integer> map = new HashMap<>();
+    private int[] post;
+
+    /**
+     * 106. 从中序与后序遍历序列构造二叉树
+     * https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
+     * 给定两个整数数组 inorder 和 postorder ，其中 inorder 是二叉树的中序遍历， postorder 是同一棵树的后序遍历，请你构造并返回这颗二叉树
+     *
+     * 输入：inorder = [9,3,15,20,7], postorder = [9,15,7,20,3]
+     * 输出：[3,9,20,null,null,15,7]
+     *
+     */
+    public TreeNode buildTree1(int[] inorder, int[] postorder) {
+        for(int i = 0;i < inorder.length; i++) {
+            map.put(inorder[i], i);//妙啊！将节点值及索引全部记录在哈希表中
+        }
+
+        post = postorder;
+        TreeNode root = buildTree1(0, inorder.length - 1, 0, post.length - 1);
+        return root;
+    }
+
+    public TreeNode buildTree1(int inorderS, int inorderE, int postorderS, int postorderE) {
+        if(inorderE < inorderS || postorderE < postorderS) return null;
+
+        int root = post[postorderE];//根据后序遍历结果，取得根节点
+        int rootIndex = map.get(root);//获取对应的索引
+
+        TreeNode node = new TreeNode(root);//创建该节点
+        node.left = buildTree1(inorderS, rootIndex - 1, postorderS, postorderS + rootIndex - inorderS - 1);//中序遍历后的左子树起止位置, 后续遍历后的左子树起止位置
+        node.right = buildTree1(rootIndex + 1, inorderE, postorderS + rootIndex - inorderS, postorderE - 1);//中序遍历后的右子树起止位置, 后续遍历后的右子树起止位置
+        return node;//注意！返回的是新建的node！
+    }
+
+
+    private HashMap<Integer, Integer> map2 = new HashMap<>();
+    private int[] pre;
+
+
+    /**
+     * 105. 从前序与中序遍历序列构造二叉树
+     * https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+     * 给定两个整数数组preorder 和 inorder，其中preorder 是二叉树的先序遍历， inorder是同一棵树的中序遍历，请构造二叉树并返回其根节点。
+     * 输入: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+     * 输出: [3,9,20,null,null,15,7]
+     *
+     */
+    public TreeNode buildTree2(int[] preorder, int[] inorder) {
+        for (int i = 0; i < inorder.length; i++) {
+            map2.put(inorder[i], i);
+        }
+        pre = preorder;
+        TreeNode root = buildTree2(0, inorder.length - 1, 0, preorder.length -1);
+        return root;
+    }
+
+    private TreeNode buildTree2(int inorderS, int inorderE, int preorderS, int preorderE) {
+        if (inorderE < inorderS || preorderE < preorderS) return null;
+        int root = pre[preorderS];
+        int rootIndex = map2.get(root);
+        TreeNode node = new TreeNode(root);
+        node.left = buildTree2(inorderS, rootIndex - 1, preorderS + 1, rootIndex - inorderS + preorderS);
+        node.right = buildTree2(rootIndex + 1, inorderE, rootIndex - inorderS + preorderS + 1, preorderE);
+        return node;
+    }
+
+    /**
+     * 617. 合并二叉树
+     * https://leetcode-cn.com/problems/merge-two-binary-trees/
+     * 给你两棵二叉树： root1 和 root2 。
+     * 想象一下，当你将其中一棵覆盖到另一棵之上时，两棵树上的一些节点将会重叠（而另一些不会）。你需要将这两棵树合并成一棵新二叉树。合并的规则是：如果两个节点重叠，那么将这两个节点的值相加作为合并后节点的新值；否则，不为 null 的节点将直接作为新二叉树的节点。
+     * 返回合并后的二叉树。
+     * 注意: 合并过程必须从两个树的根节点开始。
+     *
+     * 输入：root1 = [1,3,2,5], root2 = [2,1,3,null,4,null,7]
+     * 输出：[3,4,5,5,4,null,7]
+     */
+    public TreeNode mergeTrees(TreeNode tree1, TreeNode tree2) {
+        if (tree1 == null) return tree2;
+        if (tree2 == null) return tree1;
+        TreeNode root = new TreeNode(tree1.val + tree2.val);
+        root.left = mergeTrees(tree1.left, tree2.left);
+        root.right = mergeTrees(tree1.right, tree2.right);
+        return root;
+    }
+
+
+
+    public static void main(String[] args) {
+        int[] a = new int[]{1,2,3,4,5,0};
+        System.out.println(a[0]);
+        System.out.println(a[1]);
+    }
+
 }
