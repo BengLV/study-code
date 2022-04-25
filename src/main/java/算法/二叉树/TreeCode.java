@@ -71,12 +71,11 @@ public class TreeCode {
      * https://leetcode-cn.com/problems/symmetric-tree/
      * 输入：root = [1,2,2,3,4,4,3]
      * 输出：true
-     *
+     * <p>
      * 输入：root = [1,2,2,null,3,null,3]
      * 输出：false
-     *
+     * <p>
      * 解题思路: 复制一份二叉树, 反过来放入队列中
-     *
      */
     public boolean isSymmetric(TreeNode root) {
         TreeNode q = root;
@@ -110,7 +109,7 @@ public class TreeCode {
      * 输出：true
      * 输入：root = [1,2,2,3,3,null,null,4,4]
      * 输出：false
-     *
+     * <p>
      * 求高度,用后序遍历(左右中)
      */
     public boolean isBalanced(TreeNode root) {
@@ -129,7 +128,7 @@ public class TreeCode {
         if (rightHeight == -1) {
             return -1;
         }
-        if (leftHeight - rightHeight > 1 ||  rightHeight - leftHeight > 1) {
+        if (leftHeight - rightHeight > 1 || rightHeight - leftHeight > 1) {
             return -1;
         }
         return Math.max(leftHeight, rightHeight) + 1;
@@ -140,7 +139,7 @@ public class TreeCode {
      * https://leetcode-cn.com/problems/binary-tree-paths/
      * 给你一个二叉树的根节点 root ，按 任意顺序 ，返回所有从根节点到叶子节点的路径。
      * 叶子节点 是指没有子节点的节点。
-     *
+     * <p>
      * 输入：root = [1,2,3,null,5]
      * 输出：["1->2->5","1->3"]
      */
@@ -172,7 +171,6 @@ public class TreeCode {
      * 输入: root = [3,9,20,null,null,15,7]
      * 输出: 24
      * 解释: 在这个二叉树中，有两个左叶子，分别是 9 和 15，所以返回 24
-     *
      */
     public int sumOfLeftLeaves(TreeNode root) {
         return leaveValue(root);
@@ -195,10 +193,9 @@ public class TreeCode {
      * https://leetcode-cn.com/problems/find-bottom-left-tree-value/
      * 给定一个二叉树的 根节点 root，请找出该二叉树的 最底层 最左边 节点的值。
      * 假设二叉树中至少有一个节点。
-     *
+     * <p>
      * 输入: [1,2,3,4,null,5,6,null,null,7]
      * 输出: 7
-     *
      */
     public int findBottomLeftValue(TreeNode root) {
         int ret = root.val;
@@ -247,13 +244,12 @@ public class TreeCode {
      * https://leetcode-cn.com/problems/path-sum/
      * 给你二叉树的根节点root 和一个表示目标和的整数targetSum 。判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和targetSum 。如果存在，返回 true ；否则，返回 false 。
      * 叶子节点 是指没有子节点的节点。
-     *
+     * <p>
      * 输入：root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22
      * 输出：true
      * 解释：等于目标和的根节点到叶节点路径如上图所示。
-     *
+     * <p>
      * 类似: 404. 左叶子之和
-     *
      */
     public boolean hasPathSum(TreeNode root, int targetSum) {
         if (root == null) {
@@ -279,10 +275,9 @@ public class TreeCode {
      * https://leetcode-cn.com/problems/path-sum-ii/
      * 给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
      * 叶子节点 是指没有子节点的节点。
-     *
+     * <p>
      * 输入：root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22
      * 输出：[[5,4,11,2],[5,8,4,5]]
-     *
      */
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
         List<List<Integer>> ret = new ArrayList<>();
@@ -294,13 +289,13 @@ public class TreeCode {
         return ret;
     }
 
-    public void getPath (TreeNode node, int targetSum, int sum, List<List<Integer>> ret, List<Integer> list) {
+    public void getPath(TreeNode node, int targetSum, int sum, List<List<Integer>> ret, List<Integer> list) {
         if (node != null) {
             List<Integer> tempList = new ArrayList<>();
             tempList.addAll(list);
             tempList.add(node.val);
             sum = sum + node.val;
-            if (node.left == null && node.right== null && sum == targetSum) {
+            if (node.left == null && node.right == null && sum == targetSum) {
                 ret.add(tempList);
             } else {
                 getPath(node.left, targetSum, sum, ret, tempList);
@@ -313,25 +308,24 @@ public class TreeCode {
     /**
      * 654. 最大二叉树
      * 给定一个不重复的整数数组nums 。最大二叉树可以用下面的算法从nums 递归地构建:
-     *
+     * <p>
      * 创建一个根节点，其值为nums 中的最大值。
      * 递归地在最大值左边的子数组前缀上构建左子树。
      * 递归地在最大值 右边 的子数组后缀上构建右子树。
      * 返回nums 构建的 最大二叉树 。
-     *
+     * <p>
      * 输入：nums = [3,2,1,6,0,5]
      * 输出：[6,3,5,null,2,0,null,null,1]
      * 解释：递归调用如下所示：
      * - [3,2,1,6,0,5] 中的最大值是 6 ，左边部分是 [3,2,1] ，右边部分是 [0,5] 。
-     *     - [3,2,1] 中的最大值是 3 ，左边部分是 [] ，右边部分是 [2,1] 。
-     *         - 空数组，无子节点。
-     *         - [2,1] 中的最大值是 2 ，左边部分是 [] ，右边部分是 [1] 。
-     *             - 空数组，无子节点。
-     *             - 只有一个元素，所以子节点是一个值为 1 的节点。
-     *     - [0,5] 中的最大值是 5 ，左边部分是 [0] ，右边部分是 [] 。
-     *         - 只有一个元素，所以子节点是一个值为 0 的节点。
-     *         - 空数组，无子节点。
-     *
+     * - [3,2,1] 中的最大值是 3 ，左边部分是 [] ，右边部分是 [2,1] 。
+     * - 空数组，无子节点。
+     * - [2,1] 中的最大值是 2 ，左边部分是 [] ，右边部分是 [1] 。
+     * - 空数组，无子节点。
+     * - 只有一个元素，所以子节点是一个值为 1 的节点。
+     * - [0,5] 中的最大值是 5 ，左边部分是 [0] ，右边部分是 [] 。
+     * - 只有一个元素，所以子节点是一个值为 0 的节点。
+     * - 空数组，无子节点。
      */
     public TreeNode constructMaximumBinaryTree(int[] nums) {
         return construct(nums, 0, nums.length);
@@ -360,13 +354,12 @@ public class TreeCode {
      * 106. 从中序与后序遍历序列构造二叉树
      * https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
      * 给定两个整数数组 inorder 和 postorder ，其中 inorder 是二叉树的中序遍历， postorder 是同一棵树的后序遍历，请你构造并返回这颗二叉树
-     *
+     * <p>
      * 输入：inorder = [9,3,15,20,7], postorder = [9,15,7,20,3]
      * 输出：[3,9,20,null,null,15,7]
-     *
      */
     public TreeNode buildTree1(int[] inorder, int[] postorder) {
-        for(int i = 0;i < inorder.length; i++) {
+        for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);//妙啊！将节点值及索引全部记录在哈希表中
         }
 
@@ -376,7 +369,7 @@ public class TreeCode {
     }
 
     public TreeNode buildTree1(int inorderS, int inorderE, int postorderS, int postorderE) {
-        if(inorderE < inorderS || postorderE < postorderS) return null;
+        if (inorderE < inorderS || postorderE < postorderS) return null;
 
         int root = post[postorderE];//根据后序遍历结果，取得根节点
         int rootIndex = map.get(root);//获取对应的索引
@@ -398,14 +391,13 @@ public class TreeCode {
      * 给定两个整数数组preorder 和 inorder，其中preorder 是二叉树的先序遍历， inorder是同一棵树的中序遍历，请构造二叉树并返回其根节点。
      * 输入: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
      * 输出: [3,9,20,null,null,15,7]
-     *
      */
     public TreeNode buildTree2(int[] preorder, int[] inorder) {
         for (int i = 0; i < inorder.length; i++) {
             map2.put(inorder[i], i);
         }
         pre = preorder;
-        TreeNode root = buildTree2(0, inorder.length - 1, 0, preorder.length -1);
+        TreeNode root = buildTree2(0, inorder.length - 1, 0, preorder.length - 1);
         return root;
     }
 
@@ -443,7 +435,7 @@ public class TreeCode {
      * 700. 二叉搜索树中的搜索
      * https://leetcode-cn.com/problems/search-in-a-binary-search-tree/
      * 给定二叉搜索树（BST）的根节点root和一个整数值val。
-     *
+     * <p>
      * 你需要在 BST 中找到节点值等于val的节点。 返回以该节点为根的子树。 如果节点不存在，则返回null。
      * 输入：root = [4,2,7,1,3], val = 2
      * 输出：[2,1,3]
@@ -463,8 +455,34 @@ public class TreeCode {
     }
 
 
+    /**
+     * 98. 验证二叉搜索树
+     * https://leetcode-cn.com/problems/validate-binary-search-tree/
+     * 给你一个二叉树的根节点 root ，判断其是否是一个有效的二叉搜索树。
+     * <p>
+     * 有效 二叉搜索树定义如下：
+     * <p>
+     * 节点的左子树只包含 小于 当前节点的数。
+     * 节点的右子树只包含 大于 当前节点的数。
+     * 所有左子树和右子树自身必须也是二叉搜索树。
+     * <p>
+     * 输入：root = [5,1,4,null,null,3,6]
+     * 输出：false
+     * 解释：根节点的值是 5 ，但是右子节点的值是 4 。
+     */
+    public boolean isValidBST(TreeNode root) {
+        //[5,4,6,null,null,3,7]
+        return isValid(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean isValid(TreeNode node, long min, long max) {
+        if (node == null) return true;
+        if (min >= node.val || max <= node.val) return false;
+        return isValid(node.left, min, node.val) && isValid(node.right, node.val, max);
+    }
+
     public static void main(String[] args) {
-        int[] a = new int[]{1,2,3,4,5,0};
+        int[] a = new int[]{1, 2, 3, 4, 5, 0};
         System.out.println(a[0]);
         System.out.println(a[1]);
     }
