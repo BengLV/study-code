@@ -518,6 +518,53 @@ public class TreeCode {
         midRoot(node.right, num);
     }
 
+    /**
+     * 501. 二叉搜索树中的众数
+     * 给你一个含重复值的二叉搜索树（BST）的根节点 root ，找出并返回 BST 中的所有 众数（即，出现频率最高的元素）。 如果树中有不止一个众数，可以按 任意顺序 返回。
+     *
+     * 假定 BST 满足如下定义：
+     * 结点左子树中所含节点的值 小于等于 当前节点的值
+     * 结点右子树中所含节点的值 大于等于 当前节点的值
+     * 左子树和右子树都是二叉搜索树
+     * 输入：root = [1,null,2,2]
+     * 输出：[2]
+     *
+     */
+    List<Integer> ans = new ArrayList<>();
+    int count, maxCount, base;
+    public int[] findMode(TreeNode root) {
+        dfs(root);
+        int[] ansArr = new int[ans.size()];
+        for (int i = 0; i < ans.size(); i++) {
+            ansArr[i] =  ans.get(i);
+        }
+        return ansArr;
+    }
+
+    private void dfs(TreeNode node) {
+        if (node == null) return;
+        dfs(node.left);
+        getAns(node.val);
+        dfs(node.right);
+    }
+
+    private void getAns(int val) {
+        if (base == val) {
+            count++;
+        } else {
+            count = 1;
+            base = val;
+        }
+        if (count == maxCount) {
+            ans.add(val);
+        }
+        if (count > maxCount) {
+            maxCount = count;
+            ans.clear();
+            ans.add(val);
+        }
+    }
+
     public static void main(String[] args) {
         int[] a = new int[]{1, 2, 3, 4, 5, 0};
         System.out.println(a[0]);
