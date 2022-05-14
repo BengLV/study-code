@@ -1,5 +1,7 @@
 package 算法.二叉树;
 
+import org.springframework.lang.NonNull;
+
 import java.awt.print.Pageable;
 import java.util.*;
 
@@ -621,6 +623,48 @@ public class TreeCode {
         return root;
     }
 
+
+    /**
+     * 450. 删除二叉搜索树中的节点
+     * https://leetcode.cn/problems/delete-node-in-a-bst/
+     * 给定一个二叉搜索树的根节点 root 和一个值 key，删除二叉搜索树中的key对应的节点，并保证二叉搜索树的性质不变。返回二叉搜索树（有可能被更新）的根节点的引用。
+     *
+     * 一般来说，删除节点可分为两个步骤：
+     * 首先找到需要删除的节点；
+     * 如果找到了，删除它。
+     *
+     * 输入：root = [5,3,6,2,4,null,7], key = 3
+     * 输出：[5,4,6,2,null,null,7]
+     * 解释：给定需要删除的节点值是 3，所以我们首先找到 3 这个节点，然后删除它。
+     * 一个正确的答案是 [5,4,6,2,null,null,7], 如下图所示。
+     * 另一个正确答案是 [5,2,6,null,4,null,7]。
+     */
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null) return null;
+        if (root.val > key) {
+            root.left = deleteNode(root.left, key);
+            return root;
+        } else if (root.val < key) {
+            root.right = deleteNode(root.right, key);
+            return root;
+        } else {
+            if (root.left == null && root.right == null) {
+                return null;
+            }
+            if (root.left == null) {
+                return root.right;
+            }
+            if (root.right == null) {
+                return root.left;
+            }
+            TreeNode node = root.right;
+            while (node.left != null) {
+                node = node.left;
+            }
+            node.left = root.left;
+            return root.right;
+        }
+    }
 
     public static void main(String[] args) {
         int[] a = new int[]{1, 2, 3, 4, 5, 0};
