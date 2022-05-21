@@ -56,4 +56,52 @@ public class BackTracking {
         }
     }
 
+
+    /**
+     * 216. 组合总和 III
+     * https://leetcode.cn/problems/combination-sum-iii/
+     * 找出所有相加之和为n 的k个数的组合，且满足下列条件：
+     *
+     * 只使用数字1到9
+     * 每个数字最多使用一次
+     * 返回 所有可能的有效组合的列表 。该列表不能包含相同的组合两次，组合可以以任何顺序返回。
+     *
+     * 输入: k = 3, n = 7
+     * 输出: [[1,2,4]]
+     * 解释:
+     * 1 + 2 + 4 = 7
+     * 没有其他符合的组合了。
+     * 
+     */
+    List<List<Integer>> result1 = new ArrayList<>();
+    LinkedList<Integer> path1 = new LinkedList<>();
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        getPath1(k, n, 1, 0);
+        return result1;
+    }
+
+    private void getPath1(int k, int n, int startIndex, int sum) {
+        //剪枝
+        if (k >= n) {
+            return;
+        }
+        if (path1.size() == k) {
+            //存放结点
+            if (sum == n) {
+                result1.add(new ArrayList<>(path1));
+            }
+            return;
+        }
+        //for (int i = startIndex; i <= 9 - (k - path1.size()) + 1; i++) {  剪枝
+        for (int i = startIndex; i <= 9; i++) {
+            //处理节点
+            sum += i;
+            path1.add(i);
+            getPath1(k, n, i + 1, sum);
+            //回溯
+            path1.removeLast();
+            sum -= i;
+        }
+    }
+
 }
