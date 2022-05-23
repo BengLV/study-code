@@ -147,4 +147,48 @@ public class BackTracking {
         }
     }
 
+
+    /**
+     * 17. 电话号码的字母组合
+     * https://leetcode.cn/problems/letter-combinations-of-a-phone-number/
+     * 给定一个仅包含数字2-9的字符串，返回所有它能表示的字母组合。答案可以按 任意顺序 返回。
+     *
+     * 给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
+     * 输入：digits = "23"
+     * 输出：["ad","ae","af","bd","be","bf","cd","ce","cf"]
+     */
+    List<String> result3 = new ArrayList<>();
+    StringBuilder builder = new StringBuilder();
+    public List<String> letterCombinations(String digits) {
+        if (digits == null || digits.length() == 0) {
+            return result3;
+        }
+        String[] str = new String[]{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        letterCombinations(digits, str, 0);
+        return result3;
+    }
+
+    private void letterCombinations(String digits, String[] strs, int num) {
+        //终止条件,若符合长度要求,则添加数据并返回
+        if (digits.length() == builder.toString().length()) {
+            result3.add(builder.toString());
+            return;
+        }
+        //获取当前字母串
+        String str = strs[digits.charAt(num) - '0'];
+        //从0遍历每个字母串
+        for (int i = 0; i < str.length(); i++) {
+            builder.append(str.charAt(i));
+            letterCombinations(digits, strs, num + 1);
+            builder.deleteCharAt(builder.length() - 1);
+        }
+    }
+
+
+
+    public static void main(String[] args) {
+        String a = "abc";
+        System.out.println(a.charAt(0) - '0') ;
+    }
+
 }
