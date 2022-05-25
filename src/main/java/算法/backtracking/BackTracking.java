@@ -1,5 +1,8 @@
 package 算法.backtracking;
 
+import designpatterns.结构型模式.组合模式.shapes.CompoundShape;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -185,10 +188,108 @@ public class BackTracking {
     }
 
 
+    /**
+     * 40. 组合总和 II
+     * https://leetcode.cn/problems/combination-sum-ii/
+     * 给定一个候选人编号的集合candidates和一个目标数target，找出candidates中所有可以使数字和为target的组合。
+     *
+     * candidates中的每个数字在每个组合中只能使用一次。
+     * 示例1:
+     * 输入: candidates =[10,1,2,7,6,1,5], target =8,
+     * 输出:
+     * [
+     * [1,1,6],
+     * [1,2,5],
+     * [1,7],
+     * [2,6]
+     * ]
+     *
+     */
+    List<List<Integer>> result4 = new ArrayList<>();
+    LinkedList<Integer> path4 = new LinkedList<>();
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        if (candidates == null) return result4;
+        Arrays.sort(candidates);
+        combinationSum2(0, target, candidates, 0);
+        return result4;
+    }
+
+    private void combinationSum2(int startIndex, int target, int[] candidates, int sum) {
+        if (sum == target) {
+            result4.add(new ArrayList<>(path4));
+            return;
+        }
+        for (int i = startIndex; i < candidates.length; i++) {
+            //大剪枝
+            if (sum > target) break;
+            //同一层相同的元素,跳过后面相同元素.
+            if (i > startIndex && candidates[i] == candidates [i - 1]) {
+                continue;
+            }
+            path4.add(candidates[i]);
+            sum += candidates[i];
+            combinationSum2(i + 1, target, candidates, sum);
+            sum -= candidates[i];
+            path4.removeLast();
+        }
+    }
+
+
+    /**
+     * 131. 分割回文串
+     * https://leetcode.cn/problems/palindrome-partitioning/
+     * 给你一个字符串 s，请你将 s 分割成一些子串，使每个子串都是 回文串 。返回 s 所有可能的分割方案。
+     * 回文串 是正着读和反着读都一样的字符串。
+     *
+     * 示例 1：
+     *
+     * 输入：s = "aab"
+     * 输出：[["a","a","b"],["aa","b"]]
+     *
+     */
+    static List<List<String>> result5 = new ArrayList<>();
+    static LinkedList<String> path5 = new LinkedList<>();
+
+    public static List<List<String>> partition(String s) {
+        partition(s, 0);
+        return result5;
+    }
+
+    public static void partition(String s, int startIndex) {
+        if (s.length() == startIndex) {
+            result5.add(new ArrayList<>(path5));
+            return;
+        }
+        // 横向遍历
+        for (int i = startIndex; i < s.length(); i++) {
+            String s1 = s.substring(startIndex, i + 1);
+            if (!isSymmetrical(s1)) {
+                continue;
+            }
+            path5.add(s1);
+            partition(s, i + 1);
+            path5.removeLast();
+        }
+    }
+
+    /**
+     * 判断是否为回文数
+     */
+    public static Boolean isSymmetrical(String s) {
+        if (s == null || s.length() <= 1) return true;
+        int left = 0;
+        int right = s.length() - 1;
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
+
 
     public static void main(String[] args) {
-        String a = "abc";
-        System.out.println(a.charAt(0) - '0') ;
+        partition("aab");
     }
 
 }
