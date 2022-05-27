@@ -2,6 +2,7 @@ package 算法.backtracking;
 
 import designpatterns.结构型模式.组合模式.shapes.CompoundShape;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -262,6 +263,7 @@ public class BackTracking {
         }
         // 横向遍历
         for (int i = startIndex; i < s.length(); i++) {
+            //startIndex 截取同一层的字符串
             String s1 = s.substring(startIndex, i + 1);
             if (!isSymmetrical(s1)) {
                 continue;
@@ -287,9 +289,63 @@ public class BackTracking {
         return true;
     }
 
+    /**
+     * 93. 复原 IP 地址
+     * https://leetcode.cn/problems/restore-ip-addresses/
+     * 有效 IP 地址 正好由四个整数（每个整数位于 0 到 255 之间组成，且不能含有前导 0），整数之间用 '.' 分隔。
+     *
+     * 例如："0.1.2.201" 和 "192.168.1.1" 是 有效 IP 地址，但是 "0.011.255.245"、"192.168.1.312" 和 "192.168@1.1" 是 无效 IP 地址。
+     * 给定一个只包含数字的字符串 s ，用以表示一个 IP 地址，返回所有可能的有效 IP 地址，这些地址可以通过在 s 中插入'.' 来形成。你 不能重新排序或删除 s 中的任何数字。你可以按 任何 顺序返回答案。
+     *
+     * 示例 1：
+     *
+     * 输入：s = "25525511135"
+     * 输出：["255.255.11.135","255.255.111.35"]
+     *
+     */
+    static List<String> result6 = new ArrayList<>();
+    static LinkedList<String> path6 = new LinkedList<>();
+    public static List<String> restoreIpAddresses(String s) {
+        restoreIpAddresses(0, s);
+        return result6;
+    }
+
+
+    private static void restoreIpAddresses(int startIndex, String s) {
+        //当path里面有四个字符,并且已经到最后一个字符时,说明符合条件
+        if (path6.size() == 4 && startIndex == s.length()) {
+            assemblyStr(path6);
+            return;
+        }
+        for (int i = startIndex; i < s.length(); i++) {
+            String s1 = s.substring(startIndex, i + 1);
+            //如果path6里面的字符数大于4个,则终止当前循环.
+            if (path6.size() > 4) break;
+            //不符合条件则跳过.
+            if ((s1.length() > 1 && s1.startsWith("0")) || Long.parseLong(s1) > 255) {
+                continue;
+            }
+            path6.add(s1);
+            restoreIpAddresses(i + 1, s);
+            path6.removeLast();
+        }
+
+    }
+
+    private static void assemblyStr(LinkedList<String> list) {
+        StringBuilder builder = new StringBuilder(list.get(0)).append(".")
+                .append(list.get(1)).append(".")
+                .append(list.get(2)).append(".")
+                .append(list.get(3));
+        result6.add(builder.toString());
+    }
+
+
+
+
 
     public static void main(String[] args) {
-        partition("aab");
+        restoreIpAddresses("25525511135");
     }
 
 }
