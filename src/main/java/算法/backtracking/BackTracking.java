@@ -1,10 +1,5 @@
 package 算法.backtracking;
 
-import designpatterns.结构型模式.组合模式.shapes.CompoundShape;
-import org.springframework.util.CollectionUtils;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
