@@ -20,7 +20,7 @@ public class Avarice {
      * 示例1:
      * 输入: g = [1,2,3], s = [1,1]
      * 输出: 1
-     * 解释: 
+     * 解释:
      * 你有三个孩子和两块小饼干，3个孩子的胃口值分别是：1,2,3。
      * 虽然你有两块小饼干，由于他们的尺寸都是1，你只能让胃口值是1的孩子满足。
      * 所以你应该输出1。
@@ -102,6 +102,33 @@ public class Avarice {
          *         }
          *         return Math.max(up, down);
          */
+    }
+
+    /**
+     * 53. 最大子数组和
+     * https://leetcode.cn/problems/maximum-subarray/
+     * 给你一个整数数组 nums ，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+     * 子数组 是数组中的一个连续部分。
+     *
+     * 示例 1：
+     * 输入：nums = [-2,1,-3,4,-1,2,1,-5,4]
+     * 输出：6
+     * 解释：连续子数组 [4,-1,2,1] 的和最大，为 6 。
+     */
+    public int maxSubArray(int[] nums) {
+        int sum = 0;
+        int res = nums[0];
+        for (int num : nums) {
+            if (sum > 0) {
+                //如果总和大于0时, 则加上当前数字
+                sum += num;
+            } else {
+                //小于0时, 则从当前数字重新开始计算.
+                sum = num;
+            }
+            res = Math.max(res, sum);
+        }
+        return res;
     }
 
     public static void main(String[] args) {
