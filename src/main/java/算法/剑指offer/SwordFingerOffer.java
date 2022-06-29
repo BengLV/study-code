@@ -103,8 +103,14 @@ public class SwordFingerOffer {
      *   [18, 21, 23, 26, 30]
      * ]
      * 给定 target=5，返回true。
-     *
      * 给定target=20，返回false。
+     *
+     * 从右上角开始走，利用这个顺序关系可以在O(m+n)的复杂度下解决这个题：
+     *
+     * 如果当前位置元素比target小，则往下走
+     * 如果当前位置元素比target大，则往左走
+     * 如果相等，返回true
+     * 如果越界了还没找到，说明不存在，返回false
      */
     public boolean findNumberIn2DArray(int[][] matrix, int target) {
         if (matrix == null || matrix.length == 0) return false;
