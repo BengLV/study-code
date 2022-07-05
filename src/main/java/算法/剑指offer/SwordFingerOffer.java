@@ -1,5 +1,9 @@
 package 算法.剑指offer;
 
+import 算法.链表.ListNode;
+
+import java.util.List;
+
 /**
  * @description: 剑指offer
  * @author: LuPeng
@@ -154,6 +158,39 @@ public class SwordFingerOffer {
             }
         }
         return builder.toString();
+    }
+
+
+    /**
+     * 剑指 Offer 06. 从尾到头打印链表
+     * https://leetcode.cn/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/
+     *
+     * 输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。
+     *
+     * 示例 1：
+     * 输入：head = [1,3,2]
+     * 输出：[2,3,1]
+     *
+     */
+    public int[] reversePrint(ListNode head) {
+        //先反转链表,并且获得数组长度
+        ListNode temp = head;
+        ListNode prev = null;
+        int size = 0;
+        while (temp != null) {
+            ListNode next = temp.next;
+            temp.next = prev;
+            prev = temp;
+            temp = next;
+            size++;
+        }
+        temp = prev;
+        int[] res = new int[size];
+        for (int i = 0; i < size; i++) {
+            res[i] = temp.data;
+            temp = temp.next;
+        }
+        return res;
     }
 
     public static void main(String[] args) {
