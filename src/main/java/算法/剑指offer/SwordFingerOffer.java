@@ -1,7 +1,11 @@
 package 算法.剑指offer;
 
+import 算法.二叉树.TreeNode;
 import 算法.链表.ListNode;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -191,6 +195,40 @@ public class SwordFingerOffer {
             temp = temp.next;
         }
         return res;
+    }
+
+
+    /**
+     * 剑指 Offer 07. 重建二叉树
+     * https://leetcode.cn/problems/zhong-jian-er-cha-shu-lcof/
+     *
+     * 输入某二叉树的前序遍历和中序遍历的结果，请构建该二叉树并返回其根节点。
+     * 假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
+     *
+     * 示例 1:
+     * Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+     * Output: [3,9,20,null,null,15,7]
+     *
+     */
+    private HashMap<Integer, Integer> map = new HashMap<>();
+    private int[] pre;
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        for (int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+        pre = preorder;
+        TreeNode node = buildTree(0, inorder.length - 1, 0, preorder.length);
+        return node;
+    }
+
+    private TreeNode buildTree(int inorderS, int inorderE, int preorderS, int preorderE) {
+        if (inorderS > inorderE || preorderS > preorderE) return null;
+        int root = pre[preorderS];
+        int rootIndex = map.get(root);
+        TreeNode node = new TreeNode(root);
+        node.left = buildTree(inorderS, rootIndex - 1, preorderS + 1, rootIndex - inorderS + preorderS);
+        node.right = buildTree(rootIndex + 1, inorderE, rootIndex - inorderS + preorderS + 1, preorderE);
+        return node;
     }
 
     public static void main(String[] args) {
