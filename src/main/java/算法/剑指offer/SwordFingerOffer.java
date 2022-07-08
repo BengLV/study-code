@@ -3,10 +3,8 @@ package 算法.剑指offer;
 import 算法.二叉树.TreeNode;
 import 算法.链表.ListNode;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  * @description: 剑指offer
@@ -229,6 +227,47 @@ public class SwordFingerOffer {
         node.left = buildTree(inorderS, rootIndex - 1, preorderS + 1, rootIndex - inorderS + preorderS);
         node.right = buildTree(rootIndex + 1, inorderE, rootIndex - inorderS + preorderS + 1, preorderE);
         return node;
+    }
+
+    /**
+     * 剑指 Offer 09. 用两个栈实现队列
+     * https://leetcode.cn/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/
+     *
+     * 用两个栈实现一个队列。队列的声明如下，请实现它的两个函数 appendTail 和 deleteHead ，
+     * 分别完成在队列尾部插入整数和在队列头部删除整数的功能。(若队列中没有元素，deleteHead操作返回 -1 )
+     *
+     * 示例 1：
+     * 输入：
+     * ["CQueue","appendTail","deleteHead","deleteHead"]
+     * [[],[3],[],[]]
+     * 输出：[null,null,3,-1]
+     *
+     */
+    class CQueue {
+        LinkedList<Integer> list1;
+        LinkedList<Integer> list2;
+
+        public CQueue() {
+            list1 = new LinkedList<>();
+            list2 = new LinkedList<>();
+        }
+
+        public void appendTail(int value) {
+            list1.add(value);
+        }
+
+        public int deleteHead() {
+            if (list2.isEmpty()) {
+                if (list1.isEmpty()) {
+                    return -1;
+                }
+                while (!list1.isEmpty()) {
+                    list2.add(list1.pop());
+                }
+                return list2.pop();
+            }
+            return list2.pop();
+        }
     }
 
     public static void main(String[] args) {
