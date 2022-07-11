@@ -280,7 +280,7 @@ public class SwordFingerOffer {
      * 斐波那契数列由 0 和 1 开始，之后的斐波那契数就是由之前的两数相加而得出。
      * 答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。
      * 
-     * 示例 2：
+     * 示例 1：
      * 输入：n = 5
      * 输出：5
      *
@@ -292,6 +292,32 @@ public class SwordFingerOffer {
         int a = 0;
         int b = 1;
         for (int i = 1; i < n; i++) {
+            res = a + b;
+            if (res > 1000000007) {
+                res -= 1000000007;
+            }
+            a = b;
+            b = res;
+        }
+        return res;
+    }
+
+    /**
+     * 剑指 Offer 10- II. 青蛙跳台阶问题
+     * https://leetcode.cn/problems/qing-wa-tiao-tai-jie-wen-ti-lcof/
+     *
+     *  一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+     * 答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。
+     *
+     * 示例 1：
+     * 输入：n = 7
+     * 输出：21
+     */
+    public int numWays(int n) {
+        if (n == 0) return 1;
+        if (n < 2) return n;
+        int a = 1, b = 2, res = 0;
+        for (int i = 3; i <=n; i++) {
             res = a + b;
             if (res > 1000000007) {
                 res -= 1000000007;
