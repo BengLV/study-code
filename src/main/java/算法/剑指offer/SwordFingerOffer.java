@@ -306,7 +306,7 @@ public class SwordFingerOffer {
      * 剑指 Offer 10- II. 青蛙跳台阶问题
      * https://leetcode.cn/problems/qing-wa-tiao-tai-jie-wen-ti-lcof/
      *
-     *  一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+     *  一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 n级的台阶总共有多少种跳法。
      * 答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。
      *
      * 示例 1：
@@ -326,6 +326,59 @@ public class SwordFingerOffer {
             b = res;
         }
         return res;
+    }
+
+
+    /**
+     * 剑指 Offer 12. 矩阵中的路径
+     * https://leetcode.cn/problems/ju-zhen-zhong-de-lu-jing-lcof/
+     *
+     * 给定一个m x n 二维字符网格board 和一个字符串单词word 。如果word 存在于网格中，返回 true ；否则，返回 false 。
+     * 单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。
+     *
+     * 示例 1：
+     *
+     * 输入：board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED"
+     * 输出：true
+     *
+     * 解题思路: DFS + 回溯
+     */
+    public boolean exist(char[][] board, String word) {
+        if (board == null || board.length == 0 || board[0].length == 0) {
+            return false;
+        }
+        char[] chars = word.toCharArray();
+        //使用二维数组记录当前的位置是否已经被访问过,如果已经被访问过了,直接返回false,说明此路不通.
+        boolean[][] visited = new boolean[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (dfs(board, chars, visited, i, j, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean dfs(char[][] board, char[] chars, boolean[][] visited, int i, int j, int start) {
+        //路不通的场景.
+        if (i < 0 || j < 0 || i >= board.length || j >= board[0].length || chars[start] != board[i][j] || visited[i][j]) {
+            return false;
+        }
+        //如果能访问到最后一个字符,说明路是通的
+        if (start == chars.length - 1) {
+            return true;
+        }
+        //遍历到i,j位置时, 表明访问过
+        visited[i][j] = true;
+        boolean ans = false;
+        ans = dfs(board, chars, visited, i + 1, j, start + 1)
+                || dfs(board, chars, visited, i - 1, j, start + 1)
+                || dfs(board, chars, visited, i, j + 1, start + 1)
+                || dfs(board, chars, visited, i, j -1, start + 1);
+        //回溯,如果某条路已经不通了,则回溯.
+        visited[i][j] =false;
+        return ans;
     }
 
     public static void main(String[] args) {
