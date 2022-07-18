@@ -411,6 +411,41 @@ public class SwordFingerOffer {
                 + dfs(m, n, k, i, j - 1, visited) + dfs(m, n, k, i, j + 1, visited);
     }
 
+
+    /**
+     * 剑指 Offer 14- I. 剪绳子
+     * https://leetcode.cn/problems/jian-sheng-zi-lcof/
+     *
+     * 给你一根长度为 n 的绳子，请把绳子剪成整数长度的 m 段（m、n都是整数，n>1并且m>1），每段绳子的长度记为 k[0],k[1]...k[m-1] 。
+     * 请问 k[0]*k[1]*...*k[m-1] 可能的最大乘积是多少？例如，当绳子的长度是8时，我们把它剪成长度分别为2、3、3的三段，此时得到的最大乘积是18。
+     *
+     * 示例 1:
+     * 输入: 10
+     * 输出: 36
+     * 解释: 10 = 3 + 3 + 4, 3 × 3 × 4 = 36
+     *
+     *  动态五部曲
+     *     1.确定dp下标及其含义
+     *     2.确定递推公式
+     *     3.确定dp初始化
+     *     4.确定遍历顺序
+     *     5.打印dp
+     */
+    public int cuttingRope(int n) {
+        //1. 确定dp数组以及下标的含义。 最大乘积。
+        int[] dp = new int[n + 1];
+        //3. dp数组初始化。
+        dp[2] = 1;
+        //4. 确定遍历顺序。
+        for (int i = 3; i <= n; i++) {
+            for (int j = 1; j < i; j++) {
+                //2. 确定递推公式。
+                dp[i] = Math.max(dp[i], Math.max(j * (i - j), dp[i - j] * j));
+            }
+        }
+        return dp[n];
+    }
+
     public static void main(String[] args) {
         int a[][]={{1,2,3},{4,5,6}};
         System.out.println(a[0].length);
