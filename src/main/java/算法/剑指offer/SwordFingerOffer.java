@@ -3,6 +3,7 @@ package 算法.剑指offer;
 import 算法.二叉树.TreeNode;
 import 算法.链表.ListNode;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -279,7 +280,7 @@ public class SwordFingerOffer {
      * F(N) = F(N - 1) + F(N - 2), 其中 N > 1.
      * 斐波那契数列由 0 和 1 开始，之后的斐波那契数就是由之前的两数相加而得出。
      * 答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。
-     * 
+     *
      * 示例 1：
      * 输入：n = 5
      * 输出：5
@@ -326,6 +327,40 @@ public class SwordFingerOffer {
             b = res;
         }
         return res;
+    }
+
+
+    /**
+     * 剑指 Offer 11. 旋转数组的最小数字
+     * https://leetcode.cn/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/
+     *
+     * 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。
+     *
+     * 给你一个可能存在重复元素值的数组numbers，它原来是一个升序排列的数组，并按上述情形进行了一次旋转。请返回旋转数组的最小元素。
+     * 例如，数组[3,4,5,1,2] 为 [1,2,3,4,5] 的一次旋转，该数组的最小值为 1。
+     *
+     * 注意，数组 [a[0], a[1], a[2], ..., a[n-1]] 旋转一次 的结果为数组 [a[n-1], a[0], a[1], a[2], ..., a[n-2]] 。
+     *
+     * 有序数组:二分法
+     *
+     */
+    public static int minArray(int[] numbers) {
+        int left = 0;
+        int right = numbers.length - 1;
+        while (left < right) {
+            //二分法
+            int mid = (left + right) / 2;
+            //中间的值大于最右边的
+            if (numbers[mid] > numbers[right]) {
+                left = mid + 1;//既然小于最右边的了,就说明不是mid下标的值
+                //中间值小于最右边的
+            } else if (numbers[mid] < numbers[right]) {
+                right = mid;
+            } else {
+                right--;
+            }
+        }
+        return numbers[left];
     }
 
 
@@ -509,10 +544,12 @@ public class SwordFingerOffer {
 
     public static void main(String[] args) {
         int a[][]={{1,2,3},{4,5,6}};
-        System.out.println(a[0].length);
-        System.out.println(a.length);
-        System.out.println(a[1][2]);
+        System.out.println(a[0].length);//3
+        System.out.println(a.length);//2
+        System.out.println(a[1][2]);//6
         System.out.println(hammingWeight(13));
+        System.out.println(5/2);//2
+        System.out.println(minArray(new int[]{2,2,2,0,1}));
     }
 
 
