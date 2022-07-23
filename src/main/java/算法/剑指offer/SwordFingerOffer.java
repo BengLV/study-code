@@ -3,7 +3,6 @@ package 算法.剑指offer;
 import 算法.二叉树.TreeNode;
 import 算法.链表.ListNode;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -542,14 +541,52 @@ public class SwordFingerOffer {
         return res;
     }
 
+
+    /**
+     * 剑指 Offer 16. 数值的整数次方
+     * https://leetcode.cn/problems/shu-zhi-de-zheng-shu-ci-fang-lcof/
+     *
+     * 实现 pow(x, n) ，即计算 x 的 n 次幂函数（即，xn）。不得使用库函数，同时不需要考虑大数问题。
+     *
+     * 示例 1：
+     * 输入：x = 2.00000, n = 10
+     * 输出：1024.00000
+     */
+    public double myPow(double x, int n) {
+        /*if (n == 0) return 1;
+        if (n == -1) return 1/x;
+        if (n == 1) return x;
+        double half = myPow(x, n/2);
+        double mod = myPow(x, n%2);
+        return half * half * mod;*/
+        //防止n越界
+        long b = n;
+        if (b < 0)  {
+            //负数的话需要转换一下
+            b = -b;
+            x = 1/x;
+        }
+        double res = 1.00;
+        while (b > 0) {
+            if ((b &1) == 1) {
+                //b &1 == 1 b为奇数  ==0 为偶数
+                res *= x;
+            }
+            x *= x;
+            b = b>>1;//b除以2
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         int a[][]={{1,2,3},{4,5,6}};
         System.out.println(a[0].length);//3
         System.out.println(a.length);//2
         System.out.println(a[1][2]);//6
-        System.out.println(hammingWeight(13));
-        System.out.println(5/2);//2
+        System.out.println(hammingWeight(13));//3
+        System.out.println(1/2);//0
         System.out.println(minArray(new int[]{2,2,2,0,1}));
+        System.out.println(Integer.MAX_VALUE);//2147483647
     }
 
 
