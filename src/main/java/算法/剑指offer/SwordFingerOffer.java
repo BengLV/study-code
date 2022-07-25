@@ -3,8 +3,7 @@ package 算法.剑指offer;
 import 算法.二叉树.TreeNode;
 import 算法.链表.ListNode;
 
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * @description: 剑指offer
@@ -561,21 +560,66 @@ public class SwordFingerOffer {
         return half * half * mod;*/
         //防止n越界
         long b = n;
-        if (b < 0)  {
+        if (b < 0) {
             //负数的话需要转换一下
             b = -b;
-            x = 1/x;
+            x = 1 / x;
         }
         double res = 1.00;
         while (b > 0) {
-            if ((b &1) == 1) {
+            if ((b & 1) == 1) {
                 //b &1 == 1 b为奇数  ==0 为偶数
                 res *= x;
             }
             x *= x;
-            b = b>>1;//b除以2
+            b = b >> 1;//b除以2
         }
         return res;
+    }
+
+    /**
+     * 剑指 Offer 17. 打印从1到最大的n位数
+     * https://leetcode.cn/problems/da-yin-cong-1dao-zui-da-de-nwei-shu-lcof/
+     *
+     * 输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。
+     *
+     * 示例 1:
+     * 输入: n = 1
+     * 输出: [1,2,3,4,5,6,7,8,9]
+     *
+     */
+    public static int[] printNumbers(int n) {
+        //10的n次方
+        int length = (int)Math.pow(10, n);
+        int[] res = new int[length - 1];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = i + 1;
+        }
+        return res;
+    }
+
+    static List<String> res = new ArrayList<>();
+
+    public static List<String> printNumbers1(int n) {
+        for (int i = 1; i < n; i++) {
+            trackBack(i, new StringBuilder());
+        }
+        return res;
+    }
+
+    public static void trackBack(int n, StringBuilder builder) {
+        if (n == 0) {
+            res.add(builder.toString());
+            return;
+        }
+        for (int i = 0; i <= 9; i++) {
+            //去除前面的0
+            if (i == 0 && builder.length() == 0) continue;
+            builder.append(i);
+            //按照位数回溯
+            trackBack(n - 1, builder);
+            builder.delete(builder.length() - 1, builder.length());
+        }
     }
 
     public static void main(String[] args) {
@@ -587,6 +631,8 @@ public class SwordFingerOffer {
         System.out.println(1/2);//0
         System.out.println(minArray(new int[]{2,2,2,0,1}));
         System.out.println(Integer.MAX_VALUE);//2147483647
+        System.out.println(printNumbers(1));
+        System.out.println(Arrays.toString(printNumbers1(4).toArray()));
     }
 
 
