@@ -622,6 +622,46 @@ public class SwordFingerOffer {
         }
     }
 
+
+    /**
+     * 剑指 Offer 18. 删除链表的节点
+     * https://leetcode.cn/problems/shan-chu-lian-biao-de-jie-dian-lcof/
+     *
+     * 给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。
+     * 返回删除后的链表的头节点。
+     * 
+     * 示例 1:
+     *
+     * 输入: head = [4,5,1,9], val = 5
+     * 输出: [4,1,9]
+     * 解释: 给定你链表中值为5的第二个节点，那么在调用了你的函数之后，该链表应变为 4 -> 1 -> 9.
+     *
+     */
+    public ListNode deleteNode(ListNode head, int val) {
+        /*//递归
+        if (head == null) return null;
+        if (head.data == val) {
+            return head.next;
+        }
+        head.next = deleteNode(head.next, val);
+        return head;*/
+        if (head == null) return head;
+        ListNode temp = head;
+        ListNode pre = null;
+        if (temp.data == val) return temp.next;
+        while (temp.next != null && temp.data != val) {
+            //获取到需要删除节点的头节点.
+            pre = temp;
+            temp = temp.next;
+        }
+        if (temp.next != null || temp.data == val) {
+            //修改节点的引用
+            pre.next = pre.next.next;
+        }
+        return head;
+    }
+
+
     public static void main(String[] args) {
         int a[][]={{1,2,3},{4,5,6}};
         System.out.println(a[0].length);//3
