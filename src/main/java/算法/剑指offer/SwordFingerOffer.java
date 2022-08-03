@@ -1051,6 +1051,67 @@ public class SwordFingerOffer {
         return root;
     }
 
+
+    /**
+     * 剑指 Offer 28. 对称的二叉树
+     * https://leetcode.cn/problems/dui-cheng-de-er-cha-shu-lcof/
+     *
+     * 请实现一个函数，用来判断一棵二叉树是不是对称的。如果一棵二叉树和它的镜像一样，那么它是对称的。
+     * 例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
+     *  1
+     *  / \
+     *  2  2
+     * / \ / \
+     * 3 4 4 3
+     *
+     * 但是下面这个[1,2,2,null,3,null,3] 则不是镜像对称的:
+     *
+     *   1
+     *  / \
+     *  2  2
+     *  \  \
+     *  3  3
+     *
+     *
+     * 示例 1：
+     * 输入：root = [1,2,2,3,4,4,3]
+     * 输出：true
+     *
+     */
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true;
+        TreeNode node1 = root;
+        TreeNode node2 = root;
+        Deque<TreeNode> deque = new LinkedList<>();
+        deque.add(node1.left);
+        deque.add(node2.right);
+        while(!deque.isEmpty()) {
+            node1 = deque.poll();
+            node2 = deque.poll();
+            if (node1 == null && node2 == null) continue;
+            if (node1 == null || node2 == null || node1.val != node2.val) {
+                return false;
+            }
+            deque.add(node1.left);
+            deque.add(node2.right);
+            deque.add(node1.right);
+            deque.add(node2.left);
+        }
+        return true;
+    }
+
+    public boolean isSymmetricDfs(TreeNode root) {
+        if (root == null) return true;
+        return isSymmetricDfs(root.left, root.right);
+    }
+
+    public boolean isSymmetricDfs(TreeNode left, TreeNode right) {
+        if (left == null && right == null) return true;
+        if (left == null || right == null) return false;
+        return left.val == right.val && dfs(left.left, right.right) && dfs(left.right, right.left);
+    }
+
+
     public static void main(String[] args) {
         int a[][]={{1,2,3},{4,5,6}};
         System.out.println(a[0].length);//3
