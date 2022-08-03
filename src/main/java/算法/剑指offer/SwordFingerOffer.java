@@ -909,6 +909,31 @@ public class SwordFingerOffer {
         return low;
     }
 
+
+    /**
+     * 剑指 Offer 24. 反转链表
+     * https://leetcode.cn/problems/fan-zhuan-lian-biao-lcof/submissions/
+     *
+     * 定义一个函数，输入一个链表的头节点，反转该链表并输出反转后链表的头节点。
+     *
+     * 示例:
+     * 输入: 1->2->3->4->5->NULL
+     * 输出: 5->4->3->2->1->NULL
+     *
+     *
+     */
+    public ListNode reverseList(ListNode head) {
+        ListNode temp = head;
+        ListNode pre = null;
+        while (temp != null) {
+            ListNode node = temp.next;
+            temp.next = pre;
+            pre = temp;
+            temp = node;
+        }
+        return pre;
+    }
+
     public static void main(String[] args) {
         int a[][]={{1,2,3},{4,5,6}};
         System.out.println(a[0].length);//3
