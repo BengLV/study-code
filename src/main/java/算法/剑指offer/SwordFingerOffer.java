@@ -1,5 +1,6 @@
 package 算法.剑指offer;
 
+import lombok.val;
 import 算法.二叉树.TreeNode;
 import 算法.链表.ListNode;
 
@@ -1156,6 +1157,73 @@ public class SwordFingerOffer {
         }
         return res;
     }
+
+
+    /**
+     * 剑指 Offer 30. 包含min函数的栈
+     * https://leetcode.cn/problems/bao-han-minhan-shu-de-zhan-lcof/
+     *
+     * 定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的 min 函数在该栈中，调用 min、push 及 pop 的时间复杂度都是 O(1)。
+     *
+     * 示例:
+     * MinStack minStack = new MinStack();
+     * minStack.push(-2);
+     * minStack.push(0);
+     * minStack.push(-3);
+     * minStack.min();   --> 返回 -3.
+     * minStack.pop();
+     * minStack.top();      --> 返回 0.
+     * minStack.min();   --> 返回 -2.
+     *
+     */
+    class MinStack {
+
+        private Node node;
+
+        public MinStack() {
+
+        }
+
+        //添加
+        public void push(int x) {
+            if (node == null) {
+                node = new Node(x, x, null);
+            } else {
+                node = new Node(x, Math.min(node.min, x), node);
+            }
+        }
+
+        //删除最后添加的那个元素
+        public void pop() {
+            node = node.next;
+        }
+
+        public int top() {
+            return node.val;
+        }
+
+        public int min() {
+            return node.min;
+        }
+
+        class Node {
+
+            private int val;
+
+            private int min;
+
+            private Node next;
+
+            public Node(int val, int min, Node next) {
+                this.min = min;
+                this.val = val;
+                this.next = next;
+            }
+        }
+
+    }
+
+
 
     public static void main(String[] args) {
         int a[][]={{1,2,3},{4,5,6}};
