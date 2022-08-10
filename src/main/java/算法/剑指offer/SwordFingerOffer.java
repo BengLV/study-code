@@ -1313,6 +1313,73 @@ public class SwordFingerOffer {
     }
 
 
+    /**
+     * 剑指 Offer 32 - II. 从上到下打印二叉树 II
+     * https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/
+     *
+     * 从上到下按层打印二叉树，同一层的节点按从左到右的顺序打印，每一层打印到一行。
+     *
+     * 例如:
+     * 给定二叉树:[3,9,20,null,null,15,7],
+     *
+     *     3
+     *    / \
+     *   9  20
+     *     /  \
+     *    15   7
+     * 返回其层次遍历结果：
+     *
+     * [
+     *   [3],
+     *   [9,20],
+     *   [15,7]
+     * ]
+     */
+    public List<List<Integer>> levelOrder1(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
+        Deque<TreeNode> deque = new LinkedList<>();
+        deque.add(root);
+        while (!deque.isEmpty()) {
+            //获取当前队列大小
+            int size = deque.size();
+            ArrayList<Integer> temp = new ArrayList<>();
+            //弹出当前队列元素
+            for (int i = 0; i < size; i++) {
+                TreeNode poll = deque.poll();
+                temp.add(poll.val);
+                if (poll.left != null) {
+                    deque.add(poll.left);
+                }
+                if (poll.right != null) {
+                    deque.add(poll.right);
+                }
+            }
+            res.add(temp);
+        }
+        return res;
+    }
+
+    List<List<Integer>> res1 = new ArrayList<>();
+    public List<List<Integer>> levelOrderDFS(TreeNode root) {
+        levelOrderDFSHelper(root, 0);
+        return res1;
+    }
+
+    /**
+     * @param k 当前遍历的层数
+     */
+    private void levelOrderDFSHelper(TreeNode root, int k) {
+        if (root != null) {
+            if (res1.size() <= k) {
+                res1.add(new ArrayList<>());
+            }
+            res1.get(k).add(root.val);
+            levelOrderDFSHelper(root.left, k + 1);
+            levelOrderDFSHelper(root.right, k + 1);
+        }
+    }
+
     public static void main(String[] args) {
         int a[][]={{1,2,3},{4,5,6}};
         System.out.println(a[0].length);//3
