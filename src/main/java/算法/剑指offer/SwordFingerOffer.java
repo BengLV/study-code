@@ -1380,6 +1380,79 @@ public class SwordFingerOffer {
         }
     }
 
+
+    /**
+     * 剑指 Offer 32 - III. 从上到下打印二叉树 III
+     * https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/
+     *
+     * 请实现一个函数按照之字形顺序打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右到左的顺序打印，第三行再按照从左到右的顺序打印，其他行以此类推。
+     *
+     * 例如:
+     * 给定二叉树:[3,9,20,null,null,15,7],
+     *     3
+     *    / \
+     *   9  20
+     *     /  \
+     *    15   7
+     *
+     * 返回其层次遍历结果：
+     * [
+     *   [3],
+     *   [20,9],
+     *   [15,7]
+     * ]
+     *
+     */
+    public List<List<Integer>> levelOrder2(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
+        Deque<TreeNode> deque = new LinkedList<>();
+        deque.add(root);
+        while (!deque.isEmpty()) {
+            int size = deque.size();
+            LinkedList<Integer> temp = new LinkedList<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode poll = deque.poll();
+                //利用双端队列
+                if ((res.size() & 1) == 1) {//奇数
+                    temp.addFirst(poll.val);
+                } else {//偶数
+                    temp.addLast(poll.val);
+                }
+                if (poll.left != null) {
+                    deque.add(poll.left);
+                }
+                if (poll.right != null) {
+                    deque.add(poll.right);
+                }
+            }
+            res.add(temp);
+        }
+        return res;
+    }
+
+    List<List<Integer>> res2 = new ArrayList<>();
+    public List<List<Integer>> levelOrder2DFS(TreeNode root) {
+        levelOrder2DFSHelper(root, 0);
+        return res2;
+    }
+
+    private void levelOrder2DFSHelper(TreeNode node, int level) {
+        if (node == null) {
+            return;
+        }
+        if (level == res2.size()) {
+            res2.add(new ArrayList<>());
+        }
+        if ((level & 1) == 1) {
+            res2.get(level).add(0, node.val);
+        } else {
+            res2.get(level).add(node.val);
+        }
+        levelOrder2DFSHelper(node.left, level + 1);
+        levelOrder2DFSHelper(node.right, level + 1);
+    }
+
     public static void main(String[] args) {
         int a[][]={{1,2,3},{4,5,6}};
         System.out.println(a[0].length);//3
