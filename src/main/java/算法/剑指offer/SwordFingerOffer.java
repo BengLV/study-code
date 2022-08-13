@@ -1453,6 +1453,71 @@ public class SwordFingerOffer {
         levelOrder2DFSHelper(node.right, level + 1);
     }
 
+
+    /**
+     * 剑指 Offer 33. 二叉搜索树的后序遍历序列
+     * https://leetcode.cn/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/
+     * 
+     * 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。如果是则返回true，否则返回false。假设输入的数组的任意两个数字都互不相同。
+     *
+     * 参考以下这颗二叉搜索树：
+     *      5
+     *     / \
+     *    2   6
+     *   / \
+     *  1   3
+     *
+     * 示例 1：
+     * 输入: [1,6,3,2,5]
+     * 输出: false
+     *
+     * 示例 2：
+     * 输入: [1,3,2,6,5]
+     * 输出: true
+     *
+     */
+    public boolean verifyPostorder(int[] postorder) {
+        Deque<Integer> deque = new LinkedList<>();
+        int temp = Integer.MAX_VALUE;
+        for (int i = postorder.length - 1; i >= 0; i--) {
+            //左子树元素必须要小于递增栈被peek访问的元素，否则就不是二叉搜索树
+            if (postorder[i] > temp) return false;
+            while (!deque.isEmpty() && postorder[i] < deque.peek()) {
+                //当元素小于栈顶元素值时,说明当前为左子树
+                temp = deque.poll();//记录左子树的根节点
+            }
+            //将当前元素入栈顶
+            deque.push(postorder[i]);
+        }
+        return true;
+    }
+
+
+    public boolean verifyPostorder1(int[] postorder) {
+        // 要点：二叉搜索树中根节点的值大于左子树中的任何一个节点的值，小于右子树中任何一个节点的值，子树也是
+        return verifyDFS(0, postorder.length - 1, postorder);
+    }
+
+    private boolean verifyDFS(int left, int right, int[] postorder) {
+        if (left >= right) return true;
+        // 当前树的根节点的值
+        int mid = postorder[right];
+        int k = left;
+        // 从当前区域找到第一个大于根节点的，说明后续区域数值都在右子树中
+        while (k < right && postorder[k] < mid) {
+            k++;
+        }
+        // 进行判断后续的区域是否所有的值都是大于当前的根节点，如果出现小于的值就直接返回false
+        for (int i = k; i < right; i++) {
+            if (postorder[i] < mid) return false;
+        }
+        // 当前树没问题就检查左右子树
+        if (!verifyDFS(left, k - 1, postorder)) return false;
+        if (!verifyDFS(k, right - 1, postorder)) return false;
+        // 最终都没问题就返回true
+        return true;
+    }
+
     public static void main(String[] args) {
         int a[][]={{1,2,3},{4,5,6}};
         System.out.println(a[0].length);//3
