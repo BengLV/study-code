@@ -1518,6 +1518,36 @@ public class SwordFingerOffer {
         return true;
     }
 
+
+    /**
+     * 剑指 Offer 34. 二叉树中和为某一值的路径
+     * https://leetcode.cn/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/
+     *
+     * 给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
+     *
+     * 叶子节点 是指没有子节点的节点。
+     */
+    LinkedList<List<Integer>> res3 = new LinkedList<>();
+    LinkedList<Integer> path = new LinkedList<>();
+    public List<List<Integer>> pathSum(TreeNode root, int target) {
+        pathSumDFS(root, target);
+        return res3;
+    }
+
+    private void pathSumDFS(TreeNode node, int target) {
+        if (node == null) return;
+        path.add(node.val);
+        target -= node.val;
+        if (target == 0 && node.left == null && node.right == null) {
+            //值得注意的是，记录路径时若直接执行 res.add(path) ，则是将 path 对象加入了 res ；后续 path 改变时， res 中的 path 对象也会随之改变。
+            res3.add(new LinkedList<>(path));
+        }
+        pathSumDFS(node.left, target);
+        pathSumDFS(node.right, target);
+        path.removeLast();
+    }
+
+
     public static void main(String[] args) {
         int a[][]={{1,2,3},{4,5,6}};
         System.out.println(a[0].length);//3
