@@ -1548,6 +1548,60 @@ public class SwordFingerOffer {
     }
 
 
+    /**
+     * 剑指 Offer 35. 复杂链表的复制
+     * https://leetcode.cn/problems/fu-za-lian-biao-de-fu-zhi-lcof/
+     *
+     * 请实现 copyRandomList 函数，复制一个复杂链表。在复杂链表中，每个节点除了有一个 next 指针指向下一个节点，还有一个 random 指针指向链表中的任意节点或者 null。
+     *
+     * 示例 1：
+     * 输入：head = [[7,null],[13,0],[11,4],[10,2],[1,0]]
+     * 输出：[[7,null],[13,0],[11,4],[10,2],[1,0]]
+     *
+     */
+    public Node copyRandomList(Node head) {
+        if (head == null) return head;
+        Map<Node, Node> map = new HashMap<>();
+        for (Node cur = head; cur != null; cur = cur.next) {
+            map.put(cur, new Node(cur.val));
+        }
+        for (Node cur = head; cur != null; cur = cur.next) {
+            map.get(cur).next = map.get(cur.next);
+            map.get(cur).random = map.get(cur.random);
+        }
+        return map.get(head);
+    }
+
+    public Node copyRandomList1(Node head) {
+        if (head == null) return head;
+        Node cur = head;
+        while (cur != null) {
+            Node copy = new Node(cur.val);
+            copy.next = cur.next;
+            cur.next = copy;
+            cur = cur.next.next;
+        }
+        cur = head;
+        while (cur != null) {
+            if (cur.random != null) {
+                cur.next.random = cur.random.next;
+            }
+            cur = cur.next.next;
+        }
+        Node res = head.next;
+        Node copy = head.next;
+        cur = head;
+        while (cur != null) {
+            cur.next = cur.next.next;
+            cur = cur.next;
+            if (copy.next != null) {
+                copy.next = copy.next.next;
+                copy = copy.next;
+            }
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         int a[][]={{1,2,3},{4,5,6}};
         System.out.println(a[0].length);//3
@@ -1560,7 +1614,16 @@ public class SwordFingerOffer {
         System.out.println(printNumbers(1));
         System.out.println(Arrays.toString(printNumbers1(4).toArray()));
     }
+}
 
+class Node {
+    int val;
+    Node next;
+    Node random;
 
-
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
 }
