@@ -1602,6 +1602,36 @@ public class SwordFingerOffer {
         return res;
     }
 
+
+    /**
+     * 剑指 Offer 36. 二叉搜索树与双向链表
+     * https://leetcode.cn/problems/er-cha-sou-suo-shu-yu-shuang-xiang-lian-biao-lcof/
+     *
+     * 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。要求不能创建任何新的节点，只能调整树中节点指针的指向。
+     * 特别地，我们希望可以就地完成转换操作。当转化完成以后，树中节点的左指针需要指向前驱，树中节点的右指针需要指向后继。还需要返回链表中的第一个节点的指针。
+     */
+    private NodeTree temp, head;
+    public NodeTree treeToDoublyList(NodeTree root) {
+        if (root == null) return root;
+        treeToDoublyListDFS(root);
+        head.left = temp;
+        temp.right = head;
+        return head;
+    }
+
+    private void treeToDoublyListDFS(NodeTree nodeTree) {
+        if (nodeTree == null) return;
+        treeToDoublyListDFS(nodeTree.left);
+        if (temp == null) {
+            head = nodeTree;
+        } else {
+            temp.right = nodeTree;
+            nodeTree.left = temp;
+        }
+        temp = nodeTree;
+        treeToDoublyListDFS(nodeTree.right);
+    }
+
     public static void main(String[] args) {
         int a[][]={{1,2,3},{4,5,6}};
         System.out.println(a[0].length);//3
@@ -1627,3 +1657,21 @@ class Node {
         this.random = null;
     }
 }
+
+class NodeTree {
+    public int val;
+    public NodeTree left;
+    public NodeTree right;
+
+    public NodeTree() {}
+
+    public NodeTree(int _val) {
+        val = _val;
+    }
+
+    public NodeTree(int _val,NodeTree _left,NodeTree _right) {
+        val = _val;
+        left = _left;
+        right = _right;
+    }
+};
