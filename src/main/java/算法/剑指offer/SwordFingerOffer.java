@@ -1632,6 +1632,41 @@ public class SwordFingerOffer {
         treeToDoublyListDFS(nodeTree.right);
     }
 
+
+    /**
+     * 剑指 Offer 38. 字符串的排列
+     * https://leetcode.cn/problems/zi-fu-chuan-de-pai-lie-lcof/
+     *
+     * 输入一个字符串，打印出该字符串中字符的所有排列。
+     *
+     * 你可以以任意顺序返回这个字符串数组，但里面不能有重复元素。
+     *
+     * 示例:
+     * 输入：s = "abc"
+     * 输出：["abc","acb","bac","bca","cab","cba"]
+     *
+     */
+    Set<String> StringSet = new HashSet<>();
+    public String[] permutation(String s) {
+        char[] arr = s.toCharArray();
+        boolean[] visited = new boolean[arr.length];
+        dfs(arr, "", visited);
+        return StringSet.toArray(new String[0]);
+    }
+
+    private void dfs (char[] arr, String s, boolean[] visited) {
+        if (s.length() == arr.length) {
+            StringSet.add(s);
+            return;
+        }
+        for (int i = 0; i < arr.length; i++) {
+            if (visited[i]) continue;
+            visited[i] = true;
+            dfs(arr, s + String.valueOf(arr[i]), visited);
+            visited[i] = false;
+        }
+    }
+
     public static void main(String[] args) {
         int a[][]={{1,2,3},{4,5,6}};
         System.out.println(a[0].length);//3
