@@ -1685,6 +1685,75 @@ public class SwordFingerOffer {
         return res;
     }
 
+
+    /**
+     * 剑指 Offer 40. 最小的k个数
+     * https://leetcode.cn/problems/zui-xiao-de-kge-shu-lcof/
+     *
+     * 输入整数数组 arr ，找出其中最小的 k 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。
+     *
+     * 示例 1：
+     * 输入：arr = [3,2,1], k = 2
+     * 输出：[1,2] 或者 [2,1]
+     *
+     * 示例 2：
+     * 输入：arr = [0,1,2,1], k = 1
+     * 输出：[0]
+     *
+     * topK问题
+     */
+    public int[] getLeastNumbers(int[] arr, int k) {
+        if (k >= arr.length) return arr;
+        quickSort(arr, 0, arr.length - 1);
+        return Arrays.copyOf(arr, k);
+    }
+
+    /**
+     * 通过判断舍去了不必要的递归（哨兵划分）。
+     */
+    private int[] quickSort(int[] arr, int k, int l, int r) {
+        int i = l, j = r;
+        while (i < j) {
+            while (i < j && arr[j] >= arr[l]) j--;
+            while (i < j && arr[i] <= arr[l]) i++;
+            swap(arr, j, i);
+        }
+        swap(arr, i, l);
+        //若 k < i，代表第 k + 1小的数字在 左子数组 中，则递归左子数组
+        if (i > k) return quickSort(arr, k, l, i - 1);
+        //若 k > i，代表第 k + 1小的数字在 右子数组 中，则递归右子数组
+        if (i < k) return quickSort(arr, k, i + 1, r);
+        //若 k = i，代表此时 arr[k] 即为第 k + 1 小的数字，则直接返回数组前 k 个数字即可；
+        return Arrays.copyOf(arr, k);
+    }
+
+    /**
+     * 快速排序
+     * 平局时间复杂度为O(NlogN) ,最坏时间复杂度为n的平方.
+     */
+    private void quickSort(int[] arr, int l, int r) {
+        if (r <= l) return;
+        int i = l, j = r;
+        while (i < j) {
+            //以下标i为基数,大于i的放在最右边
+            while (i < j && arr[j] >= arr[l]) j--;
+            //小于i的放在最左边
+            while (i < j && arr[i] <= arr[l]) i++;
+            //交换i 跟 j 的位置
+            swap(arr, j, i);
+        }
+        //再用基数把坑填满,这个时候得到的数组,左边的都小于基数,右边的都大于基数.
+        swap(arr, i, l);
+        quickSort(arr, l, i - 1);
+        quickSort(arr, i + 1, r);
+    }
+
+    private void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
