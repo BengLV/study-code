@@ -1689,17 +1689,17 @@ public class SwordFingerOffer {
     /**
      * 剑指 Offer 40. 最小的k个数
      * https://leetcode.cn/problems/zui-xiao-de-kge-shu-lcof/
-     *
+     * <p>
      * 输入整数数组 arr ，找出其中最小的 k 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。
-     *
+     * <p>
      * 示例 1：
      * 输入：arr = [3,2,1], k = 2
      * 输出：[1,2] 或者 [2,1]
-     *
+     * <p>
      * 示例 2：
      * 输入：arr = [0,1,2,1], k = 1
      * 输出：[0]
-     *
+     * <p>
      * topK问题
      */
     public int[] getLeastNumbers(int[] arr, int k) {
@@ -1754,6 +1754,66 @@ public class SwordFingerOffer {
         arr[j] = temp;
     }
 
+
+    /**
+     * 剑指 Offer 41. 数据流中的中位数
+     * https://leetcode.cn/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof/
+     * <p>
+     * 如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。
+     * 如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
+     * <p>
+     * 例如，
+     * [2,3,4]的中位数是 3
+     * [2,3] 的中位数是 (2 + 3) / 2 = 2.5
+     * <p>
+     * 设计一个支持以下两种操作的数据结构：
+     * void addNum(int num) - 从数据流中添加一个整数到数据结构中。
+     * double findMedian() - 返回目前所有元素的中位数。
+     * <p>
+     * 示例 1：
+     * 输入：
+     * ["MedianFinder","addNum","addNum","findMedian","addNum","findMedian"]
+     * [[],[1],[2],[],[3],[]]
+     * 输出：[null,null,null,1.50000,null,2.00000]
+     * <p>
+     * <p>
+     * 平衡堆:大顶堆+小顶堆(参考k神)
+     * 创建两个堆:其中堆A为小顶堆(存储较大的一半元素);堆B为大顶堆(存储较小的一半元素)
+     * 规定存储元素个数:A>=B;设A中有m个元素,B中有n个元素,一共有N=m+n个元素
+     * 当N为奇数时:m=(N+1)/2,m=(N-1)/2;当N为偶数时:m=n=N/2
+     * findMedian():
+     * 1.当m+n为偶数时,中位数=(A堆顶元素+B堆顶元素)/2.0
+     * 2.当m+n为奇数时,中位数=A堆顶元素
+     * addNum(int num):其目的是使得两个堆平衡(数目差0或1)
+     * 1.当m=n时,num应该添加进A中,但num可能是较小的一半,因此先入堆B,再将B堆顶弹出入A
+     * 2.当m=n+1时,num应该添加进B中,但num可能是较大的一半,因此先入堆A,再将A堆顶弹出入B
+     * 时间复杂度:O(1)+O(logN)=O(logN);空间复杂度:O(N)
+     */
+    class MedianFinder {
+
+        Queue<Integer> A, B;
+
+        public MedianFinder() {
+            A = new PriorityQueue<>();//最小堆(堆顶为最小的元素)，保存较大的一半，
+            B = new PriorityQueue<>((x, y) -> (y - x));//最大堆(堆顶为较大的元素)，保存较小的一半，
+        }
+
+        public void addNum(int num) {
+            if (A.size() != B.size()) {
+                //当A的大小不等于B时，先往A中添加元素，再取出来添加至B中，这样能保证B中的元素一直是最小的一半
+                A.add(num);
+                B.add(A.poll());
+            } else {
+                B.add(num);
+                A.add(B.poll());
+            }
+        }
+
+        public double findMedian() {
+            return A.size() != B.size() ? A.peek() : (A.peek() + B.peek()) / 2.0;//需要除以2.0,不能除以2
+        }
+    }
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
@@ -1765,6 +1825,8 @@ public class SwordFingerOffer {
         System.out.println(Integer.MAX_VALUE);//2147483647
         System.out.println(printNumbers(1));
         System.out.println(Arrays.toString(printNumbers1(4).toArray()));
+        System.out.println(5 / 2);//2
+        System.out.println(5 / 2.0);//2.5
     }
 }
 
