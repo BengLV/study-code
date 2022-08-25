@@ -1814,6 +1814,73 @@ public class SwordFingerOffer {
         }
     }
 
+
+    /**
+     * 剑指 Offer 42. 连续子数组的最大和
+     * https://leetcode.cn/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof/
+     *
+     * 输入一个整型数组，数组中的一个或连续多个整数组成一个子数组。求所有子数组的和的最大值。
+     *
+     * 要求时间复杂度为O(n)。
+     *
+     * 
+     *
+     * 示例1:
+     * 输入: nums = [-2,1,-3,4,-1,2,1,-5,4]
+     * 输出: 6
+     * 解释:连续子数组[4,-1,2,1] 的和最大，为6。
+     *
+     */
+    public int maxSubArray(int[] nums) {
+        int res = nums[0];
+        int sum = 0;
+        for (int num : nums) {
+            if (sum > 0) {
+                sum += num;
+            } else {
+                sum = num;
+            }
+            res = Math.max(res, sum);
+        }
+        return res;
+    }
+
+
+    /**
+     * 动规五部曲如下：
+     *
+     * 确定dp数组（dp table）以及下标的含义
+     * dp[i]：包括下标i之前的最大连续子序列和为dp[i]。
+     *
+     * 确定递推公式
+     * dp[i]只有两个方向可以推出来：
+     *
+     * dp[i - 1] + nums[i]，即：nums[i]加入当前连续子序列和
+     * nums[i]，即：从头开始计算当前连续子序列和
+     * 一定是取最大的，所以dp[i] = max(dp[i - 1] + nums[i], nums[i]);
+     *
+     * dp数组如何初始化
+     * 从递推公式可以看出来dp[i]是依赖于dp[i - 1]的状态，dp[0]就是递推公式的基础。
+     *
+     * dp[0]应该是多少呢?
+     *
+     * 更具dp[i]的定义，很明显dp[0]因为为nums[0]即dp[0] = nums[0]。
+     *
+     * 确定遍历顺序
+     * 递推公式中dp[i]依赖于dp[i - 1]的状态，需要从前向后遍历。
+     *
+     * 举例推导dp数组
+     */
+    public int maxSubArrayDP(int[] nums) {
+        int dp = nums[0];
+        int res = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            dp = Math.max(dp + nums[i], nums[i]);
+            res = Math.max(dp, res);
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
