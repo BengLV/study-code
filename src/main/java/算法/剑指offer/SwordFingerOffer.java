@@ -1921,6 +1921,35 @@ public class SwordFingerOffer {
         return Long.toString(num).charAt((n - 1) % digit) - '0';
     }
 
+
+    /**
+     * 剑指 Offer 45. 把数组排成最小的数
+     * https://leetcode.cn/problems/ba-shu-zu-pai-cheng-zui-xiao-de-shu-lcof/
+     *
+     * 输入一个非负整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。
+     *
+     * 示例 1:
+     * 输入: [3,30,34,5,9]
+     * 输出: "3033459"
+     */
+    public String minNumber(int[] nums) {
+        List<String> list = new ArrayList<>();
+        for (int num : nums) {
+            list.add(String.valueOf(num));
+        }
+        /**
+         * 设数组 numsnums 中任意两数字的字符串为 xx 和 yy ，则规定 排序判断规则 为：
+         *
+         * 若拼接字符串 x + y > y + xx+y>y+x ，则 xx “大于” yy ；
+         * 反之，若 x + y < y + xx+y<y+x ，则 xx “小于” yy ；
+         *
+         * xx “小于” yy 代表：排序完成后，数组中 xx 应在 yy 左边；“大于” 则反之。
+         */
+        list.sort((o1, o2) -> (o1 + o2).compareTo(o2 + o1));
+        return String.join("", list);
+    }
+
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
