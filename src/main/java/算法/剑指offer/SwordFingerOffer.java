@@ -1950,6 +1950,50 @@ public class SwordFingerOffer {
     }
 
 
+    /**
+     * 剑指 Offer 46. 把数字翻译成字符串
+     * https://leetcode.cn/problems/ba-shu-zi-fan-yi-cheng-zi-fu-chuan-lcof/
+     *
+     * 给定一个数字，我们按照如下规则把它翻译为字符串：0 翻译成 “a” ，1 翻译成 “b”，……，11 翻译成 “l”，……，25 翻译成 “z”。一个数字可能有多个翻译。
+     * 请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。
+     *
+     * 示例 1:
+     * 输入: 12258
+     * 输出: 5
+     * 解释: 12258有5种不同的翻译，分别是"bccfi", "bwfi", "bczi", "mcfi"和"mzi"
+     *
+     */
+    public int translateNum(int num) {
+        /*
+        //递归
+        if (num < 10) {
+            return 1;
+        } else if (num < 26) {
+            return 2;
+        } else if (num < 100) {
+            return 1;
+        }
+        if (num % 100 > 25 || num % 100 < 10) {
+            return translateNum(num / 10);
+        } else {
+            return translateNum(num / 10) + translateNum(num / 100);
+        }*/
+        String s = String.valueOf(num);
+        int[] dp = new int[s.length() + 1];//翻译后方案的数量
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i <= s.length(); i++) {
+            String temp = s.substring(i - 2, i);
+            if (temp.compareTo("25") <= 0 && temp.compareTo("10") >= 0) {
+                dp[i] = dp[i -1] + dp[i - 2];
+            } else {
+                dp[i] = dp[i - 1];
+            }
+        }
+        return dp[s.length()];
+    }
+
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
@@ -1963,6 +2007,12 @@ public class SwordFingerOffer {
         System.out.println(Arrays.toString(printNumbers1(4).toArray()));
         System.out.println(5 / 2);//2
         System.out.println(5 / 2.0);//2.5
+        System.out.println(31%100);//31
+        System.out.println("123".length());//3
+        System.out.println("123".charAt(0));//1
+        System.out.println("123".substring(0, 2));//12
+        int b[] = new int[5];
+        //System.out.println(b[5]);//报错,只能b[4]
     }
 }
 
