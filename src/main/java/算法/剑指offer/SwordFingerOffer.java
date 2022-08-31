@@ -2045,6 +2045,41 @@ public class SwordFingerOffer {
         */
     }
 
+
+    /**
+     * 剑指 Offer 48. 最长不含重复字符的子字符串
+     * https://leetcode.cn/problems/zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof/
+     *
+     * 请从字符串中找出一个最长的不包含重复字符的子字符串，计算该最长子字符串的长度。
+     *
+     * 示例 1:
+     * 输入: "abcabcbb"
+     * 输出: 3
+     * 解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+     */
+    public int lengthOfLongestSubstring(String s) {
+        int res = 0;
+        //数组记录字符出现的次数
+        int[] arr = new int[128];
+        //滑动窗口
+        int left =0, right = 0;
+        while (right < s.length()) {
+            char ch = s.charAt(right);
+            arr[ch]++;
+            right++;
+            //如果字符出现次数大于1,说明重复出现了
+            while (arr[ch] > 1) {
+                //获取左指针字符的值,并且次数减一, 直到减掉跟右指针一样的字符
+                char leftChar = s.charAt(left);
+                arr[leftChar]--;
+                left++;
+            }
+            res = Math.max(res, right - left);
+        }
+        return res;
+    }
+
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
@@ -2064,6 +2099,7 @@ public class SwordFingerOffer {
         System.out.println("123".substring(0, 2));//12
         int b[] = new int[5];
         //System.out.println(b[5]);//报错,只能b[4]
+        System.out.println("123".toCharArray());
     }
 }
 
