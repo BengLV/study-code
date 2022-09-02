@@ -2080,6 +2080,33 @@ public class SwordFingerOffer {
     }
 
 
+    /**
+     * 剑指 Offer 49. 丑数
+     * https://leetcode.cn/problems/chou-shu-lcof/?favorite=xb9nqhhg
+     * 我们把只包含质因子 2、3 和 5 的数称作丑数（Ugly Number）。求按从小到大的顺序的第 n 个丑数。
+     *
+     * 示例:
+     * 输入: n = 10
+     * 输出: 12
+     * 解释: 1, 2, 3, 4, 5, 6, 8, 9, 10, 12 是前 10 个丑数。
+     *
+     */
+    public int nthUglyNumber(int n) {
+        int[] dp = new int[n];
+        dp[0] = 1;////基础丑数为1
+        int i = 0, j = 0, k = 0;////初始分别指向三个有序链表第一个元素,这三个有序链表是想象出来的，分别就是dp数组元素分别乘以2,3,5得到的
+        for (int idx = 1; idx < n; idx++) {
+            int temp = Math.min(dp[i] * 2, dp[j] * 3);
+            temp = Math.min(temp, dp[k] * 5);
+            // //三个链表可能有相同元素，所以只要是最小的，都要移动指针
+            if (temp == dp[i] * 2) i++;
+            if (temp == dp[j] * 3) j++;
+            if (temp == dp[k] * 5) k++;
+            dp[idx] = temp;
+        }
+        return dp[n - 1];
+    }
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
