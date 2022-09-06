@@ -2233,6 +2233,38 @@ public class SwordFingerOffer {
         return res;
     }
 
+    /**
+     * 剑指 Offer 53 - II. 0～n-1中缺失的数字
+     * https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/
+     *
+     * 一个长度为n-1的递增排序数组中的所有数字都是唯一的，并且每个数字都在范围0～n-1之内。
+     * 在范围0～n-1内的n个数字中有且只有一个数字不在该数组中，请找出这个数字。
+     *
+     * 示例 1:
+     * 输入: [0,1,3]
+     * 输出: 2
+     *
+     */
+    public int missingNumber(int[] nums) {
+        int left = 0, right = nums.length - 1;
+        while (left  < right) {
+            int mid = (left + right) >> 1;
+            //如果中间值等于mid,则说明在右边
+            if (nums[mid] == mid) {
+                left = mid + 1;
+            } else {
+                //否则在左边
+                right = mid;
+            }
+        }
+        //除去特殊情况
+        if (nums[nums.length - 1] == nums.length - 1) {
+            if (nums[nums.length - 1] == 0) return 1;
+            return nums.length;
+        }
+        return left;
+    }
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
