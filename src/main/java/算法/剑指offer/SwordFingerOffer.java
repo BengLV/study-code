@@ -2201,6 +2201,38 @@ public class SwordFingerOffer {
         return p1;
     }
 
+
+    /**
+     * 剑指 Offer 53 - I. 在排序数组中查找数字 I
+     * https://leetcode.cn/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/
+     *
+     * 示例 1:
+     * 输入: nums = [5,7,7,8,8,10], target = 8
+     * 输出: 2
+     *
+     * 示例2:
+     * 输入: nums = [5,7,7,8,8,10], target = 6
+     * 输出: 0
+     *
+     * 解题思路:二分法
+     */
+    public int search(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        int res = 0;
+        while (left < right) {
+            int mid = (left + right) >> 1;
+            if (nums[mid] >= target) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        while (left < nums.length && nums[left++] == target) {
+            res++;
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
