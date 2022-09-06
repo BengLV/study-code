@@ -2129,6 +2129,56 @@ public class SwordFingerOffer {
         return ' ';
     }
 
+
+    /**
+     * 剑指 Offer 51. 数组中的逆序对
+     * https://leetcode.cn/problems/shu-zu-zhong-de-ni-xu-dui-lcof/
+     *
+     * 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。
+     *
+     * 示例 1:
+     * 输入: [7,5,6,4]
+     * 输出: 5
+     */
+    int reversePairsRes;
+    public int reversePairs(int[] nums) {
+        merge(nums, 0, nums.length - 1);
+        return reversePairsRes;
+    }
+
+    private void merge(int[] nums, int left, int right) {
+        if (left >= right) return;
+        int mid = (right + left) / 2;
+        merge(nums, left, mid);
+        merge(nums, mid + 1, right);
+        mergeSort(nums, left, mid, right);
+    }
+
+    private void mergeSort(int[] nums, int left, int mid, int right) {
+        int[] temp = new int[right - left + 1];
+        int i = left;
+        int j = mid + 1;
+        int t = 0;
+        while (i <= mid && j <= right) {
+            if (nums[i] <= nums[j]) {
+                temp[t++] = nums[i++];
+            } else {
+                reversePairsRes += mid - i + 1;
+                temp[t++] = nums[j++];
+            }
+        }
+        while(i <= mid) {
+            temp[t++] = nums[i++];
+        }
+        while(j <= right) {
+            temp[t++] = nums[j++];
+        }
+        for (int k = 0; k < temp.length; k++) {
+            nums[left + k] = temp[k];
+        }
+
+    }
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
