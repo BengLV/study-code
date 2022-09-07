@@ -2302,6 +2302,45 @@ public class SwordFingerOffer {
         if (root.left != null) inorderHelper(root.left, k);
     }
 
+    /**
+     * 剑指 Offer 55 - I. 二叉树的深度
+     * https://leetcode.cn/problems/er-cha-shu-de-shen-du-lcof/
+     *
+     * 输入一棵二叉树的根节点，求该树的深度。从根节点到叶节点依次经过的节点（含根、叶节点）形成树的一条路径，最长路径的长度为树的深度。
+     *
+     *     3
+     *    / \
+     *   9  20
+     *     /  \
+     *    15   7
+     * 返回它的最大深度 3 。
+     */
+    public int maxDepth(TreeNode root) {
+        //递归
+        if(root == null) return 0;
+        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+    }
+
+    private int maxDepthDFS(TreeNode root) {
+        int res = 0;
+        if (root == null) return res;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            res++;
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (node.left != null) queue.add(node.left);
+                if (node.right!= null) queue.add(node.right);
+            }
+
+        }
+        return res;
+    }
+
+
+
 
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
