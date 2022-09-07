@@ -1,5 +1,6 @@
 package 算法.剑指offer;
 
+import designpatterns.结构型模式.享元模式.trees.Tree;
 import 算法.二叉树.TreeNode;
 import 算法.链表.ListNode;
 
@@ -2264,6 +2265,43 @@ public class SwordFingerOffer {
         }
         return left;
     }
+
+
+    /**
+     * 剑指 Offer 54. 二叉搜索树的第k大节点
+     * https://leetcode.cn/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/?favorite=xb9nqhhg
+     *
+     * 给定一棵二叉搜索树，请找出其中第 k 大的节点的值。
+     *
+     * 二叉搜索树: 有序,使用中序遍历.
+     */
+    int count = 0, ans = 0;
+    public int kthLargest(TreeNode root, int k) {
+        /*List<Integer> list = new LinkedList<>();
+        inorderBfs(root, list);
+        return list.get(list.size() - k);*/
+        inorderHelper(root, k);
+        return ans;
+    }
+
+    public void inorderBfs(TreeNode root, List<Integer> res) {
+        //空间复杂度(O(n))
+        if (root == null) return;
+        inorderBfs(root.left, res);
+        res.add(root.val);
+        inorderBfs(root.right, res);
+    }
+
+    public void inorderHelper(TreeNode root, int k) {
+        //空间复杂度(O(1))
+        if (root.right != null) inorderHelper(root.right, k);
+        if (++count == k) {//++count是先加后比较, count++=k是先比较后加
+            ans = root.val;
+            return;
+        }
+        if (root.left != null) inorderHelper(root.left, k);
+    }
+
 
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
