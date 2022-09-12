@@ -2498,6 +2498,41 @@ public class SwordFingerOffer {
     }
 
 
+    /**
+     * 剑指 Offer 57 - II. 和为s的连续正数序列
+     * https://leetcode.cn/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof/
+     *
+     * 输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
+     *
+     * 序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
+     *
+     *
+     * 示例 1：
+     * 输入：target = 9
+     * 输出：[[2,3,4],[4,5]]
+     *
+     */
+    public int[][] findContinuousSequence(int target) {
+        List<int[]> res = new ArrayList<>();
+
+        for (int right = 1, left = 1, sum = 0; right < target; right++) {
+            sum += right;
+            while (sum > target) {
+                sum -= left++;
+            }
+            if (sum == target) {
+                int[] temp = new int[right - left + 1];
+                for (int i = 0; i < temp.length; i++) {
+                    temp[i] = left + i;
+                }
+                res.add(temp);
+            }
+        }
+        return res.toArray(new int[res.size()][]);
+    }
+
+
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
