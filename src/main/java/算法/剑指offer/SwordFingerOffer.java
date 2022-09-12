@@ -2571,6 +2571,54 @@ public class SwordFingerOffer {
         return s.substring(n) + s.substring(0, n);
     }
 
+
+    /**
+     * 剑指 Offer 59 - I. 滑动窗口的最大值
+     * https://leetcode.cn/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof/
+     * 给定一个数组 nums 和滑动窗口的大小 k，请找出所有滑动窗口里的最大值。
+     *
+     * 示例:
+     * 输入: nums = [1,3,-1,-3,5,3,6,7], 和 k = 3
+     * 输出: [3,3,5,5,6,7]
+     * 解释:
+     *
+     *   滑动窗口的位置                最大值
+     * ---------------               -----
+     * [1  3  -1] -3  5  3  6  7       3
+     *  1 [3  -1  -3] 5  3  6  7       3
+     *  1  3 [-1  -3  5] 3  6  7       5
+     *  1  3  -1 [-3  5  3] 6  7       5
+     *  1  3  -1  -3 [5  3  6] 7       6
+     *  1  3  -1  -3  5 [3  6  7]      7
+     *
+     */
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if (nums == null || nums.length == 0) return new int[0];
+        int[] res = new int[nums.length - k + 1];
+        //单调队列
+        LinkedList<Integer> deque = new LinkedList<>();
+        for (int right = 0; right < nums.length; right++) {
+            //如果队列不为空,并且对位元素小于当前元素,则移除对尾元素.
+            while (!deque.isEmpty() && nums[deque.peekLast()] <= nums[right]) {
+                deque.removeLast();
+            }
+            //存当前元素下标. 这个地方很精髓.
+            deque.addLast(right);
+            //计算窗口左边下标
+            int left = right - k + 1;
+            //如果队首值小于窗口左端值,说明这个值已经不再窗口范围内了
+            if (deque.peekFirst() < left) {
+                //移除队首值
+                deque.removeFirst();
+            }
+            //形成窗口时,队首的值为最大值
+            if (right + 1 >= k) {
+                res[left] = nums[deque.peekFirst()];
+            }
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
