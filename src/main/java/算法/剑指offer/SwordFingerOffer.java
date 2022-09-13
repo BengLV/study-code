@@ -2619,6 +2619,55 @@ public class SwordFingerOffer {
         return res;
     }
 
+
+    /**
+     * 剑指 Offer 60. n个骰子的点数
+     * https://leetcode.cn/problems/nge-tou-zi-de-dian-shu-lcof/?favorite=xb9nqhhg
+     *
+     * 把n个骰子扔在地上，所有骰子朝上一面的点数之和为s。输入n，打印出s的所有可能的值出现的概率。
+     * 你需要用一个浮点数数组返回答案，其中第 i 个元素代表这 n 个骰子所能掷出的点数集合中第 i 小的那个的概率。
+     *
+     * 示例 1:
+     * 输入: 1
+     * 输出: [0.16667,0.16667,0.16667,0.16667,0.16667,0.16667]
+     *
+     * 示例2:
+     * 输入: 2
+     * 输出: [0.02778,0.05556,0.08333,0.11111,0.13889,0.16667,0.13889,0.11111,0.08333,0.05556,0.02778]
+     */
+    public double[] dicesProbability(int n) {
+        //确定dp数组,以及边界
+        int[][] dp = new int[n][6 * n + 1];
+        //初始化dp数组
+        for (int i = 1; i <= 6; i++) {
+            dp[1][i] = 1;
+        }
+        //第n个数
+        for (int i = 2; i <= n; i++) {
+            //和值结果种数
+            for (int j = i; j <= 6 * i; j++) {
+                //骰子1至6
+                for (int k = 1; k <= 6 && k <= j; k++) {
+                    //递归公式
+                    //单单看第 nn 枚骰子，它的点数可能为 1 , 2, 3, ... , 61,2,3,...,6
+                    // 因此投掷完 nn 枚骰子后点数 jj 出现的次数，可以由投掷完 n-1n−1 枚骰子后，
+                    // 对应点数 j-1, j-2, j-3, ... , j-6j−1,j−2,j−3,...,j−6 出现的次数之和转化过来。
+                    dp[i][j] += dp[i - 1][j - k];
+                }
+            }
+        }
+        //结果集
+        double ans[] = new double[5 * n + 1];
+        //6的n次方,表示所有的情况数量.
+        double all = Math.pow(6, n);
+        for (int i = n; i <= 6 * n; i++) {
+            //结果出现的概率 = 结果出现的次数 / 总次数
+            ans[i - n] = dp[n][i] / all;
+        }
+        return ans;
+    }
+
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
