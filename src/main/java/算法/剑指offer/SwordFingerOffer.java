@@ -2779,6 +2779,26 @@ public class SwordFingerOffer {
     }
 
 
+    /**
+     * 剑指 Offer 64. 求1+2+…+n
+     * https://leetcode.cn/problems/qiu-12n-lcof/
+     *
+     * 求 1+2+...+n ，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
+     *
+     * 示例 1：
+     * 输入: n = 3
+     * 输出:6
+     *
+     */
+    public int sumNums(int n) {
+        //return (int) (Math.pow(n, 2) + n) >> 1; (首项+末项)*项数/2
+        int sum = n;
+        //利用"短路"特性 当n大于0时 就继续递归 否则停止递归 return 前面的累加值
+        boolean flag = n > 0 && (sum += sumNums(n - 1)) > 0;
+        return sum;
+    }
+
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
