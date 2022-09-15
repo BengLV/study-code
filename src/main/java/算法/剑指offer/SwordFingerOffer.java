@@ -2825,6 +2825,42 @@ public class SwordFingerOffer {
     }
 
 
+    /**
+     * 剑指 Offer 66. 构建乘积数组
+     * https://leetcode.cn/problems/gou-jian-cheng-ji-shu-zu-lcof/
+     *
+     * 给定一个数组 A[0,1,…,n-1]，请构建一个数组 B[0,1,…,n-1]，其中B[i] 的值是数组 A 中除了下标 i 以外的元素的积, 
+     * 即B[i]=A[0]×A[1]×…×A[i-1]×A[i+1]×…×A[n-1]。不能使用除法。
+     *
+     * 示例:
+     * 输入: [1,2,3,4,5]
+     * 输出: [120,60,40,30,24]
+     *
+     */
+    public int[] constructArr(int[] a) {
+        if (a == null || a.length == 0) return new int[0];
+        //从左往右累乘结果
+        int[] left = new int[a.length];
+        left[0] = a[0];
+        for (int i = 1; i < a.length; i++) {
+            left[i] = a[i] * left[i - 1];
+        }
+        //从右往左累乘结果
+        int[] right = new int[a.length];
+        right[a.length - 1] = a[a.length - 1];
+        for (int i = a.length - 2; i >= 0; i--) {
+            right[i] = a[i] * right[i + 1];
+        }
+        int[] res = new int[a.length];
+        res[0] = right[1];
+        res[a.length - 1] = left[a.length - 2];
+        for (int i = 1; i < a.length - 1; i++) {
+            //最终结果
+            res[i] = left[i - 1] * right[i + 1];
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
