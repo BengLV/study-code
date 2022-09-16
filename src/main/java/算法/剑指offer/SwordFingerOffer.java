@@ -2939,6 +2939,38 @@ public class SwordFingerOffer {
         return root;
     }
 
+
+    /**
+     * 剑指 Offer 68 - II. 二叉树的最近公共祖先
+     * https://leetcode.cn/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/?favorite=xb9nqhhg
+     *
+     * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
+     *
+     * 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
+     *
+     * 说明:
+     * 所有节点的值都是唯一的。
+     * p、q 为不同节点且均存在于给定的二叉树中。
+     *
+     * 三种情况：
+     *   1、p q 一个在左子树 一个在右子树 那么当前节点即是最近公共祖先
+     *   2、p q 都在左子树
+     *   3、p q 都在右子树
+     *
+     */
+    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+        //如果节点为空,获取已经找到一个节点,则返回
+        if (root == null || root == q || root == p) return root;
+        TreeNode left = lowestCommonAncestor2(root.left, p, q);
+        TreeNode right = lowestCommonAncestor2(root.right, p, q);
+        //说明公共节点在右子树
+        if (left == null) return right;
+        //说明公共节点在左子树
+        if (right == null) return left;
+        //当前为公共节点
+        return root;
+    }
+
     public static void main(String[] args) {
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
