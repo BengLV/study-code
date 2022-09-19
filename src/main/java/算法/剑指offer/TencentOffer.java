@@ -124,4 +124,50 @@ public class TencentOffer {
         }
     }
 
+
+    /**
+     * 5. 最长回文子串
+     * https://leetcode.cn/problems/longest-palindromic-substring/?favorite=ex0k24j
+     *
+     * 示例 1：
+     * 输入：s = "babad"
+     * 输出："bab"
+     * 解释："aba" 同样是符合题意的答案。
+     */
+    int begin = 0, end = 0;
+    public String longestPalindrome(String s) {
+        if (s == null || s.length() <= 1) return s;
+        char[] ch = s.toCharArray();
+        for (int i = 0; i < s.length(); i++) {
+            i = findLongest(ch, i);
+        }
+        return s.substring(begin, end + 1);
+    }
+
+    private int findLongest(char[] ch, int low) {
+        int high = low;
+        //如果是连续字符，则可以快进到最后一位字符
+        while (high < ch.length - 1 && ch[high + 1] == ch[low]) {
+            high++;
+        }
+        //定位不等于当前字符的下标，并且返回，时间复杂度最好为O(n)
+        int ans = high;
+        //从中间往两边扩散
+        while(low > 0 && high < ch.length - 1 && ch[low - 1] == ch[high + 1]) {
+            low--;
+            high++;
+        }
+        //记录最大长度
+        if (high - low > end - begin) {
+            end = high;
+            begin = low;
+        }
+        return ans;
+
+    }
+
+
+
+    public static void main(String[] args) {
+    }
 }
