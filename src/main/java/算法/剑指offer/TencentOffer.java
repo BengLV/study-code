@@ -163,11 +163,35 @@ public class TencentOffer {
             begin = low;
         }
         return ans;
+    }
+
+
+    /**
+     * 7. 整数反转
+     * https://leetcode.cn/problems/reverse-integer/
+     * 
+     * 给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。
+     *
+     * 如果反转后整数超过 32 位的有符号整数的范围[−2的31次方, 2的31次方− 1] ，就返回 0。
+     *
+     * 假设环境不允许存储 64 位整数（有符号或无符号）。
+     *
+     */
+    public int reverse(int x) {
+        int flag = 1;
+        if (x < 0) flag = -1;
+        StringBuilder sb = new StringBuilder(String.valueOf(Math.abs(x)));
+        sb.reverse();
+        try {
+            return Integer.parseInt(sb.toString()) *  flag;
+        } catch(Exception e) {
+            return 0;
+        }
 
     }
 
 
-
     public static void main(String[] args) {
+        System.out.println(Integer.parseInt("-32"));
     }
 }
