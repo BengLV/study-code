@@ -1,8 +1,7 @@
 package 算法.剑指offer;
 
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @description: 牛客网高频面试题
@@ -130,6 +129,63 @@ public class CommonInterviewTopic {
     }*/
 
 
+    /**
+     * 前中后序遍历
+     * https://leetcode.cn/problems/binary-tree-preorder-traversal/
+     *
+     * 中左右 左中右  左右中
+     * 输入：root = [1,null,2,3]
+     * 输出：[1,2,3]
+     *
+     */
+    public int[][] threeOrders (TreeNode root) {
+        // write code here
+        List<Integer> res1 = preorderTraversal(root);
+        List<Integer> res2 = inorderTraversal(root);
+        List<Integer> res3 = postorderTraversal(root);
+        int[][] res = {res1.stream().mapToInt(Integer::valueOf).toArray(), res2.stream().mapToInt(Integer::valueOf).toArray() ,res3.stream().mapToInt(Integer::valueOf).toArray()};
+        return res;
+    }
+
+    private List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        preorder(root, res);
+        return res;
+    }
+
+    private void preorder(TreeNode root, List<Integer> res) {
+        if (root == null) return;
+        res.add(root.val);
+        preorder(root.left, res);
+        preorder(root.right, res);
+    }
+
+    private List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        inorder(root, res);
+        return res;
+    }
+
+    private void inorder(TreeNode root, List<Integer> res) {
+        if (root == null) return;
+        inorder(root.left, res);
+        res.add(root.val);
+        inorder(root.right, res);
+    }
+
+    private List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        postorder(root, res);
+        return res;
+    }
+
+    private void postorder(TreeNode root, List<Integer> res) {
+        if (root == null) return;
+        postorder(root.left, res);
+        postorder(root.right, res);
+        res.add(root.val);
+    }
+
 }
 
 
@@ -138,4 +194,10 @@ class ListNode {
     ListNode next;
     ListNode(int x) { val = x; }
 
+}
+
+class TreeNode {
+    int val = 0;
+    TreeNode left;
+    TreeNode right;
 }
