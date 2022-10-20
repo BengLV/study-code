@@ -200,6 +200,39 @@ public class CommonInterviewTopic {
         return res;
     }
 
+
+    /**
+     * NC15 求二叉树的层序遍历
+     * <p>
+     * 示例1:
+     * 输入：
+     * {1,2,3,4,#,#,5}
+     * 返回值：
+     * [[1],[2,3],[4,5]]
+     */
+    public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
+        if (root == null) return new ArrayList<>();
+        Deque<TreeNode> deque = new LinkedList<>();
+        deque.add(root);
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+        while (!deque.isEmpty()) {
+            int size = deque.size();
+            ArrayList<Integer> list = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode poll = deque.poll();
+                list.add(poll.val);
+                if (poll.left != null) {
+                    deque.add(poll.left);
+                }
+                if (poll.right != null) {
+                    deque.add(poll.right);
+                }
+            }
+            res.add(list);
+        }
+        return res;
+    }
+
 }
 
 
