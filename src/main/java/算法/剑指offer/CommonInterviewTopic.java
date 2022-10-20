@@ -186,6 +186,20 @@ public class CommonInterviewTopic {
         res.add(root.val);
     }
 
+
+    /**
+     * NC119 最小的K个数
+     */
+    public ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
+        quickSort(input,  0, input.length - 1);
+        int[] arr = Arrays.copyOf(input, k);
+        ArrayList<Integer> res = new ArrayList<>();
+        for (int i : arr) {
+            res.add(i);
+        }
+        return res;
+    }
+
 }
 
 
