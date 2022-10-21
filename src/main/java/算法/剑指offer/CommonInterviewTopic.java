@@ -233,6 +233,21 @@ public class CommonInterviewTopic {
         return res;
     }
 
+
+    /**
+     * NC88 寻找第K大
+     *
+     * 有一个整数数组，请你根据快速排序的思路，找出数组中第 k 大的数。
+     *
+     * 给定一个整数数组 a ,同时给定它的大小n和要找的 k ，请返回第 k 大的数(包括重复的元素，不用去重)，保证答案存在。
+     * 要求：时间复杂度 O(nlogn)，空间复杂度 O(1)
+     */
+    public int findKth(int[] a, int n, int K) {
+        // write code here
+        quickSort(a, 0, n - 1);
+        return a[n - K];
+    }
+
 }
 
 
