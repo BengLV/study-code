@@ -271,6 +271,28 @@ public class CommonInterviewTopic {
     }
 
 
+    /**
+     * NC33 合并两个排序的链表
+     * 输入两个递增的链表，单个链表的长度为n，合并这两个链表并使新链表中的节点仍然是递增排序的。
+     *
+     */
+    public ListNode Merge(ListNode list1,ListNode list2) {
+        if (list1 == null) {
+            return list2;
+        }
+        if (list2 == null) {
+            return list1;
+        }
+        if (list1.val <= list2.val) {
+            list1.next = Merge(list1.next, list2);
+            return list1;
+        } else {
+            list2.next = Merge(list1, list2.next);
+            return list2;
+        }
+    }
+
+
 }
 
 
