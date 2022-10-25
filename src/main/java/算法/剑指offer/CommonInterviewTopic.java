@@ -318,6 +318,23 @@ public class CommonInterviewTopic {
         return stack2.pop();
     }
 
+
+    /**
+     * NC68 跳台阶
+     * 一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法（先后次序不同算不同的结果）。
+     * 要求：时间复杂度：O(n) ，空间复杂度： O(1)
+     */
+    public int jumpFloor(int target) {
+        if (target < 3) return target;
+        int a = 1, b = 2, res = 0;
+        for (int i = 3; i <= target; i++) {
+            res = a + b;
+            a = b;
+            b = res;
+        }
+        return res;
+    }
+
 }
 
 
