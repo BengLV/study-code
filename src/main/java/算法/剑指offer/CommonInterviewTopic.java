@@ -335,6 +335,58 @@ public class CommonInterviewTopic {
         return res;
     }
 
+
+    /**
+     * NC50 链表中的节点每k个一组翻转
+     * 将给出的链表中的节点每 k 个一组翻转，返回翻转后的链表
+     * 如果链表中的节点数不是 k 的倍数，将最后剩下的节点保持原样
+     * 你不能更改节点中的值，只能更改节点本身。
+     */
+    public static ListNode reverseKGroup (ListNode head, int k) {
+        //记录当前列表的长度
+        int length = 0;
+        ListNode temp = head;
+        while (temp != null) {
+            temp = temp.next;
+            length++;
+        }
+        ListNode dummy = new ListNode(0);
+        ListNode pre = dummy;
+        pre.next = head;
+        ListNode curr = head;
+        //12345 k=3
+        for (int i = 0; i < length / k; i++) {
+            for (int j = 0; j < k - 1; j++) {
+                //当前遍历的节点
+                ListNode node = curr.next;      //node:2345  >> 345
+                //这一轮中,最开始的那个节点. 指向第三个节点
+                curr.next = node.next;         //curr:1345   >> 145
+                //交换两个节点
+                node.next = pre.next;         //node:21345   >> 32145
+                //将交换后的节点指向虚拟节点
+                pre.next = node;             //021345        >> 032145
+            }
+            //挪动区间
+            pre = curr;                     //145
+            curr = curr.next;               //45
+        }
+        return dummy.next;
+    }
+
+    public static void main(String[] args) {
+        ListNode node1 = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(3);
+        ListNode node4 = new ListNode(4);
+        ListNode node5 = new ListNode(5);
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+
+        reverseKGroup(node1, 3);
+    }
+
 }
 
 
