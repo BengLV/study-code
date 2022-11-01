@@ -373,6 +373,48 @@ public class CommonInterviewTopic {
         return dummy.next;
     }
 
+
+    /**
+     * NC19 连续子数组的最大和
+     * 输入一个长度为n的整型数组array，数组中的一个或连续多个整数组成一个子数组，子数组最小长度为1。
+     * 求所有子数组的和的最大值。
+     */
+    public int FindGreatestSumOfSubArray(int[] array) {
+        int res = array[0];
+        int sum = 0;
+        for (int num : array) {
+            if (sum > 0) {
+                sum += num;
+            } else {
+                sum = num;
+            }
+            res = Math.max(res, sum);
+        }
+        return res;
+        /**
+         * int[] dp = new int[array.length];
+         *         dp[0] = array[0];
+         *         int res = array[0];
+         *         for (int i = 1; i < array.length; i++) {
+         *             dp[i] = Math.max(dp[i - 1] + array[i], array[i]);
+         *             res = Math.max(res, dp[i]);
+         *
+         *         }
+         *         return res;
+         *
+         *  //空间优化后的动态规划
+         *  int sum = 0;
+         *         int max = array[0];
+         *         for(int i=0;i<array.length;i++){
+         *             // 优化动态规划，确定sum的最大值
+         *             sum = Math.max(sum + array[i], array[i]);
+         *             // 每次比较，保存出现的最大值
+         *             max = Math.max(max,sum);
+         *         }
+         *         return max;
+         */
+    }
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
