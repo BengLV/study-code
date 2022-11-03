@@ -415,6 +415,30 @@ public class CommonInterviewTopic {
          */
     }
 
+    /**
+     * NC41 最长无重复子数组
+     * 给定一个长度为n的数组arr，返回arr的最长无重复元素子数组的长度，无重复指的是所有数字都不相同。
+     * 子数组是连续的，比如[1,3,5,7,9]的子数组有[1,3]，[3,5,7]等等，但是[1,3,7]不是子数组
+     */
+    public static int maxLength(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        Set<Integer> set = new HashSet<>();
+        int left = 0, right = 0;
+        int res = 0;
+        while (right < arr.length) {
+            while (set.contains(arr[right])) {
+                set.remove(arr[left]);
+                left++;
+            }
+            res = Math.max(res, right - left + 1);
+            set.add(arr[right]);
+            right++;
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
@@ -426,7 +450,8 @@ public class CommonInterviewTopic {
         node3.next = node4;
         node4.next = node5;
 
-        reverseKGroup(node1, 3);
+        //reverseKGroup(node1, 3);
+        maxLength(new int[]{1,1});
     }
 
 }
