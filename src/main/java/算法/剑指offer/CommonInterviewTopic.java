@@ -439,6 +439,34 @@ public class CommonInterviewTopic {
         return res;
     }
 
+
+    /**
+     * NC4 判断链表中是否有环
+     * 判断给定的链表中是否有环。如果有环则返回true，否则返回false。
+     */
+    public boolean hasCycle(ListNode head) {
+        /* 空间复杂度:O(n) 时间复杂度:O(n)
+        Set<ListNode> set = new HashSet<>();
+        while (head != null) {
+            if (!set.add(head)) {
+                return true;
+            }
+            head = head.next;
+        }
+        return false;*/
+
+        //空间复杂度:O(1)
+        if (head == null || head.next == null) return false;
+        ListNode fast = head.next;
+        ListNode slow = head;
+        while (slow != fast) {
+            if (fast == null || fast.next == null) return false;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
@@ -451,7 +479,7 @@ public class CommonInterviewTopic {
         node4.next = node5;
 
         //reverseKGroup(node1, 3);
-        maxLength(new int[]{1,1});
+        maxLength(new int[]{1, 2, 3,3,4});
     }
 
 }
