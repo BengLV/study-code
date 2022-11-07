@@ -467,6 +467,23 @@ public class CommonInterviewTopic {
         return true;
     }
 
+
+    /**
+     * NC22 合并两个有序的数组
+     * 给出一个有序的整数数组 A 和有序的整数数组 B ，请将数组 B 合并到数组 A 中，变成一个有序的升序数组
+     */
+    public static void merge(int[] nums1, int m, int[] nums2, int n) {
+        int i = m - 1, j = n - 1, k = m + n - 1;
+        while (j >= 0) {
+            if (i < 0 || nums2[j] > nums1[i]) {
+                nums1[k--] = nums2[j--];
+            } else {
+                nums1[k--] = nums1[i--];
+            }
+
+        }
+    }
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
@@ -479,7 +496,8 @@ public class CommonInterviewTopic {
         node4.next = node5;
 
         //reverseKGroup(node1, 3);
-        maxLength(new int[]{1, 2, 3,3,4});
+        //maxLength(new int[]{1, 2, 3,3,4});
+        merge(new int[]{0}, 0, new int[]{1}, 1);
     }
 
 }
