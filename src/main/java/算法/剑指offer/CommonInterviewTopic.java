@@ -518,12 +518,12 @@ public class CommonInterviewTopic {
      * 括号必须以正确的顺序关闭，"()"和"()[]{}"都是合法的括号序列，但"(]"和"([)]"不合法
      */
     public boolean isValid(String s) {
-        Stack<Character>stack = new Stack<Character>();
-        for(char c: s.toCharArray()){
-            if(c=='(')stack.push(')');
-            else if(c=='[')stack.push(']');
-            else if(c=='{')stack.push('}');
-            else if(stack.isEmpty()||c!=stack.pop())return false;
+        Stack<Character> stack = new Stack<Character>();
+        for (char c : s.toCharArray()) {
+            if (c == '(') stack.push(')');
+            else if (c == '[') stack.push(']');
+            else if (c == '{') stack.push('}');
+            else if (stack.isEmpty() || c != stack.pop()) return false;
         }
         return stack.isEmpty();
     }
