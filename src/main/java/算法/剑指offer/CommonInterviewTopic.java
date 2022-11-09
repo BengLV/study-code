@@ -17,14 +17,14 @@ public class CommonInterviewTopic {
      * https://leetcode.cn/problems/reverse-linked-list/
      *
      */
-    public ListNode reverseList(ListNode head) {
+    public 算法.链表.ListNode reverseList(算法.链表.ListNode head) {
         if (head == null) {
             return null;
         }
-        ListNode temp = head;
-        ListNode pre = null;
+        算法.链表.ListNode temp = head;
+        算法.链表.ListNode pre = null;
         while (temp != null) {
-            ListNode node = temp.next;
+            算法.链表.ListNode node = temp.next;
             temp.next = pre;
             pre = temp;
             temp = node;
@@ -483,6 +483,35 @@ public class CommonInterviewTopic {
 
         }
     }
+
+
+    /**
+     * NC3 链表中环的入口结点
+     * 给一个长度为n链表，若其中包含环，请找出该链表的环的入口结点，否则，返回null。
+     */
+    public ListNode EntryNodeOfLoop(ListNode pHead) {
+        if (pHead == null || pHead.next == null) return null;
+        ListNode fast = pHead;
+        ListNode slow = pHead;
+        while (fast != null) {
+            if (fast.next != null) {
+                fast = fast.next.next;
+            } else {
+                return null;
+            }
+            slow = slow.next;
+            if (slow == fast) {
+                ListNode res = pHead;
+                while (res != slow) {
+                    res = res.next;
+                    slow = slow.next;
+                }
+                return res;
+            }
+        }
+        return null;
+    }
+
 
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
