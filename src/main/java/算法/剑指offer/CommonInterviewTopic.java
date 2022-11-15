@@ -529,6 +529,40 @@ public class CommonInterviewTopic {
     }
 
 
+    /**
+     * NC53 删除链表的倒数第n个节点
+     * 给定一个链表，删除链表的倒数第 n 个节点并返回链表的头指针
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        /*//空间复杂度O(1), 时间复杂度O(n)
+        int nodeCount = 0;
+        ListNode temp = head;
+        while (temp != null) {
+            nodeCount++;
+            temp = temp.next;
+        }
+        temp = head;
+        if (nodeCount - n == 0) return head.next;
+        for (int i = 1; i < nodeCount - n; i++) {
+            temp = temp.next;
+        }
+        temp.next = temp.next.next;
+        return head;*/
+        ListNode temp = new ListNode(0);
+        temp.next = head;
+        ListNode fast = head;
+        ListNode slow = temp;
+        for (int i = 0; i < n; i++) {
+            fast = fast.next;
+        }
+        while (fast != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        slow.next = slow.next.next;
+        return temp.next;
+    }
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
