@@ -1,6 +1,7 @@
 package 算法.剑指offer;
 
 
+
 import java.util.*;
 
 /**
@@ -561,6 +562,30 @@ public class CommonInterviewTopic {
         }
         slow.next = slow.next.next;
         return temp.next;
+    }
+
+    /**
+     * NC1 大数加法 <br>
+     * 以字符串的形式读入两个数字，编写一个函数计算它们的和，以字符串形式返回。
+     *
+     */
+    public String solve(String s, String t) {
+        // write code here
+        StringBuilder builder = new StringBuilder();
+        int i = s.length() - 1, j = t.length() - 1, carry = 0;
+        while (i >= 0 || j >= 0) {
+            int n1 = i >= 0 ? s.charAt(i) - '0' : 0;
+            int n2 = j >= 0 ? t.charAt(j) - '0' : 0;
+            int temp = n1 + n2 + carry;
+            carry = temp / 10;
+            builder.append(temp % 10);
+            i--;
+            j--;
+        }
+        if (carry == 1) {
+            builder.append(1);
+        }
+        return builder.reverse().toString();
     }
 
     public static void main(String[] args) {
