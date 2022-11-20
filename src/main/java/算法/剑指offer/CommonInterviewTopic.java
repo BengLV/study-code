@@ -2,6 +2,8 @@ package 算法.剑指offer;
 
 
 
+import designpatterns.结构型模式.享元模式.trees.Tree;
+
 import java.util.*;
 
 /**
@@ -587,6 +589,51 @@ public class CommonInterviewTopic {
         }
         return builder.reverse().toString();
     }
+
+
+    /**
+     * NC14 按之字形顺序打印二叉树
+     * 例如：
+     * 给定的二叉树是{1,2,3,#,#,4,5}
+     *
+     * 该二叉树之字形层序遍历的结果是
+     * [
+     * [1],
+     * [3,2],
+     * [4,5]
+     * ]
+     */
+    public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+        if (pRoot == null) {
+            return res;
+        }
+        Deque<TreeNode> deque = new LinkedList<>();
+        deque.add(pRoot);
+        int level = 0;
+        while (!deque.isEmpty()) {
+            int size = deque.size();
+            ArrayList<Integer> temp = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode poll = deque.poll();
+                if (level % 2 == 0) {
+                    temp.add(poll.val);
+                } else {
+                    temp.add(0, poll.val);
+                }
+                if (poll.left != null) {
+                    deque.add(poll.left);
+                }
+                if (poll.right != null) {
+                    deque.add(poll.right);
+                }
+            }
+            level++;
+            res.add(temp);
+        }
+        return res;
+    }
+
 
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
