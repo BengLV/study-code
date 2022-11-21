@@ -635,6 +635,38 @@ public class CommonInterviewTopic {
     }
 
 
+    /**
+     * NC127 最长公共子串
+     *
+     * 给定两个字符串str1和str2,输出两个字符串的最长公共子串
+     * 题目保证str1和str2的最长公共子串存在且唯一。
+     */
+    public String LCS(String str1, String str2) {
+        // write code here
+        int[][] dp = new int[str1.length() + 1][str2.length() + 1];
+        //记录相同字串最后一位的下标
+        int lastIdx = 0;
+        //相同字串的长度
+        int maxLength = 0;
+        for (int i = 0; i < str1.length(); i++) {
+            for (int j = 0; j < str2.length(); j++) {
+                //如果相等时
+                if (str1.charAt(i) == str2.charAt(j)) {
+                    //dp公式
+                    dp[i + 1][j + 1] = dp[i][j] + 1;
+                    if (dp[i + 1][j + 1] > maxLength) {
+                        maxLength = dp[i + 1][j + 1];
+                        lastIdx = i;
+                    }
+                } else {
+                    dp[i + 1][j + 1] = 0;
+                }
+            }
+        }
+        return str1.substring(lastIdx - maxLength + 1, lastIdx + 1);
+    }
+
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
