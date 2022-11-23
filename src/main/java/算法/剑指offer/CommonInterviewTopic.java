@@ -667,6 +667,22 @@ public class CommonInterviewTopic {
     }
 
 
+    /**
+     * NC66 两个链表的第一个公共结点
+     * 输入两个无环的单向链表，找出它们的第一个公共结点，如果没有公共节点则返回空。
+     */
+    public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+        if (pHead1 == null || pHead2 == null) return null;
+        ListNode node1 = pHead1;
+        ListNode node2 = pHead2;
+        while (node1 != node2) {
+            node1 = node1 == null ? pHead2 : node1.next;
+            node2 = node2 == null ? pHead1 : node2.next;
+        }
+        return  node1;
+    }
+
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
