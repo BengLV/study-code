@@ -683,6 +683,47 @@ public class CommonInterviewTopic {
     }
 
 
+    /**
+     * NC40 链表相加(二)
+     * 假设链表中每一个节点的值都在 0 - 9 之间，那么链表整体就可以代表一个整数。
+     * 给定两个这种链表，请生成代表两个整数相加值的结果链表。
+     */
+    public ListNode addInList (ListNode head1, ListNode head2) {
+        if (head1 == null) return head2;
+        if (head2 == null) return head1;
+        Stack<Integer> stack1 = new Stack<>();
+        Stack<Integer> stack2 = new Stack<>();
+        while (head1 != null) {
+            stack1.add(head1.val);
+            head1 = head1.next;
+        }
+        while (head2 != null) {
+            stack2.add(head2.val);
+            head2 = head2.next;
+        }
+        int i = stack1.size(), j = stack2.size(), carry = 0;
+        ListNode head = new ListNode(0);
+        ListNode temp = head.next;
+        while (i > 0 || j > 0) {
+            int n1 = i > 0 ? stack1.pop() : 0;
+            int n2 = j > 0 ? stack2.pop() : 0;
+            int sum = n1 + n2 + carry;
+            ListNode node = new ListNode(sum % 10);
+            //头插法
+            node.next = temp;
+            temp = node;
+            carry = sum / 10;
+            i--;
+            j--;
+        }
+        if (carry == 1) {
+            ListNode node = new ListNode(1);
+            node.next = temp;
+            temp = node;
+        }
+        return temp;
+    }
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
