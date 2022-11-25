@@ -724,6 +724,28 @@ public class CommonInterviewTopic {
         return temp;
     }
 
+
+    /**
+     * NC102 在二叉树中找到两个节点的最近公共祖先
+     * 给定一棵二叉树(保证非空)以及这棵树上的两个节点对应的val值 o1 和 o2，请找到 o1 和 o2 的最近公共祖先节点。
+     */
+    public int lowestCommonAncestor (TreeNode root, int o1, int o2) {
+        // write code here
+        TreeNode res = dfs(root, o1, o2);
+        return res.val;
+    }
+    public TreeNode dfs(TreeNode root, int o1, int o2) {
+        if(root == null || root.val == o1 || root.val == o2) {
+            return root;
+        }
+        TreeNode left = dfs(root.left, o1, o2);
+        TreeNode right = dfs(root.right, o1, o2);
+        if(left == null) return right;
+        if(right == null) return left;
+        return root;
+    }
+
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
