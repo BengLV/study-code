@@ -745,6 +745,20 @@ public class CommonInterviewTopic {
         return root;
     }
 
+    /**
+     * NC103 反转字符串
+     * 写出一个程序，接受一个字符串，然后输出该字符串反转后的字符串
+     */
+    public String solve (String str) {
+        if (str == "" || str == null) return "";
+        //直接 return new StringBuilder(str).reverse().toString();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < str.length(); i++) {
+            builder.append(str.charAt(i));
+        }
+        return builder.reverse().toString();
+    }
+
 
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
