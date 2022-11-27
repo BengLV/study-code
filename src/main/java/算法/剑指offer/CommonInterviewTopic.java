@@ -802,6 +802,22 @@ public class CommonInterviewTopic {
         return res;
     }
 
+    /**
+     * NC65 斐波那契数列
+     *
+     */
+    public int Fibonacci(int n) {
+        int res = 0;
+        if (n == 1 || n == 2) return 1;
+        int a = 1, b = 1;
+        for (int i = 3; i <= n; i++) {
+            res = a + b;
+            b = a;
+            a = res;
+        }
+        return res;
+    }
+
 
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
