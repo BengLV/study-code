@@ -760,6 +760,49 @@ public class CommonInterviewTopic {
     }
 
 
+    /**
+     * NC38 螺旋矩阵
+     *
+     * 给定一个m x n大小的矩阵（m行，n列），按螺旋的顺序返回矩阵中的所有元素。
+     */
+    public ArrayList<Integer> spiralOrder(int[][] matrix) {
+        ArrayList<Integer> res = new ArrayList<>();
+        if (matrix == null) return null;
+        int width = matrix.length;
+        if (width == 0) return res;
+        int length = matrix[0].length;
+        int left = 0, top = 0, right = length - 1, down = width - 1;
+        while (true) {
+            //从左往右 left right
+            for (int i = left; i <= right; i++) {
+                res.add(matrix[top][i]);
+            }
+            top++;
+            if (top > down) break;
+            //上往下
+            for (int i = top; i <= down; i++) {
+                res.add(matrix[i][right]);
+            }
+            right--;
+            if (right < left) break;
+            //从右往左
+            for (int i = right; i >= left; i--) {
+                res.add(matrix[down][i]);
+            }
+            down--;
+            if (down < top) break;
+            //从下往上
+            for (int i = down; i >= top; i--) {
+                res.add(matrix[i][left]);
+            }
+            left++;
+            if (left > right) break;
+
+        }
+        return res;
+    }
+
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
