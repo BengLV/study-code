@@ -1,9 +1,6 @@
 package 算法.剑指offer;
 
 
-
-import designpatterns.结构型模式.享元模式.trees.Tree;
-
 import java.util.*;
 
 /**
@@ -815,6 +812,39 @@ public class CommonInterviewTopic {
             b = a;
             a = res;
         }
+        return res;
+    }
+
+
+    /**
+     * NC17 最长回文子串
+     *
+     * 对于长度为n的一个字符串A（仅包含数字，大小写英文字母），请设计一个高效算法，计算其中最长回文子串的长度。
+     */
+    int ans = 0;
+    public int getLongestPalindrome (String A) {
+        // write code here
+        if (A == null) return 0;
+        char[] ch = A.toCharArray();
+        for (int i = 0; i < A.length(); i++) {
+            i = getPalindromeLength(ch, i);
+        }
+        return ans;
+    }
+
+    private int getPalindromeLength(char[] ch, int left) {
+        int right = left;
+        //如果是连续的字符，则跳过
+        while (right < ch.length - 1 && ch[left] == ch[right + 1]) {
+            right++;
+        }
+        int res = right;
+        //从中间往两边扩散
+        while (left > 0 && right < ch.length - 1 && ch[left - 1] == ch[right + 1]) {
+            left--;
+            right++;
+        }
+        ans = Math.max(right - left + 1, ans);
         return res;
     }
 
