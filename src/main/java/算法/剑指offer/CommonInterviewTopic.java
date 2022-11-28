@@ -849,6 +849,44 @@ public class CommonInterviewTopic {
     }
 
 
+    /**
+     * NC54 三数之和
+     * 给出一个有n个元素的数组S，S中是否有元素a,b,c满足a+b+c=0？找出数组S中所有满足条件的三元组。
+     */
+    public List<List<Integer>> threeSum(int[] num) {
+        if (num.length < 3) return new ArrayList<>();
+        Arrays.sort(num);
+        List<List<Integer>> res = new ArrayList<>();
+        for (int i = 0; i < num.length; i++) {
+            if (num[i] > 0) {
+                break;
+            }
+            if (i > 0 && num[i] == num[i - 1]) {
+                continue;
+            }
+            int left = i + 1, right = num.length - 1;
+            while (left < right) {
+                int sum = num[i] + num[left] + num[right];
+                if (sum == 0) {
+                    res.add(Arrays.asList(num[i], num[left], num[right]));
+                    while (left < right && num[right] == num[right- 1]) {
+                        right--;
+                    }
+                    while (left < right && num[left] == num[left + 1]) {
+                        left++;
+                    }
+                    left++;
+                    right--;
+                } else if (sum > 0) {
+                    right--;
+                } else {
+                    left++;
+                }
+            }
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
