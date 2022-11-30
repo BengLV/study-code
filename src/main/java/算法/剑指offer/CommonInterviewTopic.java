@@ -1,6 +1,8 @@
 package 算法.剑指offer;
 
 
+import 算法.链表.ListNode;
+
 import java.util.*;
 
 /**
@@ -276,7 +278,7 @@ public class CommonInterviewTopic {
      * 输入两个递增的链表，单个链表的长度为n，合并这两个链表并使新链表中的节点仍然是递增排序的。
      *
      */
-    public ListNode Merge(ListNode list1, ListNode list2) {
+    public ListNode Merge(算法.链表.ListNode list1, 算法.链表.ListNode list2) {
         if (list1 == null) {
             return list2;
         }
@@ -342,23 +344,23 @@ public class CommonInterviewTopic {
      * 如果链表中的节点数不是 k 的倍数，将最后剩下的节点保持原样
      * 你不能更改节点中的值，只能更改节点本身。
      */
-    public static ListNode reverseKGroup (ListNode head, int k) {
+    public static 算法.链表.ListNode reverseKGroup (算法.链表.ListNode head, int k) {
         //记录当前列表的长度
         int length = 0;
-        ListNode temp = head;
+        算法.链表.ListNode temp = head;
         while (temp != null) {
             temp = temp.next;
             length++;
         }
-        ListNode dummy = new ListNode(0);
-        ListNode pre = dummy;
+        算法.链表.ListNode dummy = new 算法.链表.ListNode(0);
+        算法.链表.ListNode pre = dummy;
         pre.next = head;
-        ListNode curr = head;
+        算法.链表.ListNode curr = head;
         //12345 k=3
         for (int i = 0; i < length / k; i++) {
             for (int j = 0; j < k - 1; j++) {
                 //当前遍历的节点
-                ListNode node = curr.next;      //node:2345  >> 345
+                算法.链表.ListNode node = curr.next;      //node:2345  >> 345
                 //这一轮中,最开始的那个节点. 指向第三个节点
                 curr.next = node.next;         //curr:1345   >> 145
                 //交换两个节点
@@ -444,7 +446,7 @@ public class CommonInterviewTopic {
      * NC4 判断链表中是否有环
      * 判断给定的链表中是否有环。如果有环则返回true，否则返回false。
      */
-    public boolean hasCycle(ListNode head) {
+    public boolean hasCycle(算法.链表.ListNode head) {
         /* 空间复杂度:O(n) 时间复杂度:O(n)
         Set<ListNode> set = new HashSet<>();
         while (head != null) {
@@ -457,8 +459,8 @@ public class CommonInterviewTopic {
 
         //空间复杂度:O(1)
         if (head == null || head.next == null) return false;
-        ListNode fast = head.next;
-        ListNode slow = head;
+        算法.链表.ListNode fast = head.next;
+        算法.链表.ListNode slow = head;
         while (slow != fast) {
             if (fast == null || fast.next == null) return false;
             slow = slow.next;
@@ -489,10 +491,10 @@ public class CommonInterviewTopic {
      * NC3 链表中环的入口结点
      * 给一个长度为n链表，若其中包含环，请找出该链表的环的入口结点，否则，返回null。
      */
-    public ListNode EntryNodeOfLoop(ListNode pHead) {
+    public 算法.链表.ListNode EntryNodeOfLoop(算法.链表.ListNode pHead) {
         if (pHead == null || pHead.next == null) return null;
-        ListNode fast = pHead;
-        ListNode slow = pHead;
+        算法.链表.ListNode fast = pHead;
+        算法.链表.ListNode slow = pHead;
         while (fast != null) {
             if (fast.next != null) {
                 fast = fast.next.next;
@@ -501,7 +503,7 @@ public class CommonInterviewTopic {
             }
             slow = slow.next;
             if (slow == fast) {
-                ListNode res = pHead;
+                算法.链表.ListNode res = pHead;
                 while (res != slow) {
                     res = res.next;
                     slow = slow.next;
@@ -533,7 +535,7 @@ public class CommonInterviewTopic {
      * NC53 删除链表的倒数第n个节点
      * 给定一个链表，删除链表的倒数第 n 个节点并返回链表的头指针
      */
-    public ListNode removeNthFromEnd(ListNode head, int n) {
+    public 算法.链表.ListNode removeNthFromEnd(算法.链表.ListNode head, int n) {
         /*//空间复杂度O(1), 时间复杂度O(n)
         int nodeCount = 0;
         ListNode temp = head;
@@ -548,10 +550,10 @@ public class CommonInterviewTopic {
         }
         temp.next = temp.next.next;
         return head;*/
-        ListNode temp = new ListNode(0);
+        算法.链表.ListNode temp = new 算法.链表.ListNode(0);
         temp.next = head;
-        ListNode fast = head;
-        ListNode slow = temp;
+        算法.链表.ListNode fast = head;
+        算法.链表.ListNode slow = temp;
         for (int i = 0; i < n; i++) {
             fast = fast.next;
         }
@@ -668,10 +670,10 @@ public class CommonInterviewTopic {
      * NC66 两个链表的第一个公共结点
      * 输入两个无环的单向链表，找出它们的第一个公共结点，如果没有公共节点则返回空。
      */
-    public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+    public 算法.链表.ListNode FindFirstCommonNode(算法.链表.ListNode pHead1, 算法.链表.ListNode pHead2) {
         if (pHead1 == null || pHead2 == null) return null;
-        ListNode node1 = pHead1;
-        ListNode node2 = pHead2;
+        算法.链表.ListNode node1 = pHead1;
+        算法.链表.ListNode node2 = pHead2;
         while (node1 != node2) {
             node1 = node1 == null ? pHead2 : node1.next;
             node2 = node2 == null ? pHead1 : node2.next;
@@ -685,7 +687,7 @@ public class CommonInterviewTopic {
      * 假设链表中每一个节点的值都在 0 - 9 之间，那么链表整体就可以代表一个整数。
      * 给定两个这种链表，请生成代表两个整数相加值的结果链表。
      */
-    public ListNode addInList (ListNode head1, ListNode head2) {
+    public 算法.链表.ListNode addInList (算法.链表.ListNode head1, 算法.链表.ListNode head2) {
         if (head1 == null) return head2;
         if (head2 == null) return head1;
         Stack<Integer> stack1 = new Stack<>();
@@ -699,13 +701,13 @@ public class CommonInterviewTopic {
             head2 = head2.next;
         }
         int i = stack1.size(), j = stack2.size(), carry = 0;
-        ListNode head = new ListNode(0);
-        ListNode temp = head.next;
+        算法.链表.ListNode head = new 算法.链表.ListNode(0);
+        算法.链表.ListNode temp = head.next;
         while (i > 0 || j > 0) {
             int n1 = i > 0 ? stack1.pop() : 0;
             int n2 = j > 0 ? stack2.pop() : 0;
             int sum = n1 + n2 + carry;
-            ListNode node = new ListNode(sum % 10);
+            算法.链表.ListNode node = new 算法.链表.ListNode(sum % 10);
             //头插法
             node.next = temp;
             temp = node;
@@ -714,7 +716,7 @@ public class CommonInterviewTopic {
             j--;
         }
         if (carry == 1) {
-            ListNode node = new ListNode(1);
+            算法.链表.ListNode node = new 算法.链表.ListNode(1);
             node.next = temp;
             temp = node;
         }
@@ -887,6 +889,41 @@ public class CommonInterviewTopic {
         return res;
     }
 
+    /**
+     * NC12 重建二叉树
+     * 给定节点数为 n 的二叉树的前序遍历和中序遍历结果，请重建出该二叉树并返回它的头结点
+     */
+    //前序遍历  中左右 pre  中序遍历 左中右  vin
+    private HashMap<Integer, Integer> map = new HashMap<>();
+    private int[] temp;
+    public TreeNode reConstructBinaryTree(int [] pre,int [] vin) {
+        //将前序遍历结果存起来,后续用来分割数组
+        for (int i = 0; i < vin.length; i++) {
+            map.put(vin[i], i);
+        }
+        temp = pre;
+        return helper(0, 0, vin.length - 1);
+    }
+
+    /**
+     * @param root 根节点在前序遍历的索引root
+     * @param left 子树在中序遍历的左边界
+     * @param right 子树在中序遍历的右边界
+     */
+    private TreeNode helper(int root, int left, int right) {
+        if (left > right) return null;
+        //获取中节点
+        int val = temp[root];
+        TreeNode node = new TreeNode(val);
+        //根节点在中序遍历的索引
+        int idx = map.get(val);
+        node.left = helper(root + 1, left, idx - 1);
+        //root + idx - left + 1:根节点索引 + 左子树长度 + 1
+        node.right = helper(root + idx - left + 1  ,idx + 1, right);
+        return node;
+    }
+
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
@@ -917,4 +954,8 @@ class TreeNode {
     int val = 0;
     TreeNode left;
     TreeNode right;
+
+    public TreeNode(int val) {
+        this.val = val;
+    }
 }
