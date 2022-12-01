@@ -36,7 +36,7 @@ class MyTask extends RecursiveTask<Integer> {
         //将任务进行拆分(fork)
         MyTask task = new MyTask(n - 1);
         task.fork();
-        log.info("fork() {] + {}", n, task);
+        log.info("fork() {} + {}", n, task);
 
         //合并(join)结果
         int result = n + task.join();
