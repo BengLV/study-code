@@ -278,26 +278,6 @@ public class DynamicProgramming {
     }
 
 
-    /**
-     * NC32 求平方根
-     */
-    public int mySqrt(int x) {
-        if (x == 1) return 1;
-        int min = 0, max = x;
-        //等于1会陷入死循环
-        while (max - min > 1) {
-            //二分法
-            int m = (max + min) / 2;
-            //用x/m<m而不是m*m>x防止溢出
-            if (x / m < m) {
-                max = m;
-            } else {
-                min = m;
-            }
-        }
-        return min;
-    }
-
     public static void main(String[] args) {
         HashMap<Object, Object> objectObjectHashMap = new HashMap<>();
         System.out.println(objectObjectHashMap.get("21"));
