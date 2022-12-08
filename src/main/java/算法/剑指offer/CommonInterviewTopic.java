@@ -980,6 +980,60 @@ public class CommonInterviewTopic {
     }
 
 
+    /**
+     * NC90 包含min函数的栈
+     * 剑指 Offer 30. 包含min函数的栈
+     * https://leetcode.cn/problems/bao-han-minhan-shu-de-zhan-lcof/
+     */
+    //先进后出
+    class MinStack {
+
+        private Node node;
+
+        public MinStack() {
+
+        }
+
+        //添加
+        public void push(int x) {
+            if (node == null) {
+                node = new Node(x, x, null);
+            } else {
+                node = new Node(x, Math.min(node.min, x), node);
+            }
+        }
+
+        //删除最后添加的那个元素
+        public void pop() {
+            node = node.next;
+        }
+
+        public int top() {
+            return node.val;
+        }
+
+        public int min() {
+            return node.min;
+        }
+
+        class Node {
+
+            private int val;
+
+            private int min;
+
+            private Node next;
+
+            public Node(int val, int min, Node next) {
+                this.min = min;
+                this.val = val;
+                this.next = next;
+            }
+        }
+
+    }
+
+
 
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
