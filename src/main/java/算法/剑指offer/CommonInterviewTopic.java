@@ -1051,6 +1051,42 @@ public class CommonInterviewTopic {
         return res;
     }
 
+    /**
+     * NC51 合并k个已排序的链表
+     * 合并 k 个升序的链表并将结果作为一个升序的链表返回其头节点。
+     */
+    public ListNode mergeKLists(ArrayList<ListNode> lists) {
+        if (lists == null || lists.size() == 0) return null;
+        //使用有线队列
+        PriorityQueue<ListNode> deque = new PriorityQueue<>(lists.size(), (o1, o2) -> {
+            if (o1.val < o2.val) {
+                return -1;
+            } else if (o1.val == o2.val) {
+                return 0;
+            } else {
+                return 1;
+            }
+        });
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+        //先添加头部节点即可.
+        for (ListNode node : lists) {
+            if (node != null) {
+                deque.add(node);
+            }
+        }
+        while (!deque.isEmpty()) {
+            tail.next = deque.poll();
+            tail = tail.next;
+            //如果临时节点的next节点不为空,则添加next节点
+            if (tail.next != null) {
+                deque.add(tail.next);
+            }
+        }
+        return dummy.next;
+    }
+
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
