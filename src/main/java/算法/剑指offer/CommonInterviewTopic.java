@@ -1034,6 +1034,22 @@ public class CommonInterviewTopic {
     }
 
 
+    /**
+     * NC7 买卖股票的最好时机(一)
+     * 只能买卖一次
+     */
+    public int maxProfit (int[] prices) {
+        if (prices == null || prices.length <= 1) return 0;
+        int min = prices[0], res = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] <= min) {
+                min = prices[i];
+            } else {
+                res = Math.max(res, prices[i] - min);
+            }
+        }
+        return res;
+    }
 
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
