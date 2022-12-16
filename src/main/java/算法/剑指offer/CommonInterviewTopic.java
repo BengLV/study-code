@@ -1086,6 +1086,33 @@ public class CommonInterviewTopic {
         return dummy.next;
     }
 
+    /**
+     * NC121 字符串的排列
+     * 输入一个长度为 n 字符串，打印出该字符串中字符的所有排列，你可以以任意顺序返回这个字符串数组。
+     * 例如输入字符串ABC,则输出由字符A,B,C所能排列出来的所有字符串ABC,ACB,BAC,BCA,CBA和CAB。
+     *
+     * 递归回溯
+     */
+    private Set<String> set = new HashSet<>();
+    public ArrayList<String> Permutation(String str) {
+        boolean[] visited = new boolean[str.length()];
+        PermutationDFS(str.toCharArray(), "", visited);
+        return new ArrayList<>(set);
+    }
+
+
+    private void PermutationDFS(char[] arr, String s, boolean[] visited) {
+        if (s.length() == arr.length) {
+            set.add(s);
+            return;
+        }
+        for (int i = 0; i < arr.length; i++) {
+            if (visited[i]) continue;
+            visited[i] = true;
+            PermutationDFS(arr, s + arr[i], visited);
+            visited[i] = false;
+        }
+    }
 
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
