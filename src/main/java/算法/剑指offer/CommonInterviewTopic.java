@@ -893,7 +893,7 @@ public class CommonInterviewTopic {
     private HashMap<Integer, Integer> map = new HashMap<>();
     private int[] temp;
     public TreeNode reConstructBinaryTree(int [] pre,int [] vin) {
-        //将前序遍历结果存起来,后续用来分割数组
+        //将中序遍历结果存起来,后续用来分割数组
         for (int i = 0; i < vin.length; i++) {
             map.put(vin[i], i);
         }
@@ -1182,6 +1182,55 @@ public class CommonInterviewTopic {
         */
     }
 
+
+    /**
+     * NC136 输出二叉树的右视图
+     * 请根据二叉树的前序遍历，中序遍历恢复二叉树，并打印出二叉树的右视图
+     */
+    private static HashMap<Integer, Integer> solveMap = new HashMap<>();
+    private static int[] solveTemp;
+    public static int[] solve (int[] xianxu, int[] zhongxu) {
+        // write code here
+        for (int i = 0; i < zhongxu.length; i++) {
+            solveMap.put(zhongxu[i], i);
+        }
+        solveTemp = xianxu;
+        TreeNode node = solveHelper(0, 0, zhongxu.length - 1);
+        Queue<TreeNode> deque = new LinkedList<>();
+        deque.add(node);
+        ArrayList<Integer> list = new ArrayList<>();
+        while (!deque.isEmpty()) {
+            int size = deque.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode poll = deque.poll();
+                if (poll.left != null) {
+                    deque.add(poll.left);
+                }
+                if (poll.right != null) {
+                    deque.add(poll.right);
+                }
+                if (i == size - 1) {
+                    list.add(poll.val);
+                }
+            }
+        }
+        int[] res = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            res[i] = list.get(i);
+        }
+        return res;
+    }
+
+    private static TreeNode solveHelper(int root, int left, int right) {
+        if (left > right) return null;
+        int val = solveTemp[root];
+        TreeNode node = new TreeNode(val);
+        int idx = solveMap.get(val);
+        node.left = solveHelper(root + 1, left, idx - 1);
+        node.right = solveHelper(root + idx + 1 - left, idx + 1, right);
+        return node;
+    }
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
@@ -1195,7 +1244,10 @@ public class CommonInterviewTopic {
 
         //reverseKGroup(node1, 3);
         //maxLength(new int[]{1, 2, 3,3,4});
-        merge(new int[]{0}, 0, new int[]{1}, 1);
+       // merge(new int[]{0}, 0, new int[]{1}, 1);
+
+        //[1,2,4,5,3],[4,2,5,1,3]
+        solve(new int[]{1,2,4,5,3}, new int[]{4,2,5,1,3});
     }
 
 }
