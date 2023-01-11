@@ -1270,6 +1270,41 @@ public class CommonInterviewTopic {
     }
 
 
+    /**
+     * NC13 二叉树的最大深度
+     * 求给定二叉树的最大深度，
+     * 深度是指树的根节点到任一叶子节点路径上节点的数量。
+     * 最大深度是所有叶子节点的深度的最大值。
+     */
+    public int maxDepthBFS (TreeNode root) {
+        int res = 0;
+        if (root == null) return res;
+        Deque<TreeNode> deque = new LinkedList<>();
+        deque.add(root);
+        while (!deque.isEmpty()) {
+            int size = deque.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode poll = deque.poll();
+                if (poll.left != null) {
+                    deque.add(poll.left);
+                }
+                if (poll.right != null) {
+                    deque.add(poll.right);
+                }
+            }
+            res++;
+        }
+        return res;
+    }
+
+    public int maxDepthDFS (TreeNode root) {
+        if (root == null) return 0;
+        int left =maxDepthDFS(root.left);
+        int right = maxDepthDFS(root.right);
+        return Math.max(left, right) + 1;
+    }
+
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
