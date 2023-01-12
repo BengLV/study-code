@@ -1305,6 +1305,22 @@ public class CommonInterviewTopic {
     }
 
 
+    /**
+     * NC141 判断是否为回文字符串
+     */
+    public boolean judge(String str) {
+        char[] strChar = str.toCharArray();
+        int length = strChar.length;
+        for (int i = 0; i < length; i++) {
+            if (strChar[i] != strChar[length - 1]) {
+                return false;
+            }
+            length--;
+        }
+        return true;
+    }
+
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
