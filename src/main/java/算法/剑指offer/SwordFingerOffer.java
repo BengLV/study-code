@@ -2140,7 +2140,8 @@ public class SwordFingerOffer {
      * 输入: [7,5,6,4]
      * 输出: 5
      *
-     * 解题思路:归并排序
+     * 解题思路:归并排序,在合并的时候，当左边的大于右边，就计算逆序数。
+     * 计算公式； mid-left+1
      */
     int reversePairsRes;
     public int reversePairs(int[] nums) {
@@ -2149,36 +2150,43 @@ public class SwordFingerOffer {
     }
 
     private void merge(int[] nums, int left, int right) {
+        //当只有一个节点的时候，直接返回，退出递归
         if (left >= right) return;
-        int mid = (right + left) / 2;
-        merge(nums, left, mid);
-        merge(nums, mid + 1, right);
-        mergeSort(nums, left, mid, right);
+        int mid = (right + left) / 2;//将数组分割成两部分
+        merge(nums, left, mid);//对前一部分进行归并排序
+        merge(nums, mid + 1, right);//对后一部分进行排序
+        mergeSort(nums, left, mid, right);//合并两部分
     }
 
     private void mergeSort(int[] nums, int left, int mid, int right) {
+        //存储处理过的数据的
         int[] temp = new int[right - left + 1];
         int i = left;
         int j = mid + 1;
         int t = 0;
         while (i <= mid && j <= right) {
+            //比较两个数组的元素，取较小的元素加入到，临时数组中
             if (nums[i] <= nums[j]) {
                 temp[t++] = nums[i++];
             } else {
+                //当左边数组的大与右边数组的元素时，就对当前元素以及后面的元素的个数进行统计，
                 reversePairsRes += mid - i + 1;
                 temp[t++] = nums[j++];
             }
         }
+        //当左边的数组没有遍历完成后，直接将剩余元素加入到临时数组中
         while(i <= mid) {
             temp[t++] = nums[i++];
         }
+        //当右边的数组没有遍历完成后，直接将剩余元素加入到临时数组中
         while(j <= right) {
             temp[t++] = nums[j++];
         }
+        //将新数组中的元素，覆盖nums旧数组中的元素。
+        //此时数组的元素已经是有序的
         for (int k = 0; k < temp.length; k++) {
             nums[left + k] = temp[k];
         }
-
     }
 
 
