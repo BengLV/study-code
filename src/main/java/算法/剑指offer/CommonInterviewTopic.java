@@ -1347,6 +1347,30 @@ public class CommonInterviewTopic {
         return res.next;
     }
 
+    /**
+     * NC62 判断是不是平衡二叉树
+     */
+    public boolean IsBalanced_Solution(TreeNode root) {
+        if (root == null) return true;
+        return IsBalanced_Solution_Dfs(root) != -1;
+    }
+
+    public int IsBalanced_Solution_Dfs(TreeNode root) {
+        if (root == null) return 0;
+        int left = IsBalanced_Solution_Dfs(root.left);
+        if (left == - 1) {
+            return -1;
+        }
+        int right = IsBalanced_Solution_Dfs(root.right);
+        if (right == -1) {
+            return -1;
+        }
+        if (Math.abs(left - right) > 1) {
+            return -1;
+        }
+        return Math.max(left, right) + 1;
+    }
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
