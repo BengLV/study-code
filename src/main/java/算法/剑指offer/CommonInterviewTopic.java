@@ -1321,6 +1321,32 @@ public class CommonInterviewTopic {
     }
 
 
+    /**
+     * NC70 单链表的排序
+     * 剑指 Offer II 077. 链表排序
+     * 给定链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。
+     */
+    public ListNode sortInList(ListNode head) {
+        if (head == null) return null;
+        List<Integer> list = new ArrayList<>();
+        while (head != null) {
+            list.add(head.val);
+            head = head.next;
+        }
+        int[] arr = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            arr[i] = list.get(i);
+        }
+        quickSort(arr, 0, list.size() - 1);
+        ListNode res = new ListNode(0);
+        ListNode cur = res;
+        for (int i = 0; i < list.size(); i++) {
+            cur.next = new ListNode(arr[i]);
+            cur = cur.next;
+        }
+        return res.next;
+    }
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
