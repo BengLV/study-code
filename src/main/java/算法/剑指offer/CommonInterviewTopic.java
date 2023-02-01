@@ -1371,6 +1371,26 @@ public class CommonInterviewTopic {
         return Math.max(left, right) + 1;
     }
 
+
+    /**
+     * NC73 数组中出现次数超过一半的数字
+     * 给一个长度为 n 的数组，数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
+     * 例如输入一个长度为9的数组[1,2,3,2,2,2,5,4,2]。由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。
+     * */
+    public int MoreThanHalfNum(int[] array) {
+        int res = 0, count = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (count == 0) {
+                count++;
+                res = array[i];
+            } else {
+                //由于题目说明出现的次数超出数组长度的一半, count最终一定会大于1.
+                count = res == array[i] ? count + 1 : count - 1;
+            }
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
