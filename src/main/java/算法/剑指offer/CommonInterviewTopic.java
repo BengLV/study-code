@@ -1415,6 +1415,44 @@ public class CommonInterviewTopic {
         return dp[m - 1][n - 1];
     }
 
+
+    /**
+     * NC97 字符串出现次数的TopK问题
+     * 给定一个字符串数组，再给定整数 k ，请返回出现次数前k名的字符串和对应的次数。
+     * 返回的答案应该按字符串出现频率由高到低排序。如果不同的字符串有相同出现频率，按字典序排序。
+     * 对于两个字符串，大小关系取决于两个字符串从左到右第一个不同字符的 ASCII 值的大小关系。
+     * 比如"ah1x"小于"ahb"，"231"<”32“
+     * 字符仅包含数字和字母
+     *
+     */
+    public String[][] topKstrings(String[] strings, int k) {
+        // write code here
+        if (k == 0) {
+            return new String[][]{};
+        }
+        String[][] res = new String[k][2];
+        //TreeMap中的元素默认按照keys的自然排序排列。
+        //（对Integer来说，其自然排序就是数字的升序；对String来说，其自然排序就是按照字母表排序）
+        TreeMap<String, Integer> map = new TreeMap<>();
+        for (int i = 0; i < strings.length; i++) {
+            String s = strings[i];
+            if (!map.containsKey(s)) {
+                map.put(s, 1);
+            } else {
+                map.put(s, map.get(s) + 1);
+            }
+        }
+        ArrayList<Map.Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
+        //先是按出现次数降序比较，相同则再按照字符ASCII码降序比较
+        Collections.sort(list, (o1, o2) -> o1.getValue().compareTo(o2.getValue()) == 0
+                ? o1.getKey().compareTo(o2.getKey()) : o2.getValue().compareTo(o1.getValue()));
+        for (int i = 0; i < k; i++) {
+            res[i][0] = list.get(i).getKey();
+            res[i][1] = list.get(i).getValue().toString();
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
