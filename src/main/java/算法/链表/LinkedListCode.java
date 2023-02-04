@@ -3,7 +3,7 @@ package 算法.链表;
 
 import java.util.Objects;
 
-public class LinkedList {
+public class LinkedListCode {
 
     /**
      * 203. 移除链表元素
@@ -148,7 +148,7 @@ public class LinkedList {
      * 142. 环形链表 II
      * https://leetcode-cn.com/problems/linked-list-cycle-ii/
      *
-     * 给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
+     * 给定一个链表，返回链表开始入环的第一个节点。如果链表无环，则返回null。
      *
      * 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。注意，pos 仅仅是用于标识环的情况，并不会作为参数传递到函数中。
      * 说明：不允许修改给定的链表。
@@ -182,6 +182,36 @@ public class LinkedList {
         return null;
     }
 
+
+    /**
+     * 92. 反转链表 II
+     * https://leetcode.cn/problems/reverse-linked-list-ii/
+     * 给你单链表的头指针 head 和两个整数left 和 right ，其中left <= right 。
+     * 请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
+     *
+     */
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        //本质上就是把left到right之间的结点依次插入到m节点的前面，这样就形成了逆序
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        //永远指向待反转区域的第一个节点left的前一个节点.循环过程中不变.
+        ListNode pre = dummy;
+        //left 前面的节点顺序保持不变
+        for (int i = 1; i < left; i++) {
+            pre = pre.next;
+        }
+        //指向待反转区域的第一个节点left
+        ListNode cur = pre.next;
+        //永远指向curr节点的下一个节点
+        ListNode next;
+        for (int i = left; i < right; i++) {
+            next = cur.next;
+            cur.next = next.next;
+            next.next = pre.next;
+            pre.next = next;
+        }
+        return dummy.next;
+    }
 
 
 
