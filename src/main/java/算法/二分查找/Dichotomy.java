@@ -39,4 +39,33 @@ public class Dichotomy {
         return -1;
     }
 
+
+    /**
+     * 74. 搜索二维矩阵
+     * BM18 二维数组中的查找
+     *
+     * 编写一个高效的算法来判断m x n矩阵中，是否存在一个目标值。该矩阵具有如下特性：
+     * 每行中的整数从左到右按升序排列。
+     * 每行的第一个整数大于前一行的最后一个整数。/
+     */
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if (matrix == null || matrix.length == 0) {
+            return false;
+        }
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int x = 0;
+        int y = m - 1;
+        while (y >= 0 && x < n) {
+            if (matrix[x][y] > target) {
+                y--;
+            } else if (matrix[x][y] < target) {
+                x++;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
