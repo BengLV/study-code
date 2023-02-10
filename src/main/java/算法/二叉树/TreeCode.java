@@ -1,8 +1,5 @@
 package 算法.二叉树;
 
-import org.springframework.lang.NonNull;
-
-import java.awt.print.Pageable;
 import java.util.*;
 
 /**
@@ -307,6 +304,25 @@ public class TreeCode {
         }
 
     }
+/*
+
+    private List<Integer> list = new ArrayList<>();
+    private List<List<Integer>> res = new ArrayList<>();
+
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return res;
+        }
+        list.add(root.val);
+        if (root.left == null && root.right == null && root.val == targetSum) {
+            res.add(new ArrayList<>(list));
+        }
+        pathSum(root.left, targetSum - root.val);
+        pathSum(root.right, targetSum - root.val);
+        list.remove(list.size() - 1);
+        return res;
+    }
+*/
 
     /**
      * 654. 最大二叉树
@@ -741,6 +757,48 @@ public class TreeCode {
         num = root.val;
         convertBST(root.left);
         return root;
+    }
+
+
+    /**
+     * 剑指 Offer 36. 二叉搜索树与双向链表
+     * BM30 二叉搜索树与双向链表
+     *
+     * 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。要求不能创建任何新的节点，只能调整树中节点指针的指向。
+     *
+     * 注意:
+     * 1.要求不能创建任何新的结点，只能调整树中结点指针的指向。当转化完成以后，树中节点的左指针需要指向前驱，树中节点的右指针需要指向后继
+     * 2.返回链表中的第一个节点的指针
+     * 3.函数返回的TreeNode，有左右指针，其实可以看成一个双向链表的数据结构
+     * 4.你不用输出双向链表，程序会根据你的返回值自动打印输出
+     *
+     * 二叉搜索树特性: 搜索树是有序的，可以使用中序遍历得到一个有序数组。
+     */
+    TreeNode preNode, headNode;
+    public TreeNode treeToDoublyList(TreeNode root) {
+        if (root == null) return root;
+        dfs(root);
+        //BM30 二叉搜索树与双向链表 去掉下面两行,因为无需首尾节点相连.
+        headNode.left = preNode;
+        preNode.right = headNode;
+        return headNode;
+    }
+
+    private void treeToDoublyListDfs (TreeNode node) {
+        //左中右遍历
+        if (node == null) return;
+        treeToDoublyListDfs(node.left);
+        if (preNode != null) {
+            //节点互相指向
+            preNode.right = node;
+            node.left = preNode;
+        } else {
+            //当遍历到最左边节点时,说明是最小值,此节点为头结点.
+            headNode = node;
+        }
+        //更新前驱节点.
+        preNode = node;
+        treeToDoublyListDfs(node.right);
     }
 
 
