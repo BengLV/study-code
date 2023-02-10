@@ -1,6 +1,10 @@
 package 算法.链表;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class LinkedListCode {
@@ -211,6 +215,32 @@ public class LinkedListCode {
             pre.next = next;
         }
         return dummy.next;
+    }
+
+
+    /**
+     * 234. 回文链表
+     * BM13 判断一个链表是否为回文结构
+     * https://leetcode.cn/problems/palindrome-linked-list/
+     *
+     * 给你一个单链表的头节点 head ，请你判断该链表是否为回文链表。如果是，返回 true ；否则，返回 false 。
+     */
+    public boolean isPalindrome(ListNode head) {
+        if (head == null) return false;
+        List<Integer> list = new ArrayList<>();
+        while (head != null) {
+            list.add(head.data);
+            head = head.next;
+        }
+        int left = 0, right = list.size() - 1;
+        while (left < right) {
+            if (!list.get(left).equals(list.get(right))) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
     }
 
 
