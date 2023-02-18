@@ -244,6 +244,37 @@ public class LinkedListCode {
     }
 
 
+    /**
+     * 328. 奇偶链表
+     * BM14 链表的奇偶重排
+     * https://leetcode.cn/problems/odd-even-linked-list/
+     * 
+     * 给定单链表的头节点head，将所有索引为奇数的节点和索引为偶数的节点分别组合在一起，然后返回重新排序的列表。
+     * 第一个节点的索引被认为是 奇数 ， 第二个节点的索引为偶数 ，以此类推。
+     *
+     * 请注意，偶数组和奇数组内部的相对顺序应该与输入时保持一致。
+     * 你必须在O(1)的额外空间复杂度和O(n)的时间复杂度下解决这个问题。
+     *
+     */
+    public ListNode oddEvenList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        //假设首节点为奇数
+        ListNode o = head;
+        //偶数的头节点
+        ListNode p = head.next;
+        //偶数的临时节点
+        ListNode e = p;
+        while (o.next != null && e.next != null) {
+            o.next = e.next;
+            o = o.next;
+            e.next = o.next;
+            e = e.next;
+        }
+        o.next = p;
+        return head;
+    }
+
+
 
     public static void main(String[] args) {
         ListNode node = new ListNode(8);
@@ -259,9 +290,14 @@ public class LinkedListCode {
         node2.add(1);
         node2.next = node;
         //reverseList(node);
-        removeLinkedList(node, 8);
+        //removeLinkedList(node, 8);
         //removeNthFromEnd(node, 2);
-        getIntersectionNode(node1, node2);
+        //getIntersectionNode(node1, node2);
+        ListNode node3 = new ListNode(1);
+        node3.add(2);
+        node3.add(3);
+        node3.add(4);
+        node3.add(5);
         System.out.println(node);
     }
 }
