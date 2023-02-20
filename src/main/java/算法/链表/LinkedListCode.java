@@ -1,11 +1,11 @@
 package 算法.链表;
 
 
+import 算法.二叉树.TreeNode;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class LinkedListCode {
 
@@ -272,6 +272,100 @@ public class LinkedListCode {
         }
         o.next = p;
         return head;
+    }
+
+
+    /**
+     * 剑指 Offer 28. 对称的二叉树
+     * BM31 对称的二叉树
+     * https://leetcode.cn/problems/dui-cheng-de-er-cha-shu-lcof/
+     * <p>
+     * 请实现一个函数，用来判断一棵二叉树是不是对称的。如果一棵二叉树和它的镜像一样，那么它是对称的。
+     * 例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
+     * 1
+     * / \
+     * 2  2
+     * / \ / \
+     * 3 4 4 3
+     * <p>
+     * 但是下面这个[1,2,2,null,3,null,3] 则不是镜像对称的:
+     * <p>
+     * 1
+     * / \
+     * 2  2
+     * \  \
+     * 3  3
+     * <p>
+     * <p>
+     * 示例 1：
+     * 输入：root = [1,2,2,3,4,4,3]
+     * 输出：true
+     */
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true;
+        TreeNode node1 = root;
+        TreeNode node2 = root;
+        Deque<TreeNode> deque = new LinkedList<>();
+        deque.add(node1.left);
+        deque.add(node2.right);
+        while (!deque.isEmpty()) {
+            node1 = deque.poll();
+            node2 = deque.poll();
+            if (node1 == null && node2 == null) continue;
+            if (node1 == null || node2 == null || node1.val != node2.val) {
+                return false;
+            }
+            deque.add(node1.left);
+            deque.add(node2.right);
+            deque.add(node1.right);
+            deque.add(node2.left);
+        }
+        return true;
+
+        /*if (pRoot == null) {
+            return true;
+        }
+        Deque<TreeNode> d1 = new LinkedList<>();
+        Deque<TreeNode> d2 = new LinkedList<>();
+        d1.add(pRoot);
+        d2.add(pRoot);
+        while (!d1.isEmpty()) {
+            if (d1.size() != d2.size()) {
+                return false;
+            }
+            for (int i = 0; i < d1.size(); i++) {
+                TreeNode node1 = d1.poll();
+                TreeNode node2 = d2.poll();
+                if (node1 == null && node2 == null) {
+                    continue;
+                }
+                if (node1 == null || node2 == null || node1.val != node2.val) {
+                    return false;
+                }
+                d1.add(node1.left);
+                d1.add(node1.right);
+                d2.add(node2.right);
+                d2.add(node2.left);
+            }
+        }
+        return true;
+
+        boolean isSymmetrical(TreeNode pRoot) {
+        if (pRoot == null) return true;
+        return dfs(pRoot.left, pRoot.right);
+        }
+
+    private boolean dfs(TreeNode left, TreeNode right) {
+        if (left == null && right == null) {
+            return true;
+        }
+        if (left == null || right == null) {
+            return false;
+        }
+        return left.val == right.val && dfs(left.left, right.right) && dfs(left.right, right.left);
+    }
+
+        */
     }
 
 
