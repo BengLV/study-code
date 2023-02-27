@@ -399,6 +399,42 @@ public class BackTracking {
         }
     }
 
+
+    /**
+     * 剑指 Offer II 083. 没有重复元素集合的全排列
+     * BM55 没有重复项数字的全排列
+     * https://leetcode.cn/problems/VvJkup/
+     *
+     * 给定一个不含重复数字的整数数组 nums ，返回其 所有可能的全排列 。可以 按任意顺序 返回答案。
+     *
+     * 示例 1：
+     * 输入：nums = [1,2,3]
+     * 输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+     *
+     * nums 中的所有整数 互不相同
+     */
+    List<List<Integer>> result9 = new ArrayList<>();
+    List<Integer> path9 = new ArrayList<>();
+    public List<List<Integer>> permute(int[] nums) {
+        permuteDfs(nums);
+        return result9;
+    }
+
+    private void permuteDfs(int[] nums) {
+        if (path9.size() == nums.length) {
+            result9.add(new ArrayList<>(path9));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (path9.contains(nums[i])) {
+                continue;
+            }
+            path9.add(nums[i]);
+            permuteDfs(nums);
+            path9.remove(path9.size() - 1);
+        }
+    }
+
     public static void main(String[] args) {
         restoreIpAddresses("25525511135");
     }
