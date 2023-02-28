@@ -435,6 +435,48 @@ public class BackTracking {
         }
     }
 
+    /**
+     * 剑指 Offer II 084. 含有重复元素集合的全排列
+     * BM56 有重复项数字的全排列
+     * https://leetcode.cn/problems/7p8L0Z/
+     *
+     * 给定一个可包含重复数字的整数集合 nums ，按任意顺序 返回它所有不重复的全排列。
+     */
+    private ArrayList<ArrayList<Integer>> res10 = new ArrayList<>();
+    private ArrayList<Integer> path10 = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> permuteUnique(int[] num) {
+        if (num == null || num.length == 0) {
+            return res10;
+        }
+        Arrays.sort(num);
+        boolean[] visited = new boolean[num.length];
+        permuteUniqueDfs(num, visited);
+        return res10;
+    }
+
+    private void permuteUniqueDfs(int[] num, boolean[] visited) {
+        if (path10.size() == num.length) {
+            res10.add(new ArrayList<>(path10));
+            return;
+        }
+        for (int i = 0; i < num.length; i++) {
+            if (visited[i]) {
+                continue;
+            }
+            //同层剪枝(效率更高):当选取到nums[i]，并满足 i > 0 && nums[i - 1] == nums[i] 时，若 !visited[i - 1] = true，
+            // 说明以nums[i - 1]为某一层元素的选择已穷尽，以至于在回溯的时候置 visited[i - 1] = false）。于是后续会根据这个条件跳过同层相等元素。
+            //非同层剪枝:visited[i - 1],
+            if (i > 0 && num[i] == num[i - 1] && !visited[i - 1]) {
+                continue;
+            }
+            visited[i] = true;
+            path10.add(num[i]);
+            permuteUniqueDfs(num, visited);
+            path10.remove(path10.size() - 1);
+            visited[i] = false;
+        }
+    }
+
     public static void main(String[] args) {
         restoreIpAddresses("25525511135");
     }
