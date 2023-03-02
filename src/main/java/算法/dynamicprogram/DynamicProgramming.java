@@ -284,6 +284,38 @@ public class DynamicProgramming {
     }
 
 
+    /**
+     * 1143. 最长公共子序列(返回子串长度)
+     * BM65 最长公共子序列(二)(返回子串字符)
+     * https://leetcode.cn/problems/longest-common-subsequence/
+     *
+     * 给定两个字符串text1 和text2，返回这两个字符串的最长 公共子序列 的长度。如果不存在 公共子序列 ，返回 0 。
+     *
+     * 一个字符串的子序列是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。
+     *
+     * 例如，"ace" 是 "abcde" 的子序列，但 "aec" 不是 "abcde" 的子序列。
+     * 两个字符串的 公共子序列 是这两个字符串所共同拥有的子序列。
+     */
+    public String LCS(String s1, String s2) {
+        // write code here
+        int l1 = s1.length(), l2 = s2.length();
+        String[][] dp = new String[l1 + 1][l2 + 1];
+        for (int i = 0; i <= l1; i++) {
+            for (int j = 0; j <= l2; j++) {
+                if (i == 0 || j == 0) {
+                    dp[i][j] = "";
+                } else if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + s1.charAt(i - 1);
+                } else {
+                    //dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                    dp[i][j] = dp[i - 1][j].length() > dp[i][j - 1].length() ? dp[i - 1][j] : dp[i][j - 1];
+                }
+            }
+        }
+        return dp[l1][l2] == "" ? "-1" : dp[l1][l2];
+    }
+
+
     public static void main(String[] args) {
         HashMap<Object, Object> objectObjectHashMap = new HashMap<>();
         System.out.println(objectObjectHashMap.get("21"));
