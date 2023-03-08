@@ -476,6 +476,7 @@ public class TreeCode {
 
     /**
      * 98. 验证二叉搜索树
+     * BM34 判断是不是二叉搜索树
      * https://leetcode-cn.com/problems/validate-binary-search-tree/
      * 给你一个二叉树的根节点 root ，判断其是否是一个有效的二叉搜索树。
      * <p>
@@ -488,11 +489,36 @@ public class TreeCode {
      * 输入：root = [5,1,4,null,null,3,6]
      * 输出：false
      * 解释：根节点的值是 5 ，但是右子节点的值是 4 。
+     *
+     * 二叉搜索树用中序遍历
      */
     public boolean isValidBST(TreeNode root) {
         //[5,4,6,null,null,3,7]
         return isValid(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
+/*
+    List<Integer> list = new ArrayList<>();
+    public boolean isValidBST (TreeNode root) {
+        // write code here
+        if (root == null) return false;
+        isValidDFS(root);
+        for (int i = 0; i < list.size() - 1; i++) {
+            if (list.get(i) >= list.get(i + 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    private void isValidDFS(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        dfs(node.left);
+        list.add(node.val);
+        dfs(node.right);
+    }*/
 
     private boolean isValid(TreeNode node, long min, long max) {
         if (node == null) return true;
