@@ -2,8 +2,10 @@ package 算法.dynamicprogram;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @description: 动态规划
@@ -313,6 +315,43 @@ public class DynamicProgramming {
             }
         }
         return dp[l1][l2] == "" ? "-1" : dp[l1][l2];
+    }
+
+
+    /**
+     * BM69 把数字翻译成字符串
+     * 与LeetCode有点区别
+     *
+     * 有一种将字母编码成数字的方式：'a'->1, 'b->2', ... , 'z->26'。
+     * 现在给一串数字，返回有多少种可能的译码结果
+     */
+    public int solve(String nums) {
+        // 排除特殊情况
+        if (nums.equals("0")) return 0;
+        if (nums == "10" || nums == "20") {
+            return 1;
+        }
+        //当0前面不是1或者2，则无法编码
+        for (int i = 1; i < nums.length(); i++) {
+            if (nums.charAt(i) == '0') {
+                if (nums.charAt(i - 1) != '1' && nums.charAt(i - 1) != '2') {
+                    return 0;
+                }
+            }
+        }
+        int[] dp = new int[nums.length() + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i <= nums.length(); i++) {
+            String temp = nums.substring(i - 2, i);
+            //11-19,21-26之间的情况。因为20只有一种编码
+            if ((temp.compareTo("21") >= 0 && temp.compareTo("26") <= 0) || (temp.compareTo("19") <= 0 && temp.compareTo("11") >= 0)) {
+                dp[i] = dp[i - 1] + dp[i - 2];
+            } else {
+                dp[i] = dp[i - 1];
+            }
+        }
+        return dp[nums.length()];
     }
 
 
