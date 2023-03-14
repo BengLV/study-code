@@ -355,6 +355,39 @@ public class DynamicProgramming {
     }
 
 
+    /**
+     * 322. 零钱兑换
+     * BM70 兑换零钱(一)
+     * https://leetcode.cn/problems/coin-change/
+     *
+     * 给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。
+     * 计算并返回可以凑成总金额所需的 最少的硬币个数 。如果没有任何一种硬币组合能组成总金额，返回-1 。
+     * 你可以认为每种硬币的数量是无限的。
+     */
+    public int coinChange(int[] coins, int amount) {
+        if (coins.length == 0) {
+            return -1;
+        }
+        //当钱包的价值为j时，所需要的最少硬币数。
+        int[] dp = new int[amount + 1];
+        int max = Integer.MAX_VALUE;
+        for (int i = 1; i <= amount; i++) {
+            dp[i] = max;
+        }
+        // 外层从左往右遍历硬币面额
+        for (int i = 0; i < coins.length; i++) {
+            // 内层初始化金额为硬币面额
+            for (int j = coins[i]; j <= amount; j++) {
+                // 计算当前持有的硬币种类可组成该金额的最少个数，直到总金额
+                // 若当前金额减去硬币面额对应dp值不为最大值，说明可组成该金额，取最小值再加1
+                if (dp[j - coins[i]] != max) {
+                    dp[j] = Math.min(dp[j], dp[j - coins[i]] + 1);
+                }
+            }
+        }
+        return dp[amount] == max ? -1 : dp[amount];
+    }
+
     public static void main(String[] args) {
         HashMap<Object, Object> objectObjectHashMap = new HashMap<>();
         System.out.println(objectObjectHashMap.get("21"));
