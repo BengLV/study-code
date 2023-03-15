@@ -2995,7 +2995,7 @@ public class SwordFingerOffer {
         System.out.println(31%100);//31
         System.out.println("123".length());//3
         System.out.println("123".charAt(0));//1
-        System.out.println("subString()" + "012345678".substring(8, 9));//8
+        System.out.println("subString()" + "012345678".substring(1, 2));//8
         int b[] = new int[5];
         //System.out.println(b[5]);//报错,只能b[4]
         System.out.println("123".toCharArray());
