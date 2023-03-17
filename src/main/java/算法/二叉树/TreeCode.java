@@ -858,6 +858,37 @@ public class TreeCode {
     }
 
 
+    /**
+     * BM35 判断是不是完全二叉树
+     *
+     * 给定一个二叉树，确定他是否是一个完全二叉树。
+     * 完全二叉树的定义：若二叉树的深度为 h，除第 h 层外，其它各层的结点数都达到最大个数，
+     * 第 h 层所有的叶子结点都连续集中在最左边，这就是完全二叉树。（第 h 层可能包含 [1~2h] 个节点）
+     */
+    public boolean isCompleteTree (TreeNode root) {
+        // write code here
+        if (root == null) {
+            return false;
+        }
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        boolean isLast = false;
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (node == null) {
+                isLast = true;
+                continue;
+            }
+            if (isLast) {
+                return false;
+            }
+            queue.add(node.left);
+            queue.add(node.right);
+        }
+        return true;
+    }
+
+
     public static void main(String[] args) {
         int[] a = new int[]{1, 2, 3, 4, 5, 0};
         System.out.println(7/2);
