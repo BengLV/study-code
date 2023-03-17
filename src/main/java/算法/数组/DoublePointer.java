@@ -228,6 +228,50 @@ public class DoublePointer {
     }
 
 
+    /**
+     * 56. 合并区间
+     * BM89 合并区间
+     * https://leetcode.cn/problems/merge-intervals/
+     * 
+     * 以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。
+     * 请你合并所有重叠的区间，并返回一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间。
+     *
+     * 示例 1：
+     * 输入：intervals = [[1,3],[2,6],[8,10],[15,18]]
+     * 输出：[[1,6],[8,10],[15,18]]
+     * 解释：区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].
+     *
+     */
+    public int[][] merge(int[][] intervals) {
+        int length = intervals.length;
+        if (length == 1) {
+            return intervals;
+        }
+        //先将所有的左边界排序
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        List<Integer> list = new ArrayList<>();
+        for (int i = 1; i < length; i++) {
+            //如果前一个区间的右边界大于等于当前区间的左边界，则合并
+            if (intervals[i][0] <= intervals[i - 1][1]) {
+                //左边界则为最小值
+                intervals[i][0] = Math.min(intervals[i][0], intervals[i - 1][0]);
+                //右边界则为最大值
+                intervals[i][1] = Math.max(intervals[i][1], intervals[i - 1][1]);
+            } else {
+                //如果不需要合并，则说明当前区间是独立的，则记录索引。
+                list.add(i - 1);
+            }
+        }
+        //记录最后一个区间
+        list.add(length - 1);
+        int[][] res = new int[list.size()][2];
+        for (int i = 0; i < list.size(); i++) {
+            res[i] = intervals[list.get(i)];
+        }
+        return res;
+    }
+
+
 
     public static void main(String[] args) {
         //sort(null);
