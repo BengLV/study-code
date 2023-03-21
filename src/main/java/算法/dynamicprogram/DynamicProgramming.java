@@ -2,10 +2,7 @@ package 算法.dynamicprogram;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @description: 动态规划
@@ -240,23 +237,22 @@ public class DynamicProgramming {
 
     /**
      * 300. 最长递增子序列
+     * BM71 最长上升子序列(一)
      * 给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
      *
      */
     public int lengthOfLIS(int[] nums) {
         //时间复杂度 O(n的平方) 空间复杂度O(n)
       /*  int[] dp = new int[nums.length];
+      int res = 0;
         Arrays.fill(dp, 1);
         for (int i = 0; i < nums.length; i++) {
             for (int j = 0; j < i; j++) {
                 if (nums[i] > nums[j]) {
                     dp[i] = Math.max(dp[j] + 1, dp[i]);
+                    res = Math.max(res, dp[i]);
                 }
             }
-        }
-        int res = 0;
-        for (int i = 0; i < nums.length; i++) {
-            res = Math.max(res, dp[i]);
         }
         return res;*/
 
