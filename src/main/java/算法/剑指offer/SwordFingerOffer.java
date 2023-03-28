@@ -922,6 +922,21 @@ public class SwordFingerOffer {
     }
 
 
+
+    public ListNode reverseList1(ListNode head) {
+        return reverse(null, head);
+    }
+
+    private ListNode reverse(ListNode prev, ListNode cur) {
+        if (cur == null) {
+            return prev;
+        }
+        ListNode temp = cur.next;
+        cur.next = prev;
+        return reverse(cur, temp);
+    }
+
+
     /**
      * 剑指 Offer 25. 合并两个排序的链表
      * https://leetcode.cn/problems/he-bing-liang-ge-pai-xu-de-lian-biao-lcof/
