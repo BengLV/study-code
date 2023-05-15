@@ -3,8 +3,6 @@ package 算法.链表;
 
 import 算法.二叉树.TreeNode;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class LinkedListCode {
@@ -366,6 +364,67 @@ public class LinkedListCode {
     }
 
         */
+    }
+
+
+    /**
+     * 23. 合并 K 个升序链表
+     * https://leetcode.cn/problems/merge-k-sorted-lists/
+     *
+     * 给你一个链表数组，每个链表都已经按升序排列。
+     * 请你将所有链表合并到一个升序链表中，返回合并后的链表。
+     *
+     * 解题思路: 1. 分治法:可参考归并排序 2. 利用优先队列
+     */
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) return null;
+        if (lists.length == 1) return lists[0];
+        if (lists.length == 2) return mergeTwoListNode(lists[0], lists[1]);
+        int mid = lists.length / 2;
+        ListNode[] l1 = new ListNode[mid];
+        for (int i = 0; i < l1.length; i++) {
+            l1[i] = lists[i];
+        }
+
+        ListNode[] l2 = new ListNode[lists.length - mid];
+        for (int j = 0; j < l2.length; j++) {
+            l2[j] = lists[mid + j];
+        }
+        return mergeTwoListNode(mergeKLists(l1), mergeKLists(l2));
+    }
+
+    private ListNode mergeTwoListNode(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        if (l1.data <= l2.data) {
+            l1.next = mergeTwoListNode(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoListNode(l1, l2.next);
+            return l2;
+        }
+    }
+
+    public ListNode mergeKLists2(ListNode[] lists) {
+        if (lists == null || lists.length == 0) return null;
+        PriorityQueue<ListNode> dq = new PriorityQueue<>((n1, n2) -> n1.data - n2.data);
+
+        for (ListNode listNode : lists) {
+            if (listNode == null) continue;
+            dq.add(listNode);
+        }
+
+        ListNode dummyHead = new ListNode(0);
+        ListNode currNode = dummyHead;
+        while (!dq.isEmpty()) {
+            ListNode nextNode = dq.poll();
+            currNode.next = nextNode;
+            currNode = currNode.next;
+            if (currNode.next != null) {
+                dq.add(nextNode.next);
+            }
+        }
+        return dummyHead.next;
     }
 
 
