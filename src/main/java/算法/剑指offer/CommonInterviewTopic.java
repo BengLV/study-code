@@ -232,6 +232,23 @@ public class CommonInterviewTopic {
         return res;
     }
 
+    public List<List<Integer>> levelOrder1(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        levelOrderDFS(root, 0, res);
+        return res;
+    }
+
+    private void levelOrderDFS(TreeNode node, int depth, List<List<Integer>> ans) {
+        if (node == null) return;
+        if (ans.size() <= depth) {
+            ans.add(new ArrayList<>());
+        }
+        List<Integer> tempList = ans.get(depth);
+        tempList.add(node.val);
+        levelOrderDFS(node.left, depth + 1, ans);
+        levelOrderDFS(node.right, depth + 1, ans);
+    }
+
 
     /**
      * NC88 寻找第K大
@@ -1433,7 +1450,7 @@ public class CommonInterviewTopic {
         String[][] res = new String[k][2];
         //TreeMap中的元素默认按照keys的自然排序排列。
         //（对Integer来说，其自然排序就是数字的升序；对String来说，其自然排序就是按照字母表排序）
-        TreeMap<String, Integer> map = new TreeMap<>();
+        TreeMap<String, Integer> map = new TreeMap<>();//LinkedHashMap也可以
         for (int i = 0; i < strings.length; i++) {
             String s = strings[i];
             if (!map.containsKey(s)) {
