@@ -487,6 +487,14 @@ public class CommonInterviewTopic {
     /**
      * NC22 合并两个有序的数组
      * 给出一个有序的整数数组 A 和有序的整数数组 B ，请将数组 B 合并到数组 A 中，变成一个有序的升序数组
+     *          if (n == 0) {
+     *             return;
+     *         }
+     *         for (int i = 0; i < n; i++) {
+     *             nums1[m + i] = nums2[i];
+     *         }
+     *          //快排
+     *         quickSort(nums1, 0, nums1.length - 1);
      */
     public static void merge(int[] nums1, int m, int[] nums2, int n) {
         int i = m - 1, j = n - 1, k = m + n - 1;
