@@ -889,6 +889,45 @@ public class TreeCode {
     }
 
 
+    /**
+     * 103. 二叉树的锯齿形层序遍历
+     * https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/
+     *
+     * 给你二叉树的根节点 root ，返回其节点值的 锯齿形层序遍历 。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
+     */
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        List<List<Integer>> res = new ArrayList<>();
+        Deque<TreeNode> deque = new LinkedList<>();
+        deque.add(root);
+        int begin = 0;
+        while (!deque.isEmpty()) {
+            int size = deque.size();
+            List<Integer> tempList = new ArrayList<>(size);
+            int flag = begin % 2;
+            begin++;
+            for (int i = 0; i < size; i++) {
+                TreeNode node = deque.poll();
+                if (flag == 0) {
+                    tempList.add(node.val);
+                } else {
+                    tempList.add(0, node.val);
+                }
+                if (node.left != null) {
+                    deque.add(node.left);
+                }
+                if (node.right != null) {
+                    deque.add(node.right);
+                }
+            }
+            res.add(tempList);
+        }
+        return res;
+    }
+
+
     public static void main(String[] args) {
         int[] a = new int[]{1, 2, 3, 4, 5, 0};
         System.out.println(7/2);
