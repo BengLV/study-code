@@ -927,6 +927,32 @@ public class TreeCode {
         return res;
     }
 
+    List<List<Integer>> zigzagLevelOrderRes = new ArrayList<>();
+
+    public List<List<Integer>> zigzagLevelOrder1(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        zigzagLevelOrderDfs(root, 0);
+        return zigzagLevelOrderRes;
+    }
+
+    private void zigzagLevelOrderDfs(TreeNode node, int level) {
+        if (node == null) {
+            return;
+        }
+        if (zigzagLevelOrderRes.size() == level) {
+            zigzagLevelOrderRes.add(new ArrayList<>());
+        }
+        if (level % 2 == 0) {
+            zigzagLevelOrderRes.get(level).add(node.val);
+        } else {
+            zigzagLevelOrderRes.get(level).add(0, node.val);
+        }
+        zigzagLevelOrderDfs(node.left, level + 1);
+        zigzagLevelOrderDfs(node.right, level + 1);
+    }
+
 
     public static void main(String[] args) {
         int[] a = new int[]{1, 2, 3, 4, 5, 0};
