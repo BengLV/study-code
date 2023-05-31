@@ -437,7 +437,7 @@ public class TreeCode {
      * 想象一下，当你将其中一棵覆盖到另一棵之上时，两棵树上的一些节点将会重叠（而另一些不会）。你需要将这两棵树合并成一棵新二叉树。合并的规则是：如果两个节点重叠，那么将这两个节点的值相加作为合并后节点的新值；否则，不为 null 的节点将直接作为新二叉树的节点。
      * 返回合并后的二叉树。
      * 注意: 合并过程必须从两个树的根节点开始。
-     *
+     * <p>
      * 输入：root1 = [1,3,2,5], root2 = [2,1,3,null,4,null,7]
      * 输出：[3,4,5,5,4,null,7]
      */
@@ -489,7 +489,7 @@ public class TreeCode {
      * 输入：root = [5,1,4,null,null,3,6]
      * 输出：false
      * 解释：根节点的值是 5 ，但是右子节点的值是 4 。
-     *
+     * <p>
      * 二叉搜索树用中序遍历
      */
     public boolean isValidBST(TreeNode root) {
@@ -532,13 +532,12 @@ public class TreeCode {
      * https://leetcode-cn.com/problems/minimum-absolute-difference-in-bst/
      * 给你一个二叉搜索树的根节点 root ，返回 树中任意两不同节点值之间的最小差值 。
      * 差值是一个正数，其数值等于两值之差的绝对值。
-     *
+     * <p>
      * 输入：root = [4,2,6,1,3]
      * 输出：1
-     *
+     * <p>
      * 遇到在二叉搜索树上求什么最值，求差值之类的，都要思考一下二叉搜索树可是有序的，要利用好这一特点。
      * 使用中序遍历得到一个有序数组
-     *
      */
     public int getMinimumDifference(TreeNode root) {
         int min = Integer.MAX_VALUE;
@@ -567,22 +566,22 @@ public class TreeCode {
     /**
      * 501. 二叉搜索树中的众数
      * 给你一个含重复值的二叉搜索树（BST）的根节点 root ，找出并返回 BST 中的所有 众数（即，出现频率最高的元素）。 如果树中有不止一个众数，可以按 任意顺序 返回。
-     *
+     * <p>
      * 假定 BST 满足如下定义：
      * 结点左子树中所含节点的值 小于等于 当前节点的值
      * 结点右子树中所含节点的值 大于等于 当前节点的值
      * 左子树和右子树都是二叉搜索树
      * 输入：root = [1,null,2,2]
      * 输出：[2]
-     *
      */
     List<Integer> ans = new ArrayList<>();
     int count, maxCount, base;
+
     public int[] findMode(TreeNode root) {
         dfs(root);
         int[] ansArr = new int[ans.size()];
         for (int i = 0; i < ans.size(); i++) {
-            ansArr[i] =  ans.get(i);
+            ansArr[i] = ans.get(i);
         }
         return ansArr;
     }
@@ -616,30 +615,47 @@ public class TreeCode {
      * 236. 二叉树的最近公共祖先
      * https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/
      * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
-     *
+     * <p>
      * 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个节点 p、q，最近公共祖先表示为一个节点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
-     *
+     * <p>
      * 输入：root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
      * 输出：3
      * 解释：节点 5 和节点 1 的最近公共祖先是节点 3
-     *
+     * <p>
      * 输入：root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
      * 输出：5
      * 解释：节点 5 和节点 4 的最近公共祖先是节点 5 。因为根据定义最近公共祖先节点可以为节点本身。
-     *
+     * <p>
      * 如何从底向上遍历？  回溯:后序遍历
      * 遍历整棵树，还是遍历局部树？
      * 如何把结果传到根节点的？
+     * <p>
+     * 后序遍历,遇见p，返回p，遇见q返回q。 判断单层循环里left和right，都是null返回null，都不为null节点就是祖先。
      */
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null || p == root || q == root) {
+    public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        //当遍历到叶结点后就会返回null
+        if (root == null) {
+            return null;
+        }
+        //当找到p或者q的时候返回pq
+        if (root == p || root == q) {
             return root;
         }
-        TreeNode left = lowestCommonAncestor(root.left, p, q);
-        TreeNode right = lowestCommonAncestor(root.right, p, q);
-        if (left == null) return right;
-        if (right == null) return left;
-        return root;
+        //先左子树
+        TreeNode left = LowestCommonAncestor(root.left, p, q);
+        //再右子树
+        TreeNode right = LowestCommonAncestor(root.right, p, q);
+        //再逻辑处理(后序遍历)
+        //如果左右都存在，就说明pq都出现了，这就是，公共祖先，此时不用考虑公共祖先是自己的情况，因为上面已经做过判断了。
+        if (left != null && right != null) {
+            return root;
+        } else if (left != null) {
+            //左子树不为空,返回左子树
+            return left;
+        } else if (right != null) {
+            return right;
+        }
+        return null;
     }
 
 
@@ -647,7 +663,7 @@ public class TreeCode {
      * 701. 二叉搜索树中的插入操作
      * https://leetcode.cn/problems/insert-into-a-binary-search-tree/
      * 给定二叉搜索树（BST）的根节点root和要插入树中的值value，将值插入二叉搜索树。 返回插入后二叉搜索树的根节点。 输入数据 保证 ，新值和原始二叉搜索树中的任意节点值都不同。
-     *
+     * <p>
      * 注意，可能存在多种有效的插入方式，只要树在插入后仍保持为二叉搜索树即可。 你可以返回 任意有效的结果
      * 输入：root = [4,2,7,1,3], val = 5
      * 输出：[4,2,7,1,3,5]
@@ -670,11 +686,11 @@ public class TreeCode {
      * 450. 删除二叉搜索树中的节点
      * https://leetcode.cn/problems/delete-node-in-a-bst/
      * 给定一个二叉搜索树的根节点 root 和一个值 key，删除二叉搜索树中的key对应的节点，并保证二叉搜索树的性质不变。返回二叉搜索树（有可能被更新）的根节点的引用。
-     *
+     * <p>
      * 一般来说，删除节点可分为两个步骤：
      * 首先找到需要删除的节点；
      * 如果找到了，删除它。
-     *
+     * <p>
      * 输入：root = [5,3,6,2,4,null,7], key = 3
      * 输出：[5,4,6,2,null,null,7]
      * 解释：给定需要删除的节点值是 3，所以我们首先找到 3 这个节点，然后删除它。
@@ -712,9 +728,9 @@ public class TreeCode {
      * 669. 修剪二叉搜索树
      * https://leetcode.cn/problems/trim-a-binary-search-tree/
      * 给你二叉搜索树的根节点 root ，同时给定最小边界low 和最大边界 high。通过修剪二叉搜索树，使得所有节点的值在[low, high]中。修剪树 不应该 改变保留在树中的元素的相对结构 (即，如果没有被移除，原有的父代子代关系都应当保留)。 可以证明，存在 唯一的答案 。
-     *
+     * <p>
      * 所以结果应当返回修剪好的二叉搜索树的新的根节点。注意，根节点可能会根据给定的边界发生改变。
-     *
+     * <p>
      * 输入：root = [3,0,4,null,2,null,null,1], low = 1, high = 3
      * 输出：[3,2,null,1]
      */
@@ -741,20 +757,19 @@ public class TreeCode {
      * 108. 将有序数组转换为二叉搜索树
      * https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/
      * 给你一个整数数组 nums ，其中元素已经按 升序 排列，请你将其转换为一棵 高度平衡 二叉搜索树。
-     *
+     * <p>
      * 高度平衡 二叉树是一棵满足「每个节点的左右两个子树的高度差的绝对值不超过 1 」的二叉树。
      * 输入：nums = [-10,-3,0,5,9]
      * 输出：[0,-3,9,-10,null,5]
      * 解释：[0,-10,5,null,-3,null,9] 也将被视为正确答案：
-     *
      */
     public TreeNode sortedArrayToBST(int[] nums) {
-        return traversal(nums, 0, nums.length -1);
+        return traversal(nums, 0, nums.length - 1);
     }
 
     private TreeNode traversal(int[] nums, int left, int right) {
         if (left > right) return null;
-        int mid = (left + right)/2;
+        int mid = (left + right) / 2;
         TreeNode root = new TreeNode(nums[mid]);
         root.left = traversal(nums, left, mid - 1);
         root.right = traversal(nums, mid + 1, right);
@@ -765,17 +780,17 @@ public class TreeCode {
      * 538. 把二叉搜索树转换为累加树
      * https://leetcode.cn/problems/convert-bst-to-greater-tree/
      * 给出二叉 搜索 树的根节点，该树的节点值各不相同，请你将其转换为累加树（Greater Sum Tree），使每个节点 node 的新值等于原树中大于或等于 node.val 的值之和。
-     *
+     * <p>
      * 提醒一下，二叉搜索树满足下列约束条件：
      * 节点的左子树仅包含键 小于 节点键的节点。
      * 节点的右子树仅包含键 大于 节点键的节点。
      * 左右子树也必须是二叉搜索树。
-     *
+     * <p>
      * 输入：[4,1,6,0,2,5,7,null,null,null,3,null,null,null,8]
      * 输出：[30,36,21,36,35,26,15,null,null,null,33,null,null,null,8]
-     *
      */
     int num = 0;
+
     public TreeNode convertBST(TreeNode root) {
         if (root == null) return null;
         convertBST(root.right);
@@ -789,18 +804,19 @@ public class TreeCode {
     /**
      * 剑指 Offer 36. 二叉搜索树与双向链表
      * BM30 二叉搜索树与双向链表
-     *
+     * <p>
      * 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。要求不能创建任何新的节点，只能调整树中节点指针的指向。
-     *
+     * <p>
      * 注意:
      * 1.要求不能创建任何新的结点，只能调整树中结点指针的指向。当转化完成以后，树中节点的左指针需要指向前驱，树中节点的右指针需要指向后继
      * 2.返回链表中的第一个节点的指针
      * 3.函数返回的TreeNode，有左右指针，其实可以看成一个双向链表的数据结构
      * 4.你不用输出双向链表，程序会根据你的返回值自动打印输出
-     *
+     * <p>
      * 二叉搜索树特性: 搜索树是有序的，可以使用中序遍历得到一个有序数组。
      */
     TreeNode preNode, headNode;
+
     public TreeNode treeToDoublyList(TreeNode root) {
         if (root == null) return root;
         dfs(root);
@@ -810,7 +826,7 @@ public class TreeCode {
         return headNode;
     }
 
-    private void treeToDoublyListDfs (TreeNode node) {
+    private void treeToDoublyListDfs(TreeNode node) {
         //左中右遍历
         if (node == null) return;
         treeToDoublyListDfs(node.left);
@@ -860,12 +876,12 @@ public class TreeCode {
 
     /**
      * BM35 判断是不是完全二叉树
-     *
+     * <p>
      * 给定一个二叉树，确定他是否是一个完全二叉树。
      * 完全二叉树的定义：若二叉树的深度为 h，除第 h 层外，其它各层的结点数都达到最大个数，
      * 第 h 层所有的叶子结点都连续集中在最左边，这就是完全二叉树。（第 h 层可能包含 [1~2h] 个节点）
      */
-    public boolean isCompleteTree (TreeNode root) {
+    public boolean isCompleteTree(TreeNode root) {
         // write code here
         if (root == null) {
             return false;
@@ -892,7 +908,7 @@ public class TreeCode {
     /**
      * 103. 二叉树的锯齿形层序遍历
      * https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/
-     *
+     * <p>
      * 给你二叉树的根节点 root ，返回其节点值的 锯齿形层序遍历 。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
      */
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
@@ -956,7 +972,7 @@ public class TreeCode {
 
     public static void main(String[] args) {
         int[] a = new int[]{1, 2, 3, 4, 5, 0};
-        System.out.println(7/2);
+        System.out.println(7 / 2);
         System.out.println(a[1]);
     }
 
