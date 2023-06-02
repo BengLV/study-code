@@ -823,6 +823,42 @@ public class CommonInterviewTopic {
         return res;
     }
 
+    public List<Integer> spiralOrder1(int[][] matrix) {
+        List<Integer> res = new ArrayList<>();
+        if (matrix == null) {
+            return res;
+        }
+        int width = matrix.length;
+        int len = matrix[0].length;
+        int left = 0, right = len - 1, top = 0, end = width - 1;
+        while (left <= right && top <= end) {
+            //从左往右走
+            for (int i = left; i <= right; i++) {
+                res.add(matrix[top][i]);
+            }
+            top++;
+            //从上往下走
+            for (int i = top; i <= end; i++) {
+                res.add(matrix[i][right]);
+            }
+            right--;
+            //从右往左走
+            //当剩下一行时，left <= right, 会从左至右加一次，这时候所有数组元素都加过了，
+            // 然后top++，此时top已经大于end,表示这一行已经加过了，但从右往左遍历的的时候，
+            // right可能仍然大于等于left，又会加一次（不过比从左往右要少一个元素，因为right也减1了）
+            for (int i = right; i >= left && top  <= end; i--) {
+                res.add(matrix[end][i]);
+            }
+            end--;
+            //从下往上走
+            for (int i = end; i >= top && left <= right; i--) {
+                res.add(matrix[i][left]);
+            }
+            left++;
+        }
+        return res;
+    }
+
     /**
      * NC65 斐波那契数列
      *
