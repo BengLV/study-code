@@ -215,6 +215,35 @@ public class LinkedListCode {
         return dummy.next;
     }
 
+    public ListNode reverseBetween2(ListNode head, int left, int right) {
+        if (head == null) {
+            return null;
+        }
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode pre = dummy;
+        //left前面的保持不变
+        for (int i = 1; i < left; i++) {
+            pre = pre.next;
+        }
+
+        ListNode cur = pre.next;
+        ListNode temp = null;
+        //翻转中间的链表
+        for (int i = left; i <= right; i++) {
+            ListNode next = cur.next;
+            cur.next = temp;
+            temp = cur;
+            cur = next;
+        }
+
+        //转换n, m 位置的节点指向
+        pre.next.next = cur;
+        pre.next = temp;
+        return dummy.next;
+    }
+
 
     /**
      * 234. 回文链表
@@ -451,6 +480,7 @@ public class LinkedListCode {
         node3.add(3);
         node3.add(4);
         node3.add(5);
-        System.out.println(node);
+        List<String> s = Arrays.asList("21", "232");
+        System.out.println(s);
     }
 }
