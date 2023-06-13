@@ -2,7 +2,7 @@ package 算法.dynamicprogram;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * @description: 动态规划
@@ -282,6 +282,37 @@ public class DynamicProgramming {
     }
 
 
+    public static List<Integer> lengthOfLIS2(int[] nums) {
+        if (nums == null || nums.length == 0) return null;
+        int[] dp = new int[nums.length];
+        //记录递增子序列中每个元素的前一个元素索引
+        int[] prevIdx = new int[nums.length];
+        Arrays.fill(prevIdx, -1);
+        int res = 0;
+        int endIdx = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j] && dp[j] + 1 > dp[i]) {
+                    dp[i] = dp[j] + 1;
+                    prevIdx[i] = j;
+                }
+            }
+            if (dp[i] > res) {
+                res = dp[i];
+                endIdx = i;
+            }
+        }
+
+        List<Integer> list = new ArrayList<>();
+        while (endIdx != -1) {
+            list.add(nums[endIdx]);
+            endIdx = prevIdx[endIdx];
+        }
+        Collections.reverse(list);
+        return list;
+    }
+
     /**
      * 1143. 最长公共子序列(返回子串长度)
      * BM65 最长公共子序列(二)(返回子串字符)
@@ -416,6 +447,7 @@ public class DynamicProgramming {
     public static void main(String[] args) {
         HashMap<Object, Object> objectObjectHashMap = new HashMap<>();
         System.out.println(objectObjectHashMap.get("21"));
+        System.out.println(Arrays.toString(lengthOfLIS2(new int[]{10,9,2,5,3,7,101,18}).toArray()));
     }
 
 }
