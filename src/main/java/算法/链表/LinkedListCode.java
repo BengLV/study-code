@@ -184,6 +184,31 @@ public class LinkedListCode {
         return null;
     }
 
+    public ListNode detectCycle2(ListNode head) {
+        if (head == null) return null;
+        ListNode fast = head;
+        ListNode slow = head;
+        //标识是否存在环形链表
+        boolean hasCycle = false;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                hasCycle = true;
+                break;
+            }
+        }
+        if (hasCycle) {
+            //如果存在环,会在环形入口相遇
+            while (head != slow) {
+                head = head.next;
+                slow = slow.next;
+            }
+            return head;
+        }
+        return null;
+    }
+
 
     /**
      * 92. 反转链表 II
