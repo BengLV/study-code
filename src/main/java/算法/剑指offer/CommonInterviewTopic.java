@@ -1243,6 +1243,41 @@ public class CommonInterviewTopic {
         */
     }
 
+    /**
+     * 双指针
+     * 空间复杂度O(1),时间复杂度O(n)
+     */
+    public int trap2(int[] height) {
+        int sum = 0;
+        int left = 0;
+        int right = height.length - 1;
+        int maxLeft = 0;//左侧最大值
+        int maxRight = 0;//右侧最大值
+        while (left < right) {
+            //如果左边小于右边高度时
+            if (height[left] < height[right]) {
+                //如果左侧当前位置高于左侧最大高度,此时无法接住雨水.
+                if (height[left] > maxLeft) {
+                    maxLeft = height[left];
+                } else {
+                    //接雨水
+                    sum += maxLeft - height[left];
+                }
+                left++;
+            } else {
+                //如果右侧当前位置大于左侧最大高度,此时也无法接住雨水.
+                if (height[right] > maxRight) {
+                    maxRight = height[right];
+                } else {
+                    //接雨水
+                    sum += maxRight - height[right];
+                }
+                right--;
+            }
+        }
+        return sum;
+    }
+
 
     /**
      * NC136 输出二叉树的右视图
