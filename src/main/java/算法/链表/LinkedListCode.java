@@ -537,6 +537,30 @@ public class LinkedListCode {
         return prev;
     }
 
+    /**
+     * 94. 二叉树的中序遍历
+     * https://leetcode.cn/problems/binary-tree-inorder-traversal/
+     *
+     * 中序遍历迭代法
+     */
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        //用来存左节点
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        while (cur != null || !stack.isEmpty()) {
+            if (cur != null) {
+                stack.add(cur);
+                cur = cur.left;
+            } else {
+                cur = stack.pop();
+                res.add(cur.val);
+                cur = cur.right;
+            }
+        }
+        return res;
+    }
+
 
 
     public static void main(String[] args) {
