@@ -482,6 +482,62 @@ public class LinkedListCode {
     }
 
 
+    /**
+     * 143. 重排链表
+     * https://leetcode.cn/problems/reorder-list/
+     *
+     * 给定一个单链表 L 的头节点 head ，单链表 L 表示为：
+     * L0 → L1 → … → Ln - 1 → Ln
+     *
+     * 请将其重新排列后变为：
+     * L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+     *
+     * 链表大杂烩,比较有代表性的链表题目.
+     */
+    public void reorderList(ListNode head) {
+        if (head == null || head.next == null) {
+            return;
+        }
+        //快慢指针得到中间节点
+        ListNode slow = head;
+        ListNode fast = slow.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        //将链表分成两段
+        ListNode secondHalf = slow.next;
+        slow.next = null;
+
+        //翻转第二个链表
+        secondHalf = reverseListNode(secondHalf);
+
+        //交替插入节点
+        ListNode temp = head;
+        while (secondHalf != null) {
+            ListNode next = temp.next;
+            temp.next = secondHalf;
+            secondHalf = secondHalf.next;
+            temp.next.next = next;
+            temp = next;
+        }
+
+    }
+
+    private ListNode reverseListNode(ListNode node) {
+        ListNode dummy = node;
+        ListNode prev = null;
+        while (dummy != null) {
+            ListNode next = dummy.next;
+            dummy.next = prev;
+            prev = dummy;
+            dummy = next;
+        }
+        return prev;
+    }
+
+
 
     public static void main(String[] args) {
         ListNode node = new ListNode(8);
