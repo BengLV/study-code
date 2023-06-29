@@ -124,6 +124,31 @@ public class LinkedListCode {
         return temp.next;
     }
 
+
+    public ListNode removeNthFromEnd2(ListNode head, int n) {
+        if (head == null) return null;
+        //临时节点
+        ListNode dummyNode = new ListNode(0);
+        dummyNode.next = head;
+        //快慢指针
+        ListNode slowNode = dummyNode;
+        ListNode fastNode = dummyNode;
+        //快指针不为空时
+        while (fastNode != null) {
+            ListNode temp = fastNode.next;
+            fastNode = temp;
+            if (n < 0) {
+                //快指针走完n步走,慢指针再走.
+                ListNode temp2 = slowNode.next;
+                slowNode = temp2;
+            }
+            n--;
+        }
+        slowNode.next = slowNode.next.next;
+        return dummyNode.next;
+    }
+
+
     /**
      * 160. 相交链表
      * https://leetcode-cn.com/problems/intersection-of-two-linked-lists/
