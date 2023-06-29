@@ -970,6 +970,37 @@ public class TreeCode {
     }
 
 
+    /**
+     * 124. 二叉树中的最大路径和
+     * https://leetcode.cn/problems/binary-tree-maximum-path-sum/
+     *
+     * 二叉树中的 路径 被定义为一条节点序列，序列中每对相邻节点之间都存在一条边。同一个节点在一条路径序列中 至多出现一次 。该路径 至少包含一个 节点，且不一定经过根节点。
+     *
+     * 路径和 是路径中各节点值的总和。
+     *
+     * 给你一个二叉树的根节点 root ，返回其 最大路径和 。
+     */
+    int res = Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        /**
+         对于任意一个节点, 如果最大和路径包含该节点, 那么只可能是两种情况:
+         1. 其左右子树中所构成的和路径值较大的那个加上该节点的值后向父节点回溯构成最大路径
+         2. 左右子树都在最大路径中, 加上该节点的值构成了最终的最大路径
+         **/
+        getMax(root);
+        return res;
+
+    }
+
+    private int getMax(TreeNode node) {
+        if (node == null) return 0;
+        int left = Math.max(0, getMax(node.left));//获取左子树最大值,如果子树路径和为负则应当置0表示最大路径不包含子树
+        int right = Math.max(0, getMax(node.right));
+        res = Math.max(res, left + right + node.val);// 判断在该节点包含左右子树的路径和是否大于当前最大路径和
+        return Math.max(left, right) + node.val;
+    }
+
+
     public static void main(String[] args) {
         int[] a = new int[]{1, 2, 3, 4, 5, 0};
         System.out.println(7 / 2);
