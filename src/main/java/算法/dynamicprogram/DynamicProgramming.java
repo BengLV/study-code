@@ -18,18 +18,18 @@ public class DynamicProgramming {
      * 斐波那契数（通常用F(n) 表示）形成的序列称为 斐波那契数列 。该数列由0 和 1 开始，后面的每一项数字都是前面两项数字的和。也就是：
      * F(0) = 0，F(1)= 1
      * F(n) = F(n - 1) + F(n - 2)，其中 n > 1
-     *
+     * <p>
      * 示例 1：
      * 输入：n = 2
      * 输出：1
      * 解释：F(2) = F(1) + F(0) = 1 + 0 = 1
      */
     public int fib(int n) {
-        if (n <2) return n;
+        if (n < 2) return n;
         int res = 0;
         int a = 0;
         int b = 1;
-        for (int i = 1; i <n; i++) {
+        for (int i = 1; i < n; i++) {
             res = a + b;
             a = b;
             b = res;
@@ -43,14 +43,14 @@ public class DynamicProgramming {
      * https://leetcode.cn/problems/climbing-stairs/
      * 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
      * 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
-     *
+     * <p>
      * 示例 1：
      * 输入：n = 2
      * 输出：2
      * 解释：有两种方法可以爬到楼顶。
      * 1. 1 阶 + 1 阶
      * 2. 2 阶
-     *
+     * <p>
      * 示例 2：
      * 输入：n = 3
      * 输出：3
@@ -58,14 +58,14 @@ public class DynamicProgramming {
      * 1. 1 阶 + 1 阶 + 1 阶
      * 2. 1 阶 + 2 阶
      * 3. 2 阶 + 1 阶
-     *
+     * <p>
      * 解析:第n个台阶只能从第n-1或者n-2个上来。到第n-1个台阶的走法 + 第n-2个台阶的走法 = 到第n个台阶的走法，
      * 已经知道了第1个和第2个台阶的走法，一路加上去。
      */
     public int climbStairs(int n) {
         if (n <= 2) return n;
         int a = 1, b = 2, res = 0;
-        for (int i =3; i <= n; i ++) {
+        for (int i = 3; i <= n; i++) {
             res = a + b;
             a = b;
             b = res;
@@ -81,14 +81,14 @@ public class DynamicProgramming {
      * 给你一个整数数组 cost ，其中 cost[i] 是从楼梯第 i 个台阶向上爬需要支付的费用。一旦你支付此费用，即可选择向上爬一个或者两个台阶。
      * 你可以选择从下标为 0 或下标为 1 的台阶开始爬楼梯。
      * 请你计算并返回达到楼梯顶部的最低花费。
-     *
+     * <p>
      * 示例 1：
      * 输入：cost = [10,15,20]
      * 输出：15
      * 解释：你将从下标为 1 的台阶开始。
      * - 支付 15 ，向上爬两个台阶，到达楼梯顶部。
      * 总花费为 15 。
-     *
+     * <p>
      * 示例2:
      * 输入：cost = [1,100,1,1,1,100,1,1,100,1]
      * 输出：6
@@ -100,7 +100,6 @@ public class DynamicProgramming {
      * - 支付 1 ，向上爬两个台阶，到达下标为 9 的台阶。
      * - 支付 1 ，向上爬一个台阶，到达楼梯顶部。
      * 总花费为 6 。
-     *
      */
     public int minCostClimbingStairs(int[] cost) {
         /*int[] dp = new int[cost.length + 1];
@@ -123,7 +122,7 @@ public class DynamicProgramming {
      * 一个机器人位于一个 m x n网格的左上角 （起始点在下图中标记为 “Start” ）。
      * 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。
      * 问总共有多少条不同的路径？
-     *
+     * <p>
      * 1. 确定dp数组下表含义 dp[i][j] 到每一个坐标可能的路径种类
      * 2. 递推公式 dp[i][j] = dp[i-1][j] dp[i][j-1]
      * 3. 初始化 dp[i][0]=1 dp[0][i]=1 初始化横竖就可
@@ -132,14 +131,14 @@ public class DynamicProgramming {
      */
     public int uniquePaths(int m, int n) {
         int[][] dp = new int[m][n];
-        for (int i = 0; i < m; i ++) {
+        for (int i = 0; i < m; i++) {
             dp[i][0] = 1;
         }
-        for (int i = 0; i < n; i ++) {
+        for (int i = 0; i < n; i++) {
             dp[0][i] = 1;
         }
-        for (int i = 1; i < m; i ++) {
-            for (int j = 1; j < n; j ++) {
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
                 dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
             }
         }
@@ -151,11 +150,11 @@ public class DynamicProgramming {
      * 63. 不同路径 II
      * https://leetcode.cn/problems/unique-paths-ii/
      * 一个机器人位于一个m x n网格的左上角 （起始点在下图中标记为 “Start” ）。
-     *
+     * <p>
      * 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish”）。
      * 现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？
      * 网格中的障碍物和空位置分别用 1 和 0 来表示。
-     *
+     * <p>
      * 示例 1：
      * 输入：obstacleGrid = [[0,0,0],[0,1,0],[0,0,0]]
      * 输出：2
@@ -163,7 +162,7 @@ public class DynamicProgramming {
      * 从左上角到右下角一共有 2 条不同的路径：
      * 1. 向右 -> 向右 -> 向下 -> 向下
      * 2. 向下 -> 向下 -> 向右 -> 向右
-     *
+     * <p>
      * 何时使用【回溯】，何时使用【动态规划】:
      * 首先看取值范围，递归回溯一维数组，100就是深度的极限了（何况本题是100²）
      * 如果是求走迷宫的【路径】，必然是回溯；如果是走迷宫的【路径的条数】，必然是dp
@@ -172,14 +171,14 @@ public class DynamicProgramming {
         int m = obstacleGrid.length;
         int n = obstacleGrid[0].length;
         int[][] dp = new int[m][n];
-        for (int i = 0; i < m && obstacleGrid[i][0] == 0; i ++) {
+        for (int i = 0; i < m && obstacleGrid[i][0] == 0; i++) {
             dp[i][0] = 1;
         }
-        for (int i = 0; i < n && obstacleGrid[0][i] == 0; i ++) {
+        for (int i = 0; i < n && obstacleGrid[0][i] == 0; i++) {
             dp[0][i] = 1;
         }
-        for (int i = 1; i < m; i ++) {
-            for (int j = 1; j < n; j ++){
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
                 if (obstacleGrid[i][j] == 1) continue;
                 dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
             }
@@ -193,7 +192,7 @@ public class DynamicProgramming {
      * https://leetcode.cn/problems/integer-break/
      * 给定一个正整数 n ，将其拆分为 k 个 正整数 的和（ k >= 2 ），并使这些整数的乘积最大化。
      * 返回 你可以获得的最大乘积
-     *
+     * <p>
      * 示例 1:
      * 输入: n = 10
      * 输出: 36
@@ -202,8 +201,8 @@ public class DynamicProgramming {
     public int integerBreak(int n) {
         int[] dp = new int[n + 1];
         dp[2] = 1;
-        for (int i = 3; i <= n; i ++) {
-            for (int j = 1; j < i; j ++) {
+        for (int i = 3; i <= n; i++) {
+            for (int j = 1; j < i; j++) {
                 //j*(i-j)代表把i拆分为j和i-j两个数相乘
                 //j*dp[i-j]代表把i拆分成j和继续把(i-j)这个数拆分，取(i-j)拆分结果中的最大乘积与j相乘
                 dp[i] = Math.max(dp[i], Math.max(j * (i - j), j * dp[i - j]));
@@ -217,7 +216,6 @@ public class DynamicProgramming {
      * 96. 不同的二叉搜索树
      * https://leetcode.cn/problems/unique-binary-search-trees/
      * 给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？返回满足题意的二叉搜索树的种数。
-     *
      */
     public int numTrees(int n) {
         int[] dp = new int[n + 1];
@@ -239,7 +237,6 @@ public class DynamicProgramming {
      * 300. 最长递增子序列
      * BM71 最长上升子序列(一)
      * 给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
-     *
      */
     public int lengthOfLIS(int[] nums) {
         //时间复杂度 O(n的平方) 空间复杂度O(n)
@@ -317,11 +314,11 @@ public class DynamicProgramming {
      * 1143. 最长公共子序列(返回子串长度)
      * BM65 最长公共子序列(二)(返回子串字符)
      * https://leetcode.cn/problems/longest-common-subsequence/
-     *
+     * <p>
      * 给定两个字符串text1 和text2，返回这两个字符串的最长 公共子序列 的长度。如果不存在 公共子序列 ，返回 0 。
-     *
+     * <p>
      * 一个字符串的子序列是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。
-     *
+     * <p>
      * 例如，"ace" 是 "abcde" 的子序列，但 "aec" 不是 "abcde" 的子序列。
      * 两个字符串的 公共子序列 是这两个字符串所共同拥有的子序列。
      */
@@ -348,7 +345,7 @@ public class DynamicProgramming {
     /**
      * BM69 把数字翻译成字符串
      * 与LeetCode有点区别
-     *
+     * <p>
      * 有一种将字母编码成数字的方式：'a'->1, 'b->2', ... , 'z->26'。
      * 现在给一串数字，返回有多少种可能的译码结果
      */
@@ -386,7 +383,7 @@ public class DynamicProgramming {
      * 322. 零钱兑换
      * BM70 兑换零钱(一)
      * https://leetcode.cn/problems/coin-change/
-     *
+     * <p>
      * 给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。
      * 计算并返回可以凑成总金额所需的 最少的硬币个数 。如果没有任何一种硬币组合能组成总金额，返回-1 。
      * 你可以认为每种硬币的数量是无限的。
@@ -419,7 +416,7 @@ public class DynamicProgramming {
     /**
      * 198. 打家劫舍
      * BM78 打家劫舍(一)
-     *
+     * <p>
      * 你是一个经验丰富的小偷，准备偷沿街的一排房间，每个房间都存有一定的现金，为了防止被发现，你不能偷相邻的两家，
      * 即，如果偷了第一家，就不能再偷第二家；如果偷了第二家，那么就不能偷第一家和第三家。
      * 给定一个整数数组nums，数组中的元素表示每个房间存有的现金数额，请你计算在不被发现的前提下最多的偷窃金额。
@@ -439,15 +436,60 @@ public class DynamicProgramming {
         dp[0] = nums[0];
         dp[1] = Math.max(nums[0], nums[1]);
         for (int i = 2; i < length; i++) {
-            dp[i] = Math.max(dp[i - 2] + nums[i], dp[i-1]);
+            dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);
         }
         return dp[length - 1];
+    }
+
+
+    /**
+     * 72. 编辑距离
+     * https://leetcode.cn/problems/edit-distance/
+     * <p>
+     * 给你两个单词word1 和word2， 请返回将word1转换成word2 所使用的最少操作数 。
+     * <p>
+     * 你可以对一个单词进行如下三种操作：
+     * 插入一个字符
+     * 删除一个字符
+     * 替换一个字符
+     * <p>
+     * 示例1：
+     * 输入：word1 = "horse", word2 = "ros"
+     * 输出：3
+     * 解释：
+     * horse -> rorse (将 'h' 替换为 'r')
+     * rorse -> rose (删除 'r')
+     * rose -> ros (删除 'e')
+     */
+    public int minDistance(String word1, String word2) {
+        int l1 = word1.length(), l2 = word2.length();
+        int[][] dp = new int[l1 + 1][l2 + 1];
+
+        for (int i = 1; i <= l1; i++) {
+            dp[i][0] = i;
+        }
+
+        for (int i = 1; i <= l2; i++) {
+            dp[0][i] = i;
+        }
+        for (int i = 1; i <= l1; i++) {
+            for (int j = 1; j <= l2; j++) {
+                //当前字母相同
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    //当前字母不同时,取最小值, 然后加一
+                    dp[i][j] = Math.min(Math.min(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]) + 1;
+                }
+            }
+        }
+        return dp[l1][l2];
     }
 
     public static void main(String[] args) {
         HashMap<Object, Object> objectObjectHashMap = new HashMap<>();
         System.out.println(objectObjectHashMap.get("21"));
-        System.out.println(Arrays.toString(lengthOfLIS2(new int[]{10,9,2,5,3,7,101,18}).toArray()));
+        System.out.println(Arrays.toString(lengthOfLIS2(new int[]{10, 9, 2, 5, 3, 7, 101, 18}).toArray()));
     }
 
 }
