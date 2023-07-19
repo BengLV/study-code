@@ -562,28 +562,37 @@ public class LinkedListCode {
         return prev;
     }
 
+
     /**
-     * 94. 二叉树的中序遍历
-     * https://leetcode.cn/problems/binary-tree-inorder-traversal/
+     * 82. 删除排序链表中的重复元素 II
+     * https://leetcode.cn/problems/remove-duplicates-from-sorted-list-ii/
      *
-     * 中序遍历迭代法
+     * 给定一个已排序的链表的头 head ， 删除原始链表中所有重复数字的节点，只留下不同的数字 。返回 已排序的链表 。
+     *
      */
-    public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> res = new ArrayList<>();
-        //用来存左节点
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode cur = root;
-        while (cur != null || !stack.isEmpty()) {
-            if (cur != null) {
-                stack.add(cur);
-                cur = cur.left;
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode dummy = new ListNode(101);
+        dummy.next = head;
+        //前驱结点
+        ListNode prev = dummy;
+        //当前节点
+        ListNode cur = head;
+        while (cur != null && cur.next != null) {
+            if (cur.data == cur.next.data) {
+                int val = cur.data;
+                //判断是否相等,往后推
+                while (cur != null && cur.data == val) {
+                    cur = cur.next;
+                }
+                //前驱节点转化
+                prev.next = cur;
             } else {
-                cur = stack.pop();
-                res.add(cur.val);
-                cur = cur.right;
+                prev = cur;
+                cur = cur.next;
             }
         }
-        return res;
+        return dummy.next;
     }
 
 
