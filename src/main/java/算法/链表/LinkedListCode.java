@@ -596,6 +596,27 @@ public class LinkedListCode {
     }
 
 
+    /**
+     * 83. 删除排序链表中的重复元素
+     * https://leetcode.cn/problems/remove-duplicates-from-sorted-list/
+     *
+     * 给定一个已排序的链表的头 head ， 删除所有重复的元素，使每个元素只出现一次(重复元素值保留一个)。返回 已排序的链表 。
+     *
+     */
+    public ListNode deleteDuplicates2(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode temp = head;
+        while(temp!= null) {
+            if (temp.next != null && temp.data == temp.next.data) {
+                temp.next = temp.next.next;
+            } else {
+                temp = temp.next;
+            }
+        }
+        return head;
+    }
+
+
 
     public static void main(String[] args) {
         ListNode node = new ListNode(8);
