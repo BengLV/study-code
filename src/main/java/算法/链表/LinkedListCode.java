@@ -617,6 +617,92 @@ public class LinkedListCode {
     }
 
 
+    /**
+     * 148. 排序链表
+     * https://leetcode.cn/problems/sort-list/
+     *
+     * 给你链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。
+     */
+    public ListNode sortList(ListNode head) {
+        if (head == null || head.next  == null) {
+            return head;
+        }
+        ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+        return quickSort(dummyNode, null);
+    }
+
+    private ListNode quickSort(ListNode head, ListNode end) {
+        if (head == end || head.next == end || head.next.next == end) {
+            return head;
+        }
+        //临时列表，存放小于划分节点的值。
+        ListNode tempNode = new ListNode(-1);
+        ListNode tempNodeDummy = tempNode;
+        //分割点
+        ListNode midNode = head.next;
+        ListNode midNodeDummy = midNode;
+        while (midNodeDummy.next != end) {
+            if (midNodeDummy.next.data < midNode.data) {
+                tempNodeDummy.next = midNodeDummy.next;
+                tempNodeDummy = tempNodeDummy.next;
+                midNodeDummy.next = midNodeDummy.next.next;
+            } else {
+                midNodeDummy = midNodeDummy.next;
+            }
+        }
+        //合并临时链表和原链表
+        tempNodeDummy.next = head.next;
+        //将临时节点插入到head后面，实现在原head上面进行操作
+        head.next = tempNode.next;
+        quickSort(head, midNode);
+        quickSort(midNode, end);
+        return head.next;
+    }
+
+
+    public ListNode sortList2(ListNode head) {
+        //归并排序
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode midNode = getMidNode(head);
+        ListNode rightNode = midNode.next;
+        midNode.next = null;
+        return mergeSortListNode(sortList2(head), sortList2(rightNode));
+    }
+
+    //寻找链表的中间位置
+    private ListNode getMidNode(ListNode node) {
+        if (node == null || node.next == null) {
+            return node;
+        }
+        ListNode slow = node;
+        ListNode fast = node.next.next;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+
+
+    //将两个有序链表进行排序
+    private ListNode mergeSortListNode(ListNode left, ListNode right) {
+        if (left == null) {
+            return right;
+        }
+        if (right == null) {
+            return left;
+        }
+        if (left.data <= right.data) {
+            left.next = mergeSortListNode(left.next, right);
+            return left;
+        } else {
+            right.next = mergeSortListNode(left, right.next);
+            return right;
+        }
+    }
 
     public static void main(String[] args) {
         ListNode node = new ListNode(8);
