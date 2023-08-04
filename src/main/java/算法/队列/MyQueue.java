@@ -123,26 +123,29 @@ public class MyQueue {
      * 输出：[4]
      */
     public static int[] maxSlidingWindow(int[] nums, int k) {
-        int n = nums.length;
-        PriorityQueue<int[]> queue = new PriorityQueue<int[]>(new Comparator<int[]>() {
-            @Override
-            public int compare(int[] num1, int[] num2) {
-                return num1[0] != num2[0] ? num2[0] - num1[0] : num2[1] - num1[1];
-            }
-        });
-        for (int i = 0; i < k; i++) {
-            queue.offer(new int[]{nums[i], i});
+        if (nums == null || k == 1) {
+            return nums;
         }
-        int[] ans = new int[n - k + 1];
-        ans[0] = queue.peek()[0];
-        for (int i = k; i < n; i++) {
-            queue.offer(new int[]{nums[i], i});
-            while (queue.peek()[1] <= i - k) {
-                queue.poll();
+        //优先队列存储 当值数值, 以及当前数值的位置.
+        PriorityQueue<int[]> dq = new PriorityQueue<>((n1, n2) -> n2[0] - n1[0]);
+        int len = nums.length;
+        int[] resNums = new int[len - k + 1];
+        int resIdx = 0;
+        for (int i = 0; i < len; i++) {
+            //存放当前节点的值, 以及下标
+            dq.add(new int[]{nums[i], i});
+            //当队列中存了三个元素后
+            if (i >= k) {
+                //如果对头元素的位置不在窗口范围内, 则移除.
+                while (dq.peek()[1] <= i - k) {
+                    dq.poll();
+                }
             }
-            ans[i - k + 1] = queue.peek()[0];
+            if (i >= k - 1) {
+                resNums[resIdx++] = dq.peek()[0];
+            }
         }
-        return ans;
+        return resNums;
     }
 
     /**
