@@ -593,7 +593,7 @@ public class SwordFingerOffer {
     static List<String> res = new ArrayList<>();
 
     public static List<String> printNumbers1(int n) {
-        for (int i = 1; i < n; i++) {
+        for (int i = 1; i <= n; i++) {
             trackBack(i, new StringBuilder());
         }
         return res;
@@ -856,6 +856,29 @@ public class SwordFingerOffer {
             fast++;
         }
         return nums;
+    }
+
+    public int[] trainingPlan(int[] actions) {
+        if (actions == null || actions.length == 0) {
+            return actions;
+        }
+        int left = 0, right = actions.length - 1;
+        while (left < right) {
+            if (actions[left] % 2 == 0) {
+                //交换后面的数字
+                while (right > left && actions[right] % 2 == 0) {
+                    right--;
+                }
+                if (right > left) {
+                    int temp = actions[left];
+                    actions[left] = actions[right];
+                    actions[right] = temp;
+                }
+            }
+            left++;
+        }
+        return actions;
+
     }
 
     /**
@@ -2995,6 +3018,7 @@ public class SwordFingerOffer {
     }
 
     public static void main(String[] args) {
+        printNumbers1(1);
         int a[][] = {{1, 2, 3}, {4, 5, 6}};
         System.out.println(a[0].length);//3
         System.out.println(a.length);//2
@@ -3016,8 +3040,10 @@ public class SwordFingerOffer {
         System.out.println("123".toCharArray());
         int a1 = 1;
         int a2 = 2;
-        a1 = a1 ^ a2 ^ a1;
+        Long  a3 = 1L;
+       // a1 = a1 ^ a2 ^ a1;
         System.out.println(a1);//2
+        System.out.println(a1 == a3.intValue());
     }
 }
 
