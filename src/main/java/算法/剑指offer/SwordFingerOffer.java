@@ -1040,6 +1040,26 @@ public class SwordFingerOffer {
         return A.val == B.val && dfs(A.left, B.left) && dfs(A.right, B.right);
     }
 
+    public boolean isSubStructure1(TreeNode A, TreeNode B) {
+        if (A == null || B == null) {
+            return false;
+        }
+        if (A.val == B.val && isContain(A, B)) {
+            return true;
+        }
+        return isSubStructure1(A.left, B) || isSubStructure1(A.right, B);
+    }
+
+    private boolean isContain(TreeNode node, TreeNode B) {
+        if (node == null && B != null) {
+            return false;
+        }
+        if (B == null) {
+            return true;
+        }
+        return node.val == B.val && isContain(node.left, B.left) && isContain(node.right, B.right);
+    }
+
 
     /**
      * 剑指 Offer 27. 二叉树的镜像
