@@ -1141,6 +1141,25 @@ public class SwordFingerOffer {
         return true;
     }
 
+
+    public boolean isSymmetric1(TreeNode root) {
+        if (root == null) {
+            return true; // 空树是对称的
+        }
+        return isMirror(root.left, root.right);
+    }
+
+    private boolean isMirror(TreeNode left, TreeNode right) {
+        if (left == null && right == null) {
+            return true; // 左右子树都为空，是对称的
+        }
+        if (left == null || right == null) {
+            return false; // 左右子树其中一个为空，不对称
+        }
+        // 判断当前节点值是否相等，并递归判断左子树的右子树和右子树的左子树，以及左子树的左子树和右子树的右子树是否对称
+        return (left.val == right.val) && isMirror(left.right, right.left) && isMirror(left.left, right.right);
+    }
+
     /**
      * 做递归思考三步：
      * <p>
