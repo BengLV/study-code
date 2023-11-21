@@ -1238,6 +1238,48 @@ public class SwordFingerOffer {
     }
 
 
+    public int[] spiralArray(int[][] array) {
+        if (array == null) return null;
+        int width = array.length;
+        if (width == 0) return new int[0];
+        int length = array[0].length;
+
+        int left = 0;
+        int rigth = length - 1;
+        int top = 0;
+        int bottom = width - 1;
+
+        int cnt = 0;
+        int size = length * width;
+        int[] result = new int[size];
+        try {
+            while (cnt < size) {
+                for (int i = left; i <= rigth; i++) {
+                    result[cnt++] = array[top][i];
+                }
+                top++;
+
+                for (int i = top; i <= bottom; i++) {
+                    result[cnt++] = array[i][rigth];
+                }
+                rigth--;
+
+                for (int i = rigth; i >= left; i--) {
+                    result[cnt++] = array[bottom][i];
+                }
+                bottom--;
+
+                for (int i = bottom; i >= top; i--) {
+                    result[cnt++] = array[i][left];
+                }
+                left++;
+            }
+        } finally {
+            return result;
+        }
+    }
+
+
     /**
      * 剑指 Offer 30. 包含min函数的栈
      * https://leetcode.cn/problems/bao-han-minhan-shu-de-zhan-lcof/
